@@ -12,3 +12,5 @@ body {
   /* This centers our sketch vertically. */
   align-items: center;
 }
+
+/*canvas { transform: scaleX(-1); } */
