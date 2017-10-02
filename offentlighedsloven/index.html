@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Offentlighedsloven</title>
+        <script src="libraries/p5.js" type="text/javascript"></script>
+
+        <script src="libraries/p5.dom.js" type="text/javascript"></script>
+        <script src="libraries/p5.sound.js" type="text/javascript"></script>
+
+        <script src="sketch.js" type="text/javascript"></script>
+        <script src="erasure.js" type="text/javascript"></script>
+
+        <style>
+            body {
+                padding: 2 px;
+                user-select: none;
+                font-size: 18px;
+                text-align: justify;
+            }
+
+            .file {
+                margin-top: 0px;
+                font-weight: bold;
+                display: none;
+            }
+
+            .text {
+                border-style: solid;
+                border-width: 1px;
+                padding: 10px;
+                margin: 0px;
+            }
+
+            #drop_zone {
+                padding: 0px;
+                border-style: dotted;
+                width: 0px;
+                text-align: center;
+                display: none;
+            }
+
+            #keepspacing {
+                display: none;
+            }
+
+            #modeSelect {
+                display: none;
+            }
+
+            #clear {
+                display: none;
+            }
+            #submit {
+                display: none;
+            }
+            #sample {
+                display: none;
+                margin: 0px;
+            }
+            #textinput {
+                display: none;
+            }
+            #drop_zone {
+                display: none;
+                margin: 0px;
+            }
+
+        </style>
+
+    </head>
+    <body>
+
+        <textarea id = "textinput" rows="10" cols="100">Enter some text</textarea>
+        <button id = "submit">submit</button>
+
+        <a href="#" id ="sample">use text sample</a>
+        <div id="drop_zone">drag a file</div>
+
+        <input type ="checkbox" id = "keepspacing" checked = "true"></input> 
+    <input type ="checkbox" id = "modeSelect" checked = "true"></input>
+
+
+<button id = "clear">clear</button>
+
+
+</body>
+</html>
