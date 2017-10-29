@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Kommunalvalg 2017</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			html, body {
+				height: 100%;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#blocker {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				height: 100%;
+			}
+
+			#info {
+				color: #ffffff;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:left;
+				font-weight: bold;
+
+				position: relative;
+				top: 0px; width: 100%;
+				padding: 5px;
+
+			}
+
+		</style>
+	</head>
+	<body>
+		<div id="container"></div>
+		<div id="info">
+			Andreas Refsgaard - Kommunalvalg 2017
+		</div>
+
+
+		<script src="three.js"></script>
+		<script src="TrackballControls.js"></script>
+		<script src="CSS3DRenderer.js"></script>
+
+		<div id="container"></div>
+		<div id="blocker"></div>
+
+		<script>
+			//Andreas Refsgaard 2017, quick mashup of https://threejs.org/examples/?q=css#css3d_panorama and https://threejs.org/examples/?q=css#css3d_youtube
+			var camera, scene, renderer;
+			var controls;
+			var group, group2, group3;
+
+			var ytSize = 120;
+
+			var Element = function ( id, x, y, z, ry ) {
+
+				var div = document.createElement( 'div' );
+				div.style.width = '240px';
+				div.style.height = '180px';
+				div.style.backgroundColor = '#000';
+
+				var iframe = document.createElement( 'iframe' );
+				iframe.style.width = '240px';
+				iframe.style.height = '180px';
+				iframe.style.border = '0px';
+				iframe.src = [ 'https://www.youtube.com/embed/', id, '?rel=0' ].join( '' );
+				div.appendChild( iframe );
+
+				var object = new THREE.CSS3DObject( div );
+				object.position.set( x, y, z );
+				object.rotation.y = ry;
+
+				return object;
+
+			};
+
+			init();
+			animate();
+
+			function init() {
+
+				var container = document.getElementById( 'container' );
+
+				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 5000 );
+				camera.position.set( 0, 350, 900 );
+
+				scene = new THREE.Scene();
+
+				//PANORAMA BACKGROUND
+				var bgScale = 2;
+				var sides = [
+					{
+						url: 'MilkyWay/dark-s_nx.jpg',
+						position: [ -512*bgScale, 0, 0 ],
+						rotation: [ 0, Math.PI / 2, 0 ]
+					},
+					{
+						url: 'MilkyWay/dark-s_ny.jpg',
+						position: [ 512*bgScale, 0, 0 ],
+						rotation: [ 0, -Math.PI / 2, 0 ]
+					},
+					{
+						url: 'MilkyWay/dark-s_nz.jpg',
+						position: [ 0,  512*bgScale, 0 ],
+						rotation: [ Math.PI / 2, 0, Math.PI ]
+					},
+					{
+						url: 'MilkyWay/dark-s_px.jpg',
+						position: [ 0, -512*bgScale, 0 ],
+						rotation: [ - Math.PI / 2, 0, Math.PI ]
+					},
+					{
+						url: 'MilkyWay/dark-s_py.jpg',
+						position: [ 0, 0,  512*bgScale ],
+						rotation: [ 0, Math.PI, 0 ]
+					},
+					{
+						url: 'MilkyWay/dark-s_pz.jpg',
+						position: [ 0, 0, -512*bgScale ],
+						rotation: [ 0, 0, 0 ]
+					}
+				];
+				for ( var i = 0; i < sides.length; i ++ ) {
+					var side = sides[ i ];
+					var element = document.createElement( 'img' );
+					element.width = 1024*bgScale+2; // 2 pixels extra to close the gap.
+					element.src = side.url;
+					var object = new THREE.CSS3DObject( element );
+					object.position.fromArray( side.position );
+					object.rotation.fromArray( side.rotation );
+					scene.add( object );
+				}
+
+				renderer = new THREE.CSS3DRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.domElement.style.position = 'absolute';
+				renderer.domElement.style.top = 0;
+				container.appendChild( renderer.domElement );
+
+				group = new THREE.Group();
+				group2 = new THREE.Group();
+				group3 = new THREE.Group();
+			
+
+				//First
+				group.add( new Element( 'ASyZ6YB9r64?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&vq=medium', 0, 0, ytSize, 0 ) );
+				group.add( new Element( 'Tm_9DUYRWys?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&vq=medium', ytSize, 0, 0, Math.PI / 2 ) );
+				group.add( new Element( '0LGQtCKn7YE?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&vq=medium', 0, 0, - ytSize, Math.PI ) );
+				group.add( new Element( 'opcZ8QTg13c?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&vq=medium', - ytSize, 0, 0, - Math.PI / 2 ) );
+
+				//Second
+				group2.add( new Element( 'PIFlJP9p-2E?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&vq=medium', -3*ytSize, 0, ytSize, 0 ) );
+				group2.add( new Element( 'IQqavlxyZFQ?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&vq=medium', -2*ytSize, 0, 0, Math.PI / 2 ) );
+				group2.add( new Element( 'Jh3VMeRRnJc?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&vq=medium', -3*ytSize, 0, - ytSize, Math.PI ) );
+				group2.add( new Element( 'Z_vYQTxnhQc?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&vq=medium', - 4*ytSize, 0, 0, - Math.PI / 2 ) );
+
+				// //Third
+				group3.add( new Element( 'B9kaxeMgE2E?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&vq=medium', 3*ytSize, 0, ytSize, 0 ) );
+				group3.add( new Element( 'UwZ2VgxVY4A?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&vq=medium', 4*ytSize, 0, 0, Math.PI / 2 ) );
+				group3.add( new Element( 'I8AIlUsuq6k?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&vq=medium', 3*ytSize, 0, - ytSize, Math.PI ) );
+				group3.add( new Element( '5u1B5QNcL08?rel=0&modestbranding=1&autohide=1&showinfo=0&controls=0&vq=medium', 2*ytSize, 0, 0, - Math.PI / 2 ) );
+
+
+				scene.add( group );
+				scene.add( group2 );
+				scene.add( group3 );
+
+				controls = new THREE.TrackballControls( camera );
+				controls.rotateSpeed = 4;
+				controls.zoomSpeed = 1;
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+				// Block iframe events when dragging camera
+				var blocker = document.getElementById( 'blocker' );
+				blocker.style.display = 'none';
+
+				document.addEventListener( 'mousedown', function () { blocker.style.display = ''; } );
+				document.addEventListener( 'mouseup', function () { blocker.style.display = 'none'; } );
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			function animate() {
+
+				group.rotation.x +=0.004 ;
+				group2.rotation.x -=0.003 ;
+				group3.rotation.x -=0.002 ;	
+
+				console.log(camera.position);
+
+				var outerLimit = 900;
+
+				camera.position.z -= 0.5;
+
+			if (camera.position.z > outerLimit) camera.position.z =outerLimit;
+			if (camera.position.y > outerLimit) camera.position.y =outerLimit;
+			if (camera.position.x > outerLimit) camera.position.x =outerLimit;
+
+			if (camera.position.z < -outerLimit) camera.position.z =-outerLimit;
+			if (camera.position.y < -outerLimit) camera.position.y =-outerLimit;
+			if (camera.position.x < -outerLimit) camera.position.x =-outerLimit;
+
+				requestAnimationFrame( animate );
+				controls.update();
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+	</body>
+</html>
