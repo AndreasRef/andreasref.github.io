@@ -35,7 +35,7 @@ function draw() {
     text("Press a, s or d to turn up the volume of each ambient instrument.", 50, 50);
     
     for (var i = 0; i<nSamples;i++) {
-        volumens[i]-=0.01;
+        volumens[i]-=0.003;
         volumens[i]=constrain(volumens[i],0.001,2);   
         ambientSamples[i].amp(volumens[i]);
         //text(volumens[i], 50, i*50 + 100);
