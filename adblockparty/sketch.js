@@ -199,6 +199,7 @@ function Banner(ad, x, y, musicSync, followAmp, animationType, playing, r) { //B
         strokeWeight(lerpVar*25)
         for (var i = 0; i<this.randomPoints; i++)
         point(this.randomX[i], this.randomY[i]);
+        noStroke();
       break;
       case 3:
         // fill(0,255,255, this.vol*this.vol*1055.0);
