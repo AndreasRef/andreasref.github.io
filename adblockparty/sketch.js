@@ -1,3 +1,10 @@
+/*To do
+
+Jeg kunne godt tænke mig at arbejde mere med hvordan sangen ville udvikle sig over tid.
+Jeg har forsømt at eksperimentere med hvordan forskellige egenskaber ved reklamerne (størrelse + placering på siden) påvirker musikken. Pt reagerer den kun på antallet af reklamer. Dette kan komme i en evt. prototype 2.0
+
+*/
+
 var bg, leftAd, rightAd, topAd, bLeftAd, bRightAd;
 
 var lerpVar = 0;
@@ -59,7 +66,7 @@ function setup() {
       instruments[i].amp = 0.0;
       instruments[i].on = false;
     }
-    console.log(instruments[i].on);
+    //console.log(instruments[i].on);
   }
 
 
