@@ -131,7 +131,7 @@ function draw() {
   var voxLevel = voxMeter.getLevel();
   voxLevel = Tone.dbToGain(voxLevel);
   //
-   background(0);
+   //background(0);
    image(bg,0,0);
 
    //LEFT AD
