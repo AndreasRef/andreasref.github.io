@@ -26,24 +26,24 @@ var guitarMeter = new Tone.Meter();
 var voxMeter = new Tone.Meter();
 
     var bass = new Tone.Player({
-      url : "/audioClips/bowie/basse_2.[mp3|ogg]",
+      url : "audioClips/bowie/basse_2.[mp3|ogg]",
       loop : true,
       volume : - 10
     }).connect(bassMeter).toMaster().sync().start(0);
 
     var drums = new Tone.Player({
-      url : "/audioClips/bowie/batterie_2.[mp3|ogg]",
+      url : "audioClips/bowie/batterie_2.[mp3|ogg]",
       loop : true
     }).connect(drumMeter).toMaster().sync().start(0);
 
     var guitar = new Tone.Player({
-      url : "/audioClips/bowie/guitare_2.[mp3|ogg]",
+      url : "audioClips/bowie/guitare_2.[mp3|ogg]",
       loop : true
     }).connect(guitarMeter).toMaster().sync().start(0);
 
 
     var vox = new Tone.Player({
-      url : "/audioClips/bowie/voix_2.[mp3|ogg]",
+      url : "audioClips/bowie/voix_2.[mp3|ogg]",
       loop : true
     }).connect(voxMeter).toMaster().sync().start(0);
 
