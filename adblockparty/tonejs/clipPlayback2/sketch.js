@@ -16,6 +16,10 @@ var synths = [];
 
 var nLoops = 3;
 
+var currentBass;
+var currentDrums;
+var currentSynths;
+
 Tone.Transport.bpm.value = 129;
 Tone.Transport.setLoopPoints(0, "1m");
 Tone.Transport.loop = true;
@@ -41,18 +45,29 @@ Tone.Transport.loop = true;
     disconnectLoops(bass);
     disconnectLoops(synths);
 
-    startRandomLoop(drums);
-    startRandomLoop(bass);
-    startRandomLoop(synths);
+    currentDrums = Math.floor(Math.random() * 3);
+    currentBass = Math.floor(Math.random() * 3);
+    currentSynths = Math.floor(Math.random() * 3);
+
+
+    startRandomLoop(drums, currentDrums);
+    startRandomLoop(bass, currentBass);
+    startRandomLoop(synths, currentSynths);
 
 
 
 function setup() {
   createCanvas(400, 400);
+  background(255);
+  text("click mouse to start music \npress 's' to stop music \nreload page to set new random clips", 20, 20);
+
+  text("drum clip: " + currentDrums, 20, 100);
+  text("bass clip: " + currentBass, 20, 120);
+  text("synth clip: " + currentSynths, 20, 140);
 }
 
 function draw() {
-  background(0);
+
  }
 
 function mousePressed() {
@@ -78,10 +93,8 @@ function keyTyped() {
   }
 }
 
-function startRandomLoop(instrument) {
-  instrument[Math.floor(Math.random() * 3)].toMaster();
-  instrument[Math.floor(Math.random() * 3)].toMaster();
-  instrument[Math.floor(Math.random() * 3)].toMaster();
+function startRandomLoop(instrument, clip) {
+  instrument[clip].toMaster();
 }
 
 function disconnectLoops(instrument) {
