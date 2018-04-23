@@ -13,7 +13,7 @@ let knn;
 let video;
 
 function setup() {
-  noCanvas();
+    noCanvas();
   video = createCapture(VIDEO).parent('videoContainer');
   // Create a KNN Image Classifier
   knn = new ml5.KNNImageClassifier(4, 1, modelLoaded, video.elt);
@@ -21,7 +21,6 @@ function setup() {
 }
 
 function draw() {
-    
 }
 
 function createButtons() {
