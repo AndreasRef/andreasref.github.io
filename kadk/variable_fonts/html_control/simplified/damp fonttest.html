@@ -1,0 +1,56 @@
+
+<html>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=9">
+	<head>
+		<title>OTVar Test: damp</title>
+		<style>
+			@font-face { 
+				font-family: "damp";
+				src: url(WindGX.ttf);
+			}
+			p {
+				margin: 0px;
+				font: 100px "damp";
+				font-variation-settings: "wght" 100;
+			}
+
+		</style>
+		<script>
+			function updateParagraph() {
+				// update paragraph text based on user input:
+				var userinput = document.getElementById("textInput");
+				var paragraph = document.getElementById("text");
+				paragraph.textContent = userinput.value;
+			}
+		
+			function updateSlider() {
+				var body = document.getElementById("text");
+				var slider = document.getElementsByClassName("slider")
+				var bodystyle = "";
+				var settingtext = "";
+				
+					//var sliderID = slider.id;
+					var sliderValue = slider.value;
+					var label = document.getElementById("label_"+sliderID);
+					label.textContent = ""+sliderID+": "+sliderValue
+					
+                    
+						// OTVar Slider
+						if (settingtext != "") { settingtext += ", " }
+						settingtext += '"' + sliderID + '" ' + sliderValue
+					
+				
+				bodystyle += "font-variation-settings: "+settingtext+";"
+				body.setAttribute("style", bodystyle);
+			}
+		</script>
+	</head>
+	<body onload="updateSlider();">
+		<input type="text" value="Type Text Here." id="textInput" onkeyup="updateParagraph();" onclick="this.select();" />
+		<div>
+			<div class='labeldiv'><label class='sliderlabel' id='label_wght'>wght</label><input type='range' min='100' max='700' value='100' class='slider' id='wght' oninput='updateSlider();'></div>
+		</div>
+		<p id="text">wind</p>
+	</body>
+</html>
