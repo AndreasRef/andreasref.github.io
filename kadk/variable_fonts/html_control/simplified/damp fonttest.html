@@ -26,23 +26,36 @@
 		
 			function updateSlider() {
 				var body = document.getElementById("text");
-				var slider = document.getElementsByClassName("slider")
+				var sliders = document.getElementsByClassName("slider")
 				var bodystyle = "";
 				var settingtext = "";
-				
-					//var sliderID = slider.id;
-					var sliderValue = slider.value;
+				for (var i = 0; i < sliders.length; i++) {
+					var sliderID = sliders[i].id;
+					var sliderValue = sliders[i].value;
 					var label = document.getElementById("label_"+sliderID);
 					label.textContent = ""+sliderID+": "+sliderValue
-					
-                    
+					if (sliderID == "fontsize") {
+						// Text Size Slider
+						bodystyle += "font-size: "+sliderValue+"px;"
+						label.textContent += "px"
+					} else if (sliderID == "lineheight") {
+						// Line Height Slider
+						bodystyle += "line-height: "+sliderValue/100.0+"em;"
+						label.textContent += "%"
+					} else {
 						// OTVar Slider
 						if (settingtext != "") { settingtext += ", " }
 						settingtext += '"' + sliderID + '" ' + sliderValue
-					
-				
+					}
+				}
 				bodystyle += "font-variation-settings: "+settingtext+";"
-				body.setAttribute("style", bodystyle);
+                
+                var myText = "font-variation-settings: " + '"' + "wght" + '" ' + 200 + ";"
+                
+                console.log(bodystyle)
+                console.log(myText)
+                
+				body.setAttribute("style", myText);
 			}
 		</script>
 	</head>
