@@ -1,69 +1,30 @@
 
 <html>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=9">
-	<head>
-		<title>OTVar Test: damp</title>
-		<style>
-			@font-face { 
-				font-family: "damp";
-				src: url(WindGX.ttf);
-			}
-			p {
-				margin: 0px;
-				font: 100px "damp";
-				font-variation-settings: "wght" 100;
-			}
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <head>
+        <title>OTVar Test: damp</title>
+        <style>
+            @font-face { 
+                font-family: "damp";
+                src: url(dampGX.ttf);
+            }
+            p {
+                margin: 0px;
+                font: 100px "damp";
+                font-variation-settings: "wght" 100;
+            }
 
-		</style>
-		<script>
-			function updateParagraph() {
-				// update paragraph text based on user input:
-				var userinput = document.getElementById("textInput");
-				var paragraph = document.getElementById("text");
-				paragraph.textContent = userinput.value;
-			}
-		
-			function updateSlider() {
-				var body = document.getElementById("text");
-				var sliders = document.getElementsByClassName("slider")
-				var bodystyle = "";
-				var settingtext = "";
-				for (var i = 0; i < sliders.length; i++) {
-					var sliderID = sliders[i].id;
-					var sliderValue = sliders[i].value;
-					var label = document.getElementById("label_"+sliderID);
-					label.textContent = ""+sliderID+": "+sliderValue
-					if (sliderID == "fontsize") {
-						// Text Size Slider
-						bodystyle += "font-size: "+sliderValue+"px;"
-						label.textContent += "px"
-					} else if (sliderID == "lineheight") {
-						// Line Height Slider
-						bodystyle += "line-height: "+sliderValue/100.0+"em;"
-						label.textContent += "%"
-					} else {
-						// OTVar Slider
-						if (settingtext != "") { settingtext += ", " }
-						settingtext += '"' + sliderID + '" ' + sliderValue
-					}
-				}
-				bodystyle += "font-variation-settings: "+settingtext+";"
-                
-                var myText = "font-variation-settings: " + '"' + "wght" + '" ' + 200 + ";"
-                
-                console.log(bodystyle)
-                console.log(myText)
-                
-				body.setAttribute("style", myText);
-			}
-		</script>
-	</head>
-	<body onload="updateSlider();">
-		<input type="text" value="Type Text Here." id="textInput" onkeyup="updateParagraph();" onclick="this.select();" />
-		<div>
-			<div class='labeldiv'><label class='sliderlabel' id='label_wght'>wght</label><input type='range' min='100' max='700' value='100' class='slider' id='wght' oninput='updateSlider();'></div>
-		</div>
-		<p id="text">wind</p>
-	</body>
+        </style>
+        <script>
+            function updateVariationSettings() {
+                var body = document.getElementById("text");
+                var settings = "font-variation-settings: " + '"' + "wght" + '" ' + 100 + ";"
+                body.setAttribute("style", settings);
+            }
+        </script>
+    </head>
+    <body onload="updateVariationSettings();">
+        <p id="text">DAMP</p>
+    </body>
 </html>
