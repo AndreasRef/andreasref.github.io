@@ -27,7 +27,6 @@ function setup() {
     capture.hide();
 
     myText = document.getElementById("text");
-
 }
 
 function draw() {
