@@ -1,0 +1,78 @@
+
+<html>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <head>
+        <title>Variable Font in P5.js</title>
+        <style>
+            @font-face { 
+                font-family: "myFont";
+                /*Specify the name of your font here. Make sure you link to the correct font filename and that your font is the right folder (same folder as this file)
+
+                TIP: Drag and drop your file at https://www.axis-praxis.org/ to make sure it works!
+                */
+                src: url(MutatorSans-weight-only.ttf);
+            }
+            p {
+                margin: 0px;
+/*                font: 10px "myFont";*/
+                font-variation-settings: "wght" 100;
+            }
+            
+            #text {
+                font: 100px "myFont";
+                font-variation-settings: "wght" 100;
+            }
+            
+            button {
+                margin: 2px;
+                padding: 4px;
+            }
+            video{
+                width: 300;
+                height: 300;
+            }
+
+            h6{
+                margin: 4px;
+                font-weight: lighter;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.sound.min.js"></script>
+        <script src="https://unpkg.com/ml5@0.0.3/dist/ml5.js"></script>
+        <script src="sketch.js"></script>
+    </head>
+    <body>
+        <!-- Write your text here: Make sure your only use letters that your font contains! Be aware of upper/lowercase letters!-->
+        <p id="text">ABCDEF</p>
+
+        <div id="videoContainer"></div>
+        <h6 id="loading">Loading base model...</h6>
+        <h6>This example has two options:</h6>
+        <h6>A) Load a pretrained model to detect if you are covering your webcam: <button id="load">Load Trained Model</button></h6>
+        <h6>b) Train your own model here and save it: </h6>
+        <p>
+            <button id="buttonA">Train A</button>
+            <button id="resetA">Reset A</button>
+        <p><span id="exampleA">0</span> Examples in A</p>
+        <p>| Confidence in A is: <span id="confidenceA">0</span></p>
+        <br><button id="buttonB">Train B</button>
+        <button id="resetB">Reset B</button>
+        <p><span id="exampleB">0</span> Examples in B</p>
+        <p>| Confidence in B is: <span id="confidenceB">0</span></p>
+        </p>
+    <br/>
+    <h6>Training on: <span id="training"></span></h6>
+    <h6>Save your trained model: <button id="save">Save Trained Model</button></h6>
+    <p>
+        <button id="buttonPredict">Start guessing!</button><br>
+        My guess is category: <span id="result">...</span>
+    </p>
+
+    </body>
+</html>
