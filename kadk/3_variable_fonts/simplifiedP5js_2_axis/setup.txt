@@ -1,0 +1,5 @@
+1) Download zipped fil
+2) Placer din font i mappen
+3) Ret navnet på fonten i index.html
+4) Skriv noget tekst med de bogstaver (store?) som din font indeholder nederst i index.html
+5) Se om det virker?
