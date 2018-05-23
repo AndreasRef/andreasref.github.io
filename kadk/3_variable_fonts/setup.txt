@@ -1,0 +1,5 @@
+1) Download zipped file
+2) Place your font in the folder
+3) Update name of font in index.html
+4) Write some text in the very end of index.html (id=myText) - be aware of upper and lower case letters
+5) Test it out
