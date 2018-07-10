@@ -5,7 +5,7 @@ int currentState;
 //in setup function
 oscP5Receiver = new OscP5(this, 12000);
 
-//in draw function
+//in draw function towards the end
   textSize(64);
   text(currentState, width/2, height/2);
 

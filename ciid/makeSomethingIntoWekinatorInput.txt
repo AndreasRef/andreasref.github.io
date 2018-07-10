@@ -9,7 +9,7 @@ NetAddress dest;
 oscP5 = new OscP5(this,9000);
 dest = new NetAddress("127.0.0.1",6448);
 
-//inside draw function
+//inside draw function towards the end
 sendOsc();
 
 //new function
