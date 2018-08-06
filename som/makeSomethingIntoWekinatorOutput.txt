@@ -1,0 +1,17 @@
+//global 
+OscP5 oscP5Receiver;
+int currentState; 
+
+//in setup function
+oscP5Receiver = new OscP5(this, 12000);
+
+//in draw function towards the end
+  textSize(64);
+  text(currentState, width/2, height/2);
+
+//new function
+void oscEvent(OscMessage message) {
+  if (message.checkAddrPattern("/wek/outputs") == true) {
+    currentState = (int) message.get(0).floatValue();
+  }
+}
