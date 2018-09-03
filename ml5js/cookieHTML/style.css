@@ -1,0 +1,45 @@
+html, body {
+  height: 100%;
+}
+
+html, body{
+    background-color: rgb(255, 228, 129);
+    margin: 0;
+    display: flex;
+
+    /* This centers our sketch horizontally. */
+    justify-content: center;
+
+    /* This centers our sketch vertically. */
+    align-items: center;
+}
+
+
+#sketch-holder{ 
+    /* Sketch is placed in here for control */
+}
+
+#rhyme{
+    color: black;
+    font-family: futura;
+    font-size: 12pt;
+}
+        
+#result{
+    color: black;
+    font-family: futura;
+    font-size: 12pt;
+}
+h1{
+    color: crimson;
+    font-family: futura;
+    font-size: 55pt;
+    padding: 0px;
+    margin-bottom: 3px;
+}
+p{
+    color: crimson;
+    font-family: futura;
+    font-size: 15pt;
+    padding: 2px;
+}
