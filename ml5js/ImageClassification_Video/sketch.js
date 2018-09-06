@@ -37,5 +37,12 @@ function gotResult(err, results) {
   // The results are in an array ordered by probability.
   select('#result').html(results[0].className);
   select('#probability').html(nf(results[0].probability, 0, 2));
+    
+ if (results[0].probability > 0.3) {
+     console.log("sure");
+ } else {
+     console.log("unsure");
+ }
+    
   classifyVideo();
 }

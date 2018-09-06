@@ -27,9 +27,9 @@ function processFaceData() {
       var vertices = face.vertices;
         
       // draw face data
-      fill('#fff');
+      fill('#ff0000');
       for (var i = 0; i < numVertices; i += 2) {
-          ellipse(vertices[i], vertices[i+1], 10, 10);
+          ellipse(vertices[i], vertices[i+1], 5, 5);
       }
         
       // get max and min vertex positions
@@ -39,7 +39,7 @@ function processFaceData() {
       var maxY = 0;
         
       for (var i = 0; i < numVertices; i += 2) {
-          ellipse(vertices[i], vertices[i+1], 10, 10);
+          //ellipse(vertices[i], vertices[i+1], 2, 2);
           if (vertices[i] < minX) {
               minX = vertices[i];
           } if (vertices[i] > maxX) {
@@ -67,7 +67,7 @@ function drawCanvasInstructions() {
         nSamples++;
         fill(255, 0, 0);
         noStroke();
-        ellipse(w - 450, 25, 25, 25);
+        ellipse(w - 380, 25, 25, 25);
     } else if (nSamples >0)  {
         fill(0,255,0);
         test = machine.classify(normalized);

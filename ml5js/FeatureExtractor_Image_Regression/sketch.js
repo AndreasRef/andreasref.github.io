@@ -14,7 +14,7 @@ let video;
 let loss;
 let slider;
 let samples = 0;
-let positionX = 140;
+let rectSize = 50;
 
 function setup() {
   createCanvas(640,480);
@@ -28,13 +28,14 @@ function setup() {
   regressor = featureExtractor.regression(video, videoReady);
   // Create the UI buttons
   setupButtons();
+  rectMode(CENTER);
 }
 
 function draw() {
-  image(video, 0, 0, 340, 280);
+  image(video, 0, 0, width, height);
   noStroke();
-  fill(255, 0, 0);
-  rect(positionX, 120, 50, 50);
+  fill(255, 0, 0,100);
+  rect(width/2, height/2, rectSize, rectSize);
 }
 
 // A function to be called when the model has been loaded
@@ -83,7 +84,7 @@ function gotResults(err, result) {
   if (err) {
     console.error(err);
   }
-  positionX = map(result, 0, 1, 0, width);
+  rectSize = constrain(map(result, 0, 1, 0, width/2),0,width/2);
   slider.value(result);
   predict();
 }
