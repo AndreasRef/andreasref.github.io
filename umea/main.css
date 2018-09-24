@@ -1,0 +1,54 @@
+html,
+body {
+  margin: 50;
+  font-family: 'Roboto Mono', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #666;
+}
+* {
+  box-sizing: border-box;
+}
+#wrapper {
+  padding: 80px;
+}
+#wrapper h1 {
+  font-size: 32px;
+  display: inline-block;
+  margin: 0 0 1em 0;
+  color: #000;
+}
+#wrapper section {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 0 80px 0;
+}
+#wrapper section h2 {
+  font-size: 20px;
+  color: #000;
+  margin: 0;
+}
+#wrapper section p {
+  margin: 0 0 1em 0;
+}
+#wrapper section ul {
+  list-style: none;
+  color: #000;
+}
+#wrapper section ul li {
+  margin: 0 0 0.5em 0;
+}
+#wrapper section ul li:before {
+  content: "-";
+  position: absolute;
+  margin: 0 0 0 -20px;
+}
+#wrapper section a {
+  color: #000;
+  border-bottom: 1px solid #000;
+  text-decoration: none;
+}
+#wrapper section a:hover {
+  background: #000;
+  color: #fff;
+}
