@@ -1,0 +1,11 @@
+Individuel Opgave:
+Vælg en af følgende:
+A) Lav et alternativt tegne- eller maleprogram
+B) Lav en generativ identitet i form af et dynamisk logo eller mønster
+C) Lav et humoristisk værk, hvori en sjov interaktiv idé udtrykkes gennem kode
+
+Krav uanset valg af A), B) eller C) :
+- Skitsen skal være 600x400 pixels
+- Skitsen må ikke være statisk, men skal ændre sig over tid og/eller reagere på brugerinputs (fx gennem mus, tastatur eller mikrofon).
+- Det er IKKE tilladt at ændre i HTML og CSS
+- Skitsen skal afleveres med link i Google Sheet senest kl 15:00 sammen med en beskrivelse af hvordan skitsen virker og hvordan man interagerer med den: https://docs.google.com/spreadsheets/d/1mxcdvpj-TUT3RkwDlh7bwzstnwVY-E2CdypgSaAiZ4Y/edit#gid=0 
