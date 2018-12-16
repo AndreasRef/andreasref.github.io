@@ -1,0 +1,21 @@
+//global 
+import oscP5.*;
+import netP5.*;
+
+OscP5 oscP5;
+NetAddress dest;
+
+//inside setup function
+oscP5 = new OscP5(this,9000);
+dest = new NetAddress("127.0.0.1",6448);
+
+//inside draw function towards the end
+sendOsc();
+
+//new function
+void sendOsc() {
+  OscMessage msg = new OscMessage("/wek/inputs");
+  msg.add((float)lerpX); 
+  msg.add((float)lerpY);
+  oscP5.send(msg, dest);
+}
