@@ -13,8 +13,8 @@ let featureExtractor;
 let classifier;
 let video;
 let loss;
-let dogImages = 0;
-let catImages = 0;
+let imagesOfA = 0;
+let imagesOfB = 0;
 
 function setup() {
   noCanvas();
@@ -50,20 +50,20 @@ function classify() {
 
 // A util function to create UI buttons
 function setupButtons() {
-  // When the Cat button is pressed, add the current frame
-  // from the video with a label of "cat" to the classifier
-  buttonA = select('#catButton');
+  // When the A button is pressed, add the current frame
+  // from the video with a label of "A" to the classifier
+  buttonA = select('#ButtonA');
   buttonA.mousePressed(function() {
-    classifier.addImage('cat');
-    select('#amountOfCatImages').html(catImages++);
+    classifier.addImage('A');
+    select('#amountOfAImages').html(imagesOfA++);
   });
 
-  // When the Dog button is pressed, add the current frame
-  // from the video with a label of "dog" to the classifier
-  buttonB = select('#dogButton');
+  // When the B button is pressed, add the current frame
+  // from the video with a label of "B" to the classifier
+  buttonB = select('#ButtonB');
   buttonB.mousePressed(function() {
-    classifier.addImage('dog');
-    select('#amountOfDogImages').html(dogImages++);
+    classifier.addImage('B');
+    select('#amountOfBImages').html(imagesOfB++);
   });
 
   // Train Button
