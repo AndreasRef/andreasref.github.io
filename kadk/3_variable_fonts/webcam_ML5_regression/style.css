@@ -1,0 +1,52 @@
+
+
+button {
+    margin: 2px;
+    padding: 4px;
+  }
+  video{
+    width: 300;
+    height: 300;
+  }
+  p{
+    display: inline;
+    font-size: 14px;
+  }
+  h6{
+    margin: 4px;
+    font-weight: lighter;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+/*
+#font-container {
+  transition: .25s all ease-in-out;
+}
+*/
+
+
+  @font-face {
+    font-family: 'Avenir Next Variable';
+    src: url('https://s3.amazonaws.com/codepen-mh/assets/fonts/AvenirNext_Variable.ttf') 
+    format('truetype'); 
+  }
+
+  @font-face {
+    font-family: 'Amstelvar-Roman';
+    src: url('https://s3.amazonaws.com/codepen-mh/assets/fonts/Amstelvar-Roman-parametric-VF.ttf') 
+    format('truetype'); 
+  }
+
+
+
+  @font-face {
+    font-family: 'Decovar Alpha';
+    src: url('https://s3.amazonaws.com/codepen-mh/assets/fonts/DecovarAlpha-VF.ttf') 
+    format('truetype'); 
+  }
+
+ 
+  body {
+    font-family: 'Avenir Next Variable';
+  }
