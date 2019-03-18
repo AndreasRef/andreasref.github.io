@@ -1,187 +1,321 @@
+
 <!DOCTYPE html>
-<!-- saved from url=(0020)http://stoj.io/dmjx/ -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	
-	<title>Machine Learning Workshop</title>
-	<meta name="robots" content="noindex, nofollow">
-	<link href="./index_files/css" rel="stylesheet">
-	<link rel="stylesheet" href="./index_files/main.css">
-</head>
-<body><div id="StayFocusd-infobar" style="display: none; top: 0px;">
-    <img src="chrome-extension://laankejkbhbdhmipfmgcngdelahlfoji/common/img/eye_19x19_red.png">
-    <span id="StayFocusd-infobar-msg"></span>
-    <span id="StayFocusd-infobar-links">
-        <a id="StayFocusd-infobar-never-show">hide forever</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-        <a id="StayFocusd-infobar-hide">hide once</a>
-    </span>
-</div><div id="validately-unmoderated-testing" class="vldt-installed"></div>
-	<div id="wrapper">
-		<h1>ARKEN Machine Learning Workshop</h1>
-<!--        <h3>Fabernovel x Andreas Refsgaard 2018 Workshop</h3>-->
-
-		<section>
-			<h2>Downloads</h2>
-			<ul>
-				<li>
-					<a href="https://processing.org/download/?processing" target="_blank">Processing (required)</a>
-					<p>Download and install</p>
-				</li>
-				<li>
-					<a href="http://www.wekinator.org/downloads/" target="_blank">Wekinator (required)</a>
-					<p>Download and install</p>
-				</li>
-				<li>
-					<a href="https://github.com/AndreasRef/ml4ixd_weki/archive/master.zip" target="_blank">Screen based Processing examples (ml4ixd - required)</a>
-					<p>Download, unzip and place on desktop</p>
-				</li>
-                
-                <li>
-					<a href="http://stoj.io/fabernovel/mac_only.zip" target="_blank">openFrameworks executables (Mac only! - optional)</a>
-					<p>Download, unzip and place on desktop</p>
-				</li>
-                
-            </ul>
-            <br>
-            
-
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Machine Learning Workshop @AndreasRef</title>
+        <meta name="robots" content="noindex, nofollow">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,700" rel="stylesheet">
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <div id="wrapper">
+        
+            <h1>Machine Learning Workshop @AndreasRef</h1>
             
 <!--
-            <h2>Downloads after lunch</h2>
-            <ul>
-                <li>
-					<a href="https://github.com/InteractivePrototyping/CreativeML/archive/master.zip" target="_blank">Physical Computing examples</a>
-					<p>Download, unzip and place on desktop</p>
-				</li>
-				<li>
-					<a href="https://cycling74.com/downloads" target="_blank">Max/MSP</a>
-					<p>Download and install</p>
-                </li>
-                
-			</ul>
+            <p><a href="https://we.tl/t-BIxn8Ko4Ga" target="_blank">Andreas intro slides</a></p>
+
+            <p><a href="https://docs.google.com/document/d/1LhUepnOQmyknlATbGRzNk1bStdoW56GvmA7GekxsBgE/edit?usp=sharing" target="_blank">Summary of Tools</a></p>
 -->
-		</section>
+            
         
+
+            <section>           
 <!--
-        <section>
-			<h2>Yoga exercise</h2>
-            <p><a href="https://andreasref.github.io/yoga/">Yoga webcam classification website</a></p>
-        </section>
+                <h1>Runway Examples for Processing</h1>
+                <h3><a href="RunwayProcessingExamples.zip">Download zip</a></h3>
+                <br>
 -->
+                
+                <h1>ml5js</h1>
+                <h2>Templates, examples and exercises</h2>
+                <br>
+                
+                <h3>0) p5js online editor</h3>
+                <ul><a href="https://editor.p5js.org/">Setup an account with the p5js online editor</a></ul>
+                <br>
+
+                <h3>1) Train a classification algorithm</h3>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/BJkaHBMYm">Simple template: Webcam classifier </a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/rJqk5_1aX">Webcam classifier + image</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/ryLlIOJpX">Webcam classifier + sound</a></ul>
+<!--                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/B19EA7x6Q">Webcam classifier + filter</a></ul>-->
+                
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/I0qqnPjfe">Webcam classifier w. 4 classes + save and load</a></ul>
+                
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/BynhuHsqX">Advanced example: Trainable Camera</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/lUELywyf4">Advanced example: Image Classifier flexible load/save</a></ul>
+
+                <ul><em>Exercise 1 (individual): Train a classifier to distinguish between two different classes. Make the sketch output a descriptive text (or a visual or sound if you are more advanced) for each class.</em></ul>
+                <br>
+
+
+                <h3>2) MobileNet pretrained classification</h3>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/H1L-KrzFQ">Simple template: Mobilenet pretrained classification</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/Sk8M6mqh7">Advanced example: Classification to speech</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/present/AYNNRbR9A">Advanced example: Poems about things</a> -> <a href ="http://andreasrefsgaard.dk/project/poems-about-things/">About the project</a></ul>
+                <ul><a href="https://github.com/ml5js/ml5-library/blob/master/src/utils/IMAGENET_CLASSES.js">ImageNet list of classes</a></ul>
+                
+<!--                <ul><em>Exercise: Pick an object (or a few objects) for the model to recognise. Make something happen when your object(s) gets detected.</em></ul>-->
+                <br>
+
+                <h3>3) Train a regression algorithm</h3>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/cN6Oebzur">Simple template: Webcam regressor</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/HyEDToYnQ">Advanced example: Playback rate camera</a></ul>
+                <ul><em>Exercise 2 (individual): Train the regressor and use the continuous output value to control something. It is okay to leave the code as it is, and just focus on training the system.</em></ul>
+                <br>
+
+                <h3>4) PoseNet pose detection</h3>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/rkz42BzYQ">Simple template: Webcam PoseNet </a></ul>
+                
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/RLv1QbuLa">Advanced example: Classify poses</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/r1_w73FhQ">Advanced example: Draw with your nose</a></ul>
+<!--                <ul><em>Exercise: Get the values of one or more bodyparts and use them to control something.</em></ul>-->
+                <br>
+
+
+                <h3>Exercise 3 (work in pairs):</h3>
+                <ul><em>Come up with a concept, where you use one of the templates as a starting point for making an interesting/useful/silly interactive website using machine learning. 
+                It is allowed to build on top of work you have already done in the previous exercise.</em></ul>
+                <br>
+
+                <h3>Documentation + additional ml5js examples</h3>
         
-        
+                <ul><a href="https://ml5js.org/docs/quick-start">Documentation + more examples on ml5js.org</a></ul>   
+                <br>
+
+                <h3>Other examples (without ml5js)</h3>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/SkUr7HcnX">KNN MFCCs sound classification</a></ul>
+                <ul><a href="https://andreasref.github.io/kochi/face_knn/index.html">KNN Facial Expressions (not in p5js editor)</a> -> <a href="https://andreasref.github.io/ml5js/face_knn.zip">download zip</a> </ul>
+                <ul><a href="https://andreasref.github.io/kochi/face_emotion/index.html">Pretrained Facial Emotions clm tracker (not in p5js editor)</a> -> <a href="https://andreasref.github.io/kochi/face_emotion.zip">download zip</a> </ul>
+                <br>
+
+                <h3>Other links</h3>
+                <ul><a href="https://ml5js.org" target="_blank">Ml5js website</a></ul>
+                <ul><a href="https://js.tensorflow.org/" target="_blank">Tensorflow.js website</a></ul>
+                <ul><a href="https://teachablemachine.withgoogle.com/" target="_blank">Teachable Machine</a></ul>
+                <ul><a href="https://booksby.ai/" target="_blank">Books by AI</a></ul>
+                
+
+                <br>
+                <ul><a href="https://editor.p5js.org/" target="_blank">Official p5.js editor</a></ul>
+                <ul><a href="https://p5js.org/reference/" target="_blank">Official p5.js reference</a></ul>
+                <ul><a href="https://andreasref.github.io/malmedkodning/index.html" target="_blank">Examples for p5.js aimed at beginners</a></ul>    
+    
+                <br>
+            </section>
+            
+            
+
+
+            
+            <section>
+                <h1>Downloads</h1>
+                <h2>Required</h2>
+                <ul>
+                    <li>
+                        <a href="https://runwayapp.ai/beta/get/">Runway</a>
+                        <p>Download and install Runway. You should have recieved an invitation over email. Use that email address to set up your account. If you haven't <a href="mailto:mail@andreasrefsgaard.dk">let us know!</a></p>
+                        <p>Please follow the <a href="https://docs.runwayapp.ai/#/installation">Installation guide</a> to make sure you are all setup (and have Docker running) before we start.</p>
+                        <p>Once Runway is installed with Docker, you can install the models you want to play with in the workshop. Install <strong>im2txt</strong> (required) and any other models you feel like and have space for on your computer. See step 1 and 2 from <a href="https://docs.runwayapp.ai/#/tutorial_t2i">this tutorial</a> for how to install models.</p>
+                        
+                    </li>
+                </ul>
+                
+                <ul>
+                    <li>
+                        <a href="https://processing.org/download/?processing" target="_blank">Processing</a>
+                        <p>Download and install.</p>
+                    </li>
+                </ul>
+                
+                
+                
+                <br>
+                
 <!--
-        <section>
-			<h2>Downloads Day 2</h2>
-            <p><a href="https://runwayml.com/beta/download/">Runway use email dmjx@runwayml.com</a></p>
-            <p><a href="https://runwayml.com/docs/install/">Docker (follow this guide)</a></p>
-            <p><a href="http://brackets.io/">Brackets (not needed if you already have a code editor and know how to run a local server)</a></p>
-            <p><a href="https://github.com/ml5js/ml5-examples">ML5 examples</a></p>
-        </section>
-        
-        <section>
-            <h2>P5js KNN demos</h2>
-            <p><a href="https://andreasref.github.io/p5js_knn_demos/">P5.js KNN demos</a></p>
-        </section>
-        
-			
-        
-        <section>
-            <h2>Make something into Wekinator input and/or output</h2>
-            <ul>
-                
-                <li>
-                    <a href="https://www.youtube.com/watch?v=QLHMtE5XsMs#t=16m30s" target="_blank">Shiffman motion detection video</a>
-                </li>
-                
-                <li>
-                    <a href="https://github.com/CodingTrain/Rainbow-Code/blob/master/Tutorials/Processing/11_video/sketch_11_6_MotionDetection/sketch_11_6_MotionDetection.pde" target="_blank">Shiffman motion detection code</a>
-                </li>
-                
-                <li>
-                    <a href="http://stoj.io/dmjx/makeSomethingIntoWekinatorInput.txt" target="_blank">Turn something into a Wekinator input</a>
-                </li>
-                
-                <li>
-                    <a href="http://stoj.io/dmjx/makeSomethingIntoWekinatorOutput.txt" target="_blank">Turn something into a Wekinator output</a>
-                </li>
-            </ul>
-        </section>
+            <h2>Optional</h2>
+                <ul>
+                    <li>
+                        <a href="https://github.com/AndreasRef/ml4ixd_weki/archive/master.zip" target="_blank">Processing examples for Wekinator</a>
+                        <p>Download, unzip and place on desktop.</p>
+                    </li>
+                    
+                    <li>
+                        <a href="http://www.wekinator.org/downloads/" target="_blank">Wekinator</a>
+                        <p>Download and install.</p>
+                    </li>
+                    
+                    <li>
+                        <a href="https://github.com/ml4a/ml4a-ofx/releases/tag/v1.1" target="_blank">ml4a-ofx openFrameworks executables (Mac only!)</a>
+                        <p>Download the ml4a-ofx.zip, unzip and place on desktop. Open terminal, navigate to the folder and run <em>sh setup.sh</em></p>
+                    </li>
+                </ul>
 -->
+                   
+            </section>
+            
 
 <!--
-        <section>
-            <h2>Slides</h2>
-            <ul>
-            <li>
-					<a href="http://stoj.io/gsa/andreas_glasgow.pdf" target="_blank">Andreas Refsgaard project slides</a>
-            </li>
-            
-            <li>
-                    <a href="http://stoj.io/gsa/wekinator_intro.pdf" target="_blank">Wekinator slides</a>
-            </li>
-            </ul>
-            
-        </section>
--->
-        
-		<section>
-			<h2>Additional resources (not required)</h2>
-			<ul>
-				
-                <li>
-					<a href="https://teachablemachine.withgoogle.com/" target="_blank">Teachable Machine</a>
-					<p>Google AI experiment - Teach a machine to using your camera, live in the browser.</p>
-				</li>
-                
-                <li>
-					<a href="https://ml5js.github.io/" target="_blank">ML5 - Friendly Machine Learning For The Web</a>
-					<p>Machine Learning library for P5.js using tensorflow.js</p>
-				</li>
-                <li>
-					<a href="http://ml4a.github.io/" target="_blank">Machine Learning for Artists (ML4A)</a>
-					<p>Community and Github repository</p>
-				</li>
-				<li>
-					<a href="https://developer.leapmotion.com/sdk/v2" target="_blank">Leap Motion SDK</a>
-					<p>Software Development Kit for Leap Motion - needed to run Leap Motion examples</p>
-				</li>
-				<li>
-					<a href="https://p5js.org/" target="_blank">P5.js</a>
-					<p>P5.js a JS client-side version of Processing</p>
-				</li>
-				
-				<li>
-					<a href="https://www.doc.gold.ac.uk/eavi/rapidmixapi.com/" target="_blank">Rapid-Mix</a>
-					<p>Toolkit for sensor integration, machine learning &amp; interactive audio (C++ / JS)</p>
-				</li>
-				
-				<li>
-					<a href="https://github.com/nickgillian/ofxGrt" target="_blank">ofxGRT</a>
-					<p>The GRT is a cross-platform, open-source, C++ machine learning library designed for real-time gesture recognition (openFrameworks)</p>
-				</li>
-				
-				<li>
-					<a href="http://www.wekinator.org/input-helper/" target="_blank">Weki Input Helper</a>
-					<p>The “WekiInputHelper” is a simple application that can sit in between your feature extractor and Wekinator to do common types of processing on your features.</p>
-				</li>
-			</ul>
-		</section>
 
-		<section>
-			<h2>About Andreas Refsgaard</h2>
-			<p>Andreas Refsgaard is an interaction designer, artist and teacher from Denmark. He graduated from <a href="http://ciid.dk/">CIID</a> in 2015 and started creative coding studio <a href="http://stoj.io/">Støj</a> with <a href="http://www.lassekorsgaard.com/">Lasse Korsgaard</a> in 2017.</p>
-            
-            <p> Andreas is the creator of <a href="https://andreasrefsgaard.dk/project/eye-conductor/">Eye Conductor</a>, which helps people express themselves through music using only their eyes and facial gestures. </p>
-            
-            <p>His work switches between commercial projects for clients like Google Creative Labs and Carlsberg and more artistic installations.</p>
-            
-            <p>Recently Andreas has been exploring creative applications of machine learning and spent a lot of time teaching other designers how to use machine learning for real-time interactive projects at places like CIID (DK), Hyper Island (SE), The Bartlett (UK), V2 (NL), Resonate (RS) and KIKK (BE). </p>
-            
-            <h2>Contact</h2>
-            <p><a href="mailto:mail@andreasrefsgaard.dk">Email</a> / <a href="https://www.facebook.com/andreasrefsgaard">Facebook</a> /&nbsp;<a href="https://twitter.com/AndreasRef">Twitter</a> / <a href="https://www.instagram.com/andreasref/">Instagram</a>  / <a href="https://github.com/AndreasRef">GitHub</a> / <a href="https://vimeo.com/user42241709">Vimeo</a> /&nbsp;<a href="https://dk.linkedin.com/pub/andreas-refsgaard/62/886/776">LinkedIn</a> </p>
-            
-		</section>
-	</div>
+            <section>
+                <h3>Additional Wekinator links</h3>
+
+                <h4>Make something into a Wekinator input/output</h4>
+
+                <ul>
+
+                    <li>
+                        <a href="https://www.youtube.com/watch?v=QLHMtE5XsMs#t=16m30s" target="_blank">Shiffman motion detection video</a>
+                    </li>
+
+                    <li>
+                        <a href="https://github.com/CodingTrain/Rainbow-Code/blob/master/Tutorials/Processing/11_video/sketch_11_6_MotionDetection/sketch_11_6_MotionDetection.pde" target="_blank">Shiffman motion detection code</a>
+                    </li>
+
+                    <li>
+                        <a href="makeSomethingIntoWekinatorInput.txt" target="_blank">Turn something into a Wekinator input</a>
+                    </li>
+
+                    <li>
+                        <a href="makeSomethingIntoWekinatorOutput.txt" target="_blank">Turn something into a Wekinator output</a>
+                    </li>
+                </ul>
+
+                <br>
 
 
-</body></html>
+                <h4>Additional examples + connected software</h4>
+
+                <ul>
+                    <li>
+                        <a href="http://www.wekinator.org/examples/" target="_blank">More examples from Wekinators website</a>
+                    </li>
+
+                    <li>
+                        <a href="https://github.com/fredeerock/wekp5" target="_blank">P5js Wekinator over websockets</a>
+                    </li>
+
+
+
+                </ul>
+
+                <br>
+
+
+                <h4>Controlling Wekinator via OSC</h4>
+
+                <ul>
+                    <li>
+                        <a href="http://www.wekinator.org/detailed-instructions/#Controlling_Wekinator_via_OSC_messages" target="_blank">Detailed instructions page on Wekinators website</a>
+                    </li>
+
+                </ul>
+                <br>
+
+
+
+
+
+            </section>
+
+
+            <section>
+                <h2>Slides</h2>
+                <ul>
+                    <li>
+                        <a href="http://stoj.io/ciid/andreas_ciid.pdf" target="_blank">Andreas Refsgaard project slides</a>
+                    </li>
+
+                    <li>
+                        <a href="WekinatorIntro.pdf" target="_blank">Wekinator slides</a>
+                    </li>
+
+                    <li>
+                        <a href="RapidMLPrototyping.pdf" target="_blank">Rapid Prototyping Yoga Exercise</a>
+                    </li>
+
+                </ul>
+
+            </section>
+
+
+
+            <section>
+                <h2>Additional resources</h2>
+
+
+                <ul>
+                    <li>
+                        <a href="http://ml4a.github.io/" target="_blank">Machine Learning for Artists (ML4A)</a>
+                        <p>Community and Github repository</p>
+                    </li>
+                    <li>
+                        <a href="https://medium.com/@atduskgreg/power-to-the-people-how-one-unknown-group-of-researchers-holds-the-key-to-using-ai-to-solve-real-cc9e75b1f334" target="_blank">Power to the People (article)</a>
+                        <p>By Greg Borenstein</p>
+                    </li>
+
+                    <li>
+                        <a href="https://docs.google.com/presentation/d/1kSuQyW5DTnkVaZEjGYCkfOxvzCqGEFzWBy4e9Uedd9k/preview?imm_mid=0f9b7e&cmp=em-data-na-na-newsltr_20171213&slide=id.g168a3288f7_0_58" target="_blank">Machine Learning 101 slides</a>
+                        <p>By Jason Mayes</p>
+                    </li>
+
+                    <li>
+                        <a href="http://paperspace.com/" target="_blank">Paperspace</a>
+                        <p>Cloud computing service for training machine learning models</p>
+                    </li>
+                    <li>
+                        <a href="https://js.tensorflow.org/" target="_blank">Tensorflow.js</a>
+                        <p>A WebGL accelerated, browser based JavaScript library</p>
+                    </li>
+                    <li>
+                        <a href="https://developer.leapmotion.com/sdk/v2" target="_blank">Leap Motion SDK</a>
+                        <p>Software Development Kit for Leap Motion - needed to run Leap Motion examples</p>
+                    </li>
+                    <li>
+                        <a href="https://p5js.org/" target="_blank">P5.js</a>
+                        <p>P5.js a JS client-side version of Processing</p>
+                    </li>
+                    <li>
+                        <a href="https://ml5js.org/" target="_blank">ML5 - Friendly Machine Learning For The Web</a>
+                        <p>Machine Learning library for P5.js using tensorflow.js</p>
+                    </li>
+                    <li>
+                        <a href="https://www.doc.gold.ac.uk/eavi/rapidmixapi.com/" target=_blank>Rapid-Mix</a>
+                        <p>Toolkit for sensor integration, machine learning &amp; interactive audio (C++ / JS)</p>
+                    </li>
+
+                    <li>
+                        <a href="https://teachablemachine.withgoogle.com/" target="_blank">Teachable Machine</a>
+                        <p>Google AI experiment - Teach a machine to using your camera, live in the browser.</p>
+                        <p>The boilerplate (hackable) version of Teachable Machine can be found <a href="https://github.com/googlecreativelab/teachable-machine-boilerplate" target="_blank">here</a>.</p>
+                    </li>
+
+                    <li>
+                        <a href="https://github.com/nickgillian/ofxGrt" target="_blank">ofxGRT</a>
+                        <p>The GRT is a cross-platform, open-source, C++ machine learning library designed for real-time gesture recognition (openFrameworks)</p>
+                    </li>
+
+                    <li>
+                        <a href="http://www.wekinator.org/input-helper/" target="_blank">Weki Input Helper</a>
+                        <p>The “WekiInputHelper” is a simple application that can sit in between your feature extractor and Wekinator to do common types of processing on your features.</p>
+                    </li>
+                </ul>
+            </section> -->
+
+
+
+            <section>
+
+                <h2>Contact Andreas Refsgaard</h2>
+                <p><a href="http://andreasrefsgaard.dk">Website</a> / <a href="mailto:mail@andreasrefsgaard.dk">Email</a> / <a href="https://www.facebook.com/andreasrefsgaard">Facebook</a> /&nbsp;<a href="https://twitter.com/AndreasRef">Twitter</a> / <a href="https://www.instagram.com/andreasref/">Instagram</a>  / <a href="https://github.com/AndreasRef">GitHub</a> / <a href="https://vimeo.com/user42241709">Vimeo</a> </p>
+                <br>
+                <p><a href="http://andreasrefsgaard.dk" target="_blank">Andreas Refsgaard website</a></p>
+
+            </section>
+
+        </div>
+
+    </body>
+</html>
