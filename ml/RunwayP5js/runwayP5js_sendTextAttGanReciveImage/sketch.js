@@ -24,7 +24,7 @@ function sendStringToRunway() {
         "caption": input.value()
     };
 
-    fetch('http://localhost:8000/query', {
+    fetch('http://localhost:8005/query', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
