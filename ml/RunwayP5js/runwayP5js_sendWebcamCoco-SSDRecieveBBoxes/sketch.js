@@ -30,9 +30,9 @@ function sendWebcamToRunway() {
         "image": pgCam.canvas.toDataURL('image/jpeg')
     };
     //Pay attention to the localhost port in Runway!
-    httpPost("http://localhost:8000/query", data, function(response) {
+    httpPost("http://localhost:8001/query", data, function(response) {
 
-        fetch('http://localhost:8000/data')
+        fetch('http://localhost:8001/data')
             .then(response => response.json())
             .then(output => {
             const { results } = output;

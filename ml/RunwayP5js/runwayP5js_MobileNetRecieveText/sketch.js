@@ -13,7 +13,7 @@ function draw() {
 }
 
 function getResults() {
-  fetch('http://localhost:8000/data')
+  fetch('http://localhost:8001/data')
   .then(response => response.json())
   .then(output => {
     const { results } = output;

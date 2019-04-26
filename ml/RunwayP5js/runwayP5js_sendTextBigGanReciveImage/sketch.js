@@ -26,7 +26,7 @@ function sendStringToRunway() {
         "seed": 1
     };
 
-    fetch('http://localhost:8000/query', {
+    fetch('http://localhost:8002/query', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -36,7 +36,7 @@ function sendStringToRunway() {
     })
         .then(response => response.json())
         .then(output => {
-        const { generatedOutput, z } = output;
+        const { generatedOutput} = output;
         // use the outputs in your project
         console.log(output);
         img = createImg(output.generatedOutput);
