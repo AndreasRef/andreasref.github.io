@@ -30,9 +30,9 @@ function sendWebcamToRunway() {
         "image": pgCam.canvas.toDataURL('image/jpeg')
     };
     //Pay attention to the localhost port in Runway!
-    httpPost("http://localhost:8001/query", data, function(response) {
+    httpPost("http://localhost:8002/query", data, function(response) {
 
-        fetch('http://localhost:8001/data')
+        fetch('http://localhost:8002/data')
             .then(response => response.json())
             .then(output => {
             const { results } = output;
@@ -53,13 +53,13 @@ function sendWebcamToRunway() {
                 let className = output.results[i].class;
                 let score = output.results[i].score;
                 
-                pgOutputs.stroke(0,255,0);
+                pgOutputs.stroke(255, 0, 255);
                 pgOutputs.strokeWeight(score*10-5);
                 pgOutputs.rect(x,y,w,h);
                 
                 pgOutputs.strokeWeight(1);
                 pgOutputs.stroke(255);
-                pgOutputs.text(className, x+7, y+15);
+                pgOutputs.text("this is a " + className, x+7, y+15);
             }
         })
     })

@@ -13,7 +13,7 @@ function draw() {
 }
 
 function getResults() {
-  fetch('http://localhost:8007/data')
+  fetch('http://localhost:8002/data')
   .then(response => response.json())
   .then(output => {
     const { results } = output;
@@ -23,3 +23,4 @@ function getResults() {
     currentPrediction = output.results[0].className;
   })   
 }
+

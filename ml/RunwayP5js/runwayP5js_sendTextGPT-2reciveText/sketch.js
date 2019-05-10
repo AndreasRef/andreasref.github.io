@@ -23,7 +23,7 @@ function sendStringToRunway() {
         "prompt": input.value()
     };
 
-    fetch('http://localhost:8001/query', {
+    fetch('http://localhost:8004/query', {
         method: 'POST',
         headers: {
             Accept: 'application/json',

@@ -15,18 +15,24 @@ function setup() {
 }
 
 function draw() {
-    img.position(0, 0);
-    img.size(256, 256);
+    if (img) {
+        img.position(0, 0);
+        img.size(256, 256);
+    }
 }
 
 function sendStringToRunway() {
+    const vector = [];
+    for (let i = 0; i < 140; i++) {
+        vector.push(random());
+    }
+
     const inputs = {
         "category": input.value(),
-        "truncation": random(1),
-        "seed": 1
+        "z": vector
     };
 
-    fetch('http://localhost:8002/query', {
+    fetch('http://localhost:8004/query', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -36,10 +42,9 @@ function sendStringToRunway() {
     })
         .then(response => response.json())
         .then(output => {
-        const { generatedOutput} = output;
+        const { generatedOutput } = output;
         // use the outputs in your project
         console.log(output);
-        img = createImg(output.generatedOutput);
+        img = createImg(generatedOutput);
     })
 }
-
