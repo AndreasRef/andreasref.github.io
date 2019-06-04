@@ -15,7 +15,7 @@ let model = null;
 
 const modelParams = {
     flipHorizontal: true,   // flip e.g for video  
-    maxNumBoxes: 1,        // maximum number of boxes to detect
+    maxNumBoxes: 2,        // maximum number of boxes to detect
     iouThreshold: 0.8,      // ioU threshold for non-max suppression
     scoreThreshold: 0.8,    // confidence threshold for predictions.
 }
@@ -73,14 +73,35 @@ trackButton.addEventListener("click", function(){
 
 function runDetection() {
     model.detect(video).then(predictions => {
-        console.log("Predictions: ", predictions);
+        //console.log("Predictions: ", predictions);
         model.renderPredictions(predictions, canvas, context, video);
+        
+        
+        let firstHandX = 0;
+        let secondHandX = 0;
+        let distanceBetweenHands = 0;
+        
         
         if (predictions[0]) {
             let midval = predictions[0].bbox[0] + (predictions[0].bbox[2] / 2)
-            console.log('Predictions: ', midval);
+            //console.log('First hand mid: ', midval);
+            
+            firstHandX = midval;
 
-        }
+        } 
+        
+        if (predictions[1]) {
+            let midval = predictions[1].bbox[0] + (predictions[1].bbox[2] / 2)
+            //console.log('Second hand mid: ', midval);
+            
+            secondHandX = midval;
+            
+            distanceBetweenHands = Math.abs(firstHandX - secondHandX);
+            
+            console.log('distanceBetweenHands: ', distanceBetweenHands);
+            
+
+        } 
         
         
         if (isVideo) {
