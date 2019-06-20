@@ -12,7 +12,7 @@ async function loadModelsAndCalculateDescriptors() {
 
     console.log("models loaded, calculating labeledFaceDescriptors")
 
-    const labels = ['andreas','nikolaj', 'barack']
+    const labels = ['andreas','nikolaj', 'thomas']
     const options = new faceapi.TinyFaceDetectorOptions({ inputSize: 512 })
 
     labeledFaceDescriptors = await Promise.all(
