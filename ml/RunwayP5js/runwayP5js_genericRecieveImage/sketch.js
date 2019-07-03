@@ -19,8 +19,8 @@ function mousePressed() {
     const { depth_image } = output;
     // use the output in your project
     
-    console.log(output.depth_image);
-    img = createImg(output.depth_image);
+    console.log(output.result); //be aware of what is after the "." and change accordingly
+    img = createImg(output.result);
   })
     
 }
