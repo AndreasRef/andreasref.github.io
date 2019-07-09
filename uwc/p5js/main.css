@@ -11,6 +11,10 @@ img {
     width: 400px;
 }
 
+iframe{
+    overflow:hidden;
+}
+
 * {
   box-sizing: border-box;
 }
