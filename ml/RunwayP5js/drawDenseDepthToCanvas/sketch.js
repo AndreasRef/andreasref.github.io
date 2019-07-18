@@ -3,13 +3,14 @@ let img;
 function setup() {
     createCanvas(640,360)
     console.log("starting!");
-    //getImageFromRunway();
-    getImageOffline();
+    getImageFromRunway();
+    //getImageOffline();
     background(255,0,0);
+    frameRate(1);
 }
 
 function draw() {
-    
+    getImageFromRunway();
 }
 
 function getImageFromRunway() {
