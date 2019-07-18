@@ -1,0 +1,9 @@
+In this workshop interaction designer and digital artist Andreas Refsgaard will show how to make simple websites that can be trained to react to costume inputs from users.
+The workshop will work as a hands on introduction to machine learning with a focus on creating your own interactive applications that live on the web.
+ 
+Learn how to:
+	• Make interactive websites that can learn and react to user input from the webcam 
+	• Train supervised machine learning algorithms in minutes
+	• Use the friendly ml5js library that builds on top of Tensorflow.js
+Requirements: Bring your own computer with a functional webcam and Google Chrome installed.
+Experience level: No prior coding or machine learning knowledge required
