@@ -63,15 +63,18 @@ function draw() {
 }
     </script>
 
+
     </script>
-    <h3>Changing canvas + ellipse size</h3>
+    <h3>Only draw if mouse is pressed</h3>
     <script type="text/p5" data-height="525" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
 function setup() {
   createCanvas(400, 400);
 }
 
 function draw() {
-  ellipse(mouseX, mouseY, 100);
+  if (mouseIsPressed) {
+    ellipse(mouseX, mouseY, 100);
+  }
 }
     </script>
 
@@ -83,26 +86,119 @@ function setup() {
 }
 
 function draw() {
-  //background(220);  
-  ellipse(mouseX, mouseY, sin(millis()/500)*50 + 50);
+  //background(220);
+  if (mouseIsPressed) {  
+    ellipse(mouseX, mouseY, sin(millis()/500)*50 + 50);
+  }
 }
     </script>
-    
-    </script>
-    <h3>Using random to control ellipse size + ellipse position</h3>
+
+        </script>
+    <h3>Using sine + millis to control ellipse size and random to control color</h3>
     <script type="text/p5" data-height="525" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
 function setup() {
   createCanvas(400, 400);
 }
 
 function draw() {
-  //background(220);  
+  //background(220);
+  if (mouseIsPressed) { 
+    fill(random(0,255), random(0,255), random(0, 255));  
+    ellipse(mouseX, mouseY, sin(millis()/500)*50 + 50);
+  }
+}
+    </script>
+    
+    </script>
+    <h3>Using random to control ellipse size, position & color</h3>
+    <script type="text/p5" data-height="525" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  //background(220);
+  fill(random(0,255), random(0,255), random(0, 255));   
   ellipse(random(0, width), random(0, height), random(10, 100));
 }
     </script>
 
+    <h3>Simple brush</h3>
+    <script type="text/p5" data-height="525" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
+function setup() {
+  createCanvas(400, 400);
+  background(220);
+}
+
+function draw() {
+  
+  if (mouseIsPressed) {
+    myBrush(mouseX, mouseY);
+  }
+}
+
+function myBrush(x, y) {
+  ellipse(random(x-20, x+20), random(y-20, y+20), 10);
+}
+
+function keyTyped() {
+  if (key == " ") {
+   background(220); 
+  }
+}
+    </script>
+
+    <h3>Advanced brush</h3>
+    <script type="text/p5" data-height="825" data-preview-width="550" data-p5-version="0.9.0" data-autoplay>
+let brushMode = 1;
+
+function setup() {
+  createCanvas(500, 500);
+  background(220);
+  rectMode(CENTER);
+}
+
+function draw() {
+  if (mouseIsPressed) {
+    myBrush(mouseX, mouseY);
+  }
+}
+
+function myBrush(x, y) {
+  if (brushMode == 1) {
+    ellipse(random(x-20, x+20), random(y-20, y+20), random(5,25));
+  } else if (brushMode == 2) {
+    line(random(x-20, x+20), random(y-20, y+20), random(x-20, x+20), random(y-20, y+20));
+  } else if (brushMode == 3) {
+    rect(x, y, random(10, 50), random(10, 50));
+  }
+}
+
+function keyTyped() {
+  if (key == ' ') {
+   background(220); 
+  } else if (key == '1') {
+   brushMode = 1;
+  } else if (key == '2') {
+   brushMode = 2;
+  } else if (key == '3') {
+   brushMode = 3;
+  } 
+}
+    </script>
+ 
 
 
+
+    <h3>Additional tutorials</h3>
+        <ul>
+            <li><a href="https://p5js.org/learn/color.html">Color (p5js website)</a></li>
+            <li><a href="https://p5js.org/learn/interactivity.html">Mouse and Keyboard interactivity (p5js website)</a></li>
+            <li><a href="http://genekogan.com/code/p5js-transformations/">Transformations: Rotation, push, pop, translate & scale (Gene Kogan)</a></li>
+            <li><a href="https://creative-coding.decontextualize.com/expressions-variables-and-loops/">Expressions, variables & loops (Allison Parrish)</a></li>
+            <li><a href="https://creative-coding.decontextualize.com/media/">Media: Images & Sound (Allison Parrish)</a></li>
+            <li><a href="https://creative-coding.decontextualize.com/text-and-type/">Text & Type (Allison Parrish)</a></li>
+        </ul>
 
     <h3>Andreas Refsgaard links</h3>
     <p><a href="http://andreasrefsgaard.dk">andreasrefsgaard.dk</a></p>
