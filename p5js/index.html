@@ -1,0 +1,115 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>p5js painting with code</title>
+    <script src="//toolness.github.io/p5.js-widget/p5-widget.js"></script>
+    <script type="text/p5" data-p5-version="0.9.0"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,700" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <h1>p5js painting with code - p5.js intro</h1>
+
+    <h3>My first sketch</h3>
+    <script type="text/p5" data-height="325" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
+function setup() {
+  createCanvas(400, 200);
+}
+            
+function draw() {
+  background(220);
+}
+    </script>
+
+    <h3>Basic Shapes</h3>
+    <script type="text/p5" data-height="325" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
+function setup() {
+  createCanvas(400, 200);
+}
+
+function draw() {
+  background(220);
+  ellipse(50, 100, 50);
+  line(100, 50, 150, 150);
+  rect(200, 100, 50, 50);
+  triangle(300, 100, 350, 150, 400, 100);
+}
+    </script>
+
+    <h3>MouseX and MouseY</h3>
+    <script type="text/p5" data-height="325" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
+function setup() {
+  createCanvas(400, 200);
+}
+
+function draw() {
+  background(220);
+  ellipse(mouseX, mouseY, 50);
+}
+    </script>
+    <h3>No background + comments</h3>
+    <script type="text/p5" data-height="325" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
+function setup() {
+  createCanvas(400, 200);
+}
+
+function draw() {
+  //background(220);
+  ellipse(mouseX, mouseY, 50);
+}
+    </script>
+
+    </script>
+    <h3>Changing canvas + ellipse size</h3>
+    <script type="text/p5" data-height="525" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  ellipse(mouseX, mouseY, 100);
+}
+    </script>
+
+    </script>
+    <h3>Using sine + millis to control ellipse size</h3>
+    <script type="text/p5" data-height="525" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  //background(220);  
+  ellipse(mouseX, mouseY, sin(millis()/500)*50 + 50);
+}
+    </script>
+    
+    </script>
+    <h3>Using random to control ellipse size + ellipse position</h3>
+    <script type="text/p5" data-height="525" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  //background(220);  
+  ellipse(random(0, width), random(0, height), random(10, 100));
+}
+    </script>
+
+
+
+
+    <h3>Andreas Refsgaard links</h3>
+    <p><a href="http://andreasrefsgaard.dk">andreasrefsgaard.dk</a></p>
+    <p><a href="http://twitter.com/andreasref">Twitter</a></p>
+    <p><a href="http://instagram.com/andreasref">Instagram</a></p>
+    </br>
+
+</body>
+
+</html>
