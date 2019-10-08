@@ -79,7 +79,7 @@ function draw() {
     </script>
 
     </script>
-    <h3>Using sine + millis to control ellipse size</h3>
+    <h3>Using sin + millis to control ellipse size</h3>
     <script type="text/p5" data-height="525" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
 function setup() {
   createCanvas(400, 400);
@@ -88,13 +88,13 @@ function setup() {
 function draw() {
   //background(220);
   if (mouseIsPressed) {  
-    ellipse(mouseX, mouseY, sin(millis()/500)*50 + 50);
+    ellipse(mouseX, mouseY, sin(millis()/1000)*50 + 50);
   }
 }
     </script>
 
         </script>
-    <h3>Using sine + millis to control ellipse size and random to control color</h3>
+    <h3>Using sin + millis to control ellipse size and random to control color</h3>
     <script type="text/p5" data-height="525" data-preview-width="450" data-p5-version="0.9.0" data-autoplay>
 function setup() {
   createCanvas(400, 400);
@@ -104,7 +104,7 @@ function draw() {
   //background(220);
   if (mouseIsPressed) { 
     fill(random(0,255), random(0,255), random(0, 255));  
-    ellipse(mouseX, mouseY, sin(millis()/500)*50 + 50);
+    ellipse(mouseX, mouseY, sin(millis()/1000)*50 + 50);
   }
 }
     </script>
@@ -193,7 +193,7 @@ function keyTyped() {
             <li><a href="https://editor.p5js.org/AndreasRef/sketches/g8zrnIlng">Painting with body parts (using poseNet from ml5js)</a></li>
         </ul>
 
-    <h3>Additional tutorials</h3>
+    <h3>Additional tutorials + examples</h3>
         <ul>
             <li><a href="https://p5js.org/learn/color.html">Color (p5js website)</a></li>
             <li><a href="https://p5js.org/learn/interactivity.html">Mouse and Keyboard interactivity (p5js website)</a></li>
@@ -201,6 +201,15 @@ function keyTyped() {
             <li><a href="https://creative-coding.decontextualize.com/expressions-variables-and-loops/">Expressions, variables & loops (Allison Parrish)</a></li>
             <li><a href="https://creative-coding.decontextualize.com/media/">Media: Images & Sound (Allison Parrish)</a></li>
             <li><a href="https://creative-coding.decontextualize.com/text-and-type/">Text & Type (Allison Parrish)</a></li>
+            <li><a href="http://www.generative-gestaltung.de/2/">Generative Gestaltung Advanced Examples</a></li>
+            
+        </ul>
+
+    <h3>p5js links</h3>
+        <ul>
+            <li><a href="https://p5js.org/reference/">p5js reference</a></li>
+            <li><a href="https://editor.p5js.org/">p5js online editor</a></li>
+            <li><a href="https://github.com/bmoren/p5js-cheat-sheet">p5js cheat sheet</a></li>
         </ul>
 
     <h3>Andreas Refsgaard links</h3>
