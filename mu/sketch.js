@@ -42,6 +42,8 @@ function setup() {
     var constraints = {
       audio: false,
       video: {
+        width: height,
+        height: width,
         facingMode: {
           exact: "environment"
         }
@@ -90,7 +92,7 @@ function draw() {
     
     push();
     //textAlign(CENTER);
-    text("Touch the screen to take a picture ", 10, 7*height/9);
+    text("Tap the screen to take a picture ", 10, 7*height/9);
     pop();
     
   }
