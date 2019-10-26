@@ -2,13 +2,13 @@ var myBool = true;
 
 const video = document.getElementById('video')
 
-var canvas;
+var canvas = document.getElementById('overlay')
 
 Promise.all([
   faceapi.nets.tinyFaceDetector.loadFromUri('https://rawgit.com/justadudewhohacks/face-api.js/master/weights'),
   faceapi.nets.faceLandmark68Net.loadFromUri('https://rawgit.com/justadudewhohacks/face-api.js/master/weights'),
-  faceapi.nets.faceRecognitionNet.loadFromUri('https://rawgit.com/justadudewhohacks/face-api.js/master/weights'),
-  faceapi.nets.faceExpressionNet.loadFromUri('https://rawgit.com/justadudewhohacks/face-api.js/master/weights'),
+//  faceapi.nets.faceRecognitionNet.loadFromUri('https://rawgit.com/justadudewhohacks/face-api.js/master/weights'),
+//  faceapi.nets.faceExpressionNet.loadFromUri('https://rawgit.com/justadudewhohacks/face-api.js/master/weights'),
   faceapi.nets.ageGenderNet.loadFromUri('https://rawgit.com/justadudewhohacks/face-api.js/master/weights')
 ]).then(startVideo)
 
@@ -21,35 +21,31 @@ function startVideo() {
 }
 
 video.addEventListener('play', () => {
-  canvas = faceapi.createCanvasFromMedia(video)
+  //canvas = faceapi.createCanvasFromMedia(video)
   document.body.append(canvas)
   const displaySize = { width: video.width, height: video.height }
   faceapi.matchDimensions(canvas, displaySize)
     
   setInterval(async () => {
-    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions().withAgeAndGender()
-            
-    const resizedDetections = faceapi.resizeResults(detections, displaySize)
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
-    
-    //const box = { x: 50, y: 50, width: 10, height: 10 }
-        // see DrawBoxOptions below
-        //const drawOptions = {
-          //label: detections[0].gender + " " + detections[0].age,
-          //lineWidth: 1
-        //}
-        //const drawBox = new faceapi.draw.DrawBox(box, drawOptions)
-        //drawBox.draw(canvas)
-        
-      //console.log("age " + detections[0].age)
-      //console.log("gender " + detections[0].gender)
-      //console.log(detections[0]); //THIS GIVES RESULTS!
 
-      
-      //console.log("x: " + myBox.x + "\ny: " +  myBox.y + "\nwidth: " + myBox.width + "\nheight: " + myBox.height);
-      //console.log(document.getElementById("genderSelect").value)
-      
-      for (let i = 0; i<detections.length; i++) {
+
+    const detections = await faceapi.detectAllFaces(video, new 
+    faceapi.TinyFaceDetectorOptions({ inputSize: 512 }, {scoreThreshold: 0.5})).withFaceLandmarks().withAgeAndGender();
+                                //faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions().withAgeAndGender()
+    //inputSize must be divisible by 32, common sizes are 128, 160, 224, 320, 416, 512, 608,        
+                              
+    const resizedDetections = faceapi.resizeResults(detections, displaySize)
+    //canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+    //Test to make things alligned in time
+    canvas.getContext("2d").drawImage(video, 0, 0, video.width, video.height, 0, 0, video.width, video.height);
+
+    
+    //console.log("detections: " + detections[0]._box._x);
+    //console.log("resized: " + resizedDetections[0]._box._x);
+
+      for (let i = 0; i<resizedDetections.length; i++) {
+        //console.log(resizedDetections[0]._box._x);
+        //drawStuff(resizedDetections, i);
           if (detections[i].gender == "male" && settings.male) {
             drawStuff(resizedDetections, i);
           } if (detections[i].gender == "female" && settings.female) {
@@ -58,25 +54,40 @@ video.addEventListener('play', () => {
         }
         
 
-  faceapi.draw.drawDetections(canvas, resizedDetections)
+  //faceapi.draw.drawDetections(canvas, resizedDetections)
   //faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
   //faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
-    
+      
+      
   }, 200)
 })
 
 
 function drawStuff(resizedDetections, i) {
-    let myBox = resizedDetections[i].detection._box;
+    let myBox = resizedDetections[i].alignedRect.box;
+    console.log(resizedDetections[i])
 
     var ctx = canvas.getContext("2d");  
-    ctx.fillStyle = "white"
-    ctx.fillRect(myBox.x, myBox.y, myBox.width, myBox.height);
+    //ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+    //ctx.fillRect(myBox.x, myBox.y, myBox.width, myBox.height);
+    //ctx.font = "12px Arial";
+    //ctx.fillStyle = "blue"
+    //ctx.fillText(resizedDetections[i].gender +" "+Math.round(resizedDetections[i].age), myBox.x+5, myBox.y + 15);
 
-    ctx.font = "12px Arial";
-    ctx.fillStyle = "blue"
-    ctx.fillText(resizedDetections[i].gender +" "+Math.round(resizedDetections[i].age), myBox.x+5, myBox.y + 15);
-    
+    let offSet = myBox.width/8;
+
+
+  
+    ctx.filter = 'blur(15px)';
+    //ctx.drawImage(video, myBox.x, myBox.y, myBox.width, myBox.height, myBox.x, myBox.y, myBox.width, myBox.height)
+    ctx.drawImage(video,myBox.x + offSet, myBox.y - offSet, myBox.width - offSet*2, myBox.height, myBox.x + offSet, myBox.y - offSet, myBox.width - offSet*2, myBox.height)
+    ctx.drawImage(video,myBox.x + offSet, myBox.y - offSet, myBox.width - offSet*2, myBox.height, myBox.x + offSet, myBox.y - offSet, myBox.width - offSet*2, myBox.height)
+    //ctx.drawImage(video,myBox.x, myBox.y - offSet, myBox.width, myBox.height + offSet * 2, myBox.x, myBox.y - offSet, myBox.width, myBox.height + offSet * 2) //blur additional time
+
+    //Debug box without filter
+    ctx.filter = 'blur(0px)';
+    ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+    //ctx.fillRect(myBox.x + offSet, myBox.y, myBox.width - offSet*2, myBox.height);
 }
 
 //GUI
@@ -87,5 +98,3 @@ var settings = { age: 5, male: false, female: false};
 gui.add(settings, 'male');
 gui.add(settings, 'female');
 gui.add(settings, 'age', 0, 100);
-
-console.log(settings.age)

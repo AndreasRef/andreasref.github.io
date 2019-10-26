@@ -9,12 +9,6 @@
   <script defer src="script.js"></script>
   <script type="text/javascript" src="dat.gui.js"></script>
   <style>
-
-    body {
-      justify-content: left;
-      align-items: center;
-    }
-/*
     body {
       margin: 10;
       padding: 0;
@@ -26,14 +20,15 @@
       align-items: center;
       
     }
-*/
-      
 
+    canvas {
+      position: absolute;
+    }
+    
 
   </style>
 </head>
 <body>
-<video id="video" width="640" height="480" autoplay muted style="position:absolute; top: 0px; left: 0px; margin: 0px; border: 1px solid #FF0000;"></video>
-<canvas id="overlay" width="640" height="480" style="position:absolute; top: 0px; left: 0px; margin:0px; border: 1px solid #0000FF;" ></canvas><br>
+  <p><video id="video" width="720" height="560" autoplay muted></video></p>
 </body>
 </html>
