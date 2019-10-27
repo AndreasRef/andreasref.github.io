@@ -1,4 +1,21 @@
 html, body {
-  margin: 0;
-  padding: 0;
+  margin: 30;
+  padding: 30;
+  background: #eeeeee;
+}
+canvas {
+  display: block;
+}
+
+h1 {
+  padding: 30;
+  margin: 30;
+  position: relative;
+  left: 30px;
+  font-family: "Courier New", Courier, monospace;
+}
+
+p {
+  position: relative;
+  left: 30px;
 }
