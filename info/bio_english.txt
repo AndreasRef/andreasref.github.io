@@ -1,0 +1,18 @@
+Short bio:
+Andreas Refsgaard is an artist and creative coder based in Copenhagen. He uses algorithms and machine learning to allows people to play music using only eye movement and facial gestures, control games by making silly sounds or transform drawings of musical instruments on paper into real compositions.
+
+
+Longer bio:
+Andreas Refsgaard is an artist and creative coder based in Copenhagen.
+
+He uses algorithms and machine learning to make unconventional connections between inputs and outputs, which allows people to play music using only eye movement and facial gestures, control games by making silly sounds, transform drawings of musical instruments on paper into real compositions and train algorithms to decide what is funny, funky or boring.
+
+His works have been published in New Scientist, Vice, Gizmodo, PSFK and Designboom, awarded by Interaction Awards and Core77 and exhibited in museums and at festivals in Europe, North America, Asia and Australia.
+
+Andreas has been a public speaker at international events like Mutation, openVTR, OEB Conference, DIGITEC, NextConf, Bump, Space10 and Roskilde Festival and taught workshops on creative computation, interaction design and machine learning at institutions like CIID, KIKK, ECAL, Umeå Institute of Design, LUCA School of Arts, Resonate, Hyper Island, Design School Kolding, ofCourse and SchoolOfMa.
+
+Andreas is a regular contributor to ml4a, a free resource on machine learning for artists and regularly publishes videos, texts and tutorials in attempt to demystify machine learning and facilitate a greater public understanding of the subject.
+
+Commercially he has worked with international clients like Google Creative Labs, Carlsberg, Philips and LittleBits and regularly takes on freelance work as a creative technologist.
+
+Andreas holds a MSc IT from IT University of Copenhagen and a Bachelor in Sociology from University of Copenhagen and attended the 1-year Interaction Design Programme at Copenhagen Institute of Interaction Design in 2015.
