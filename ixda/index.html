@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Machine Learning Workshop @AndreasRef</title>
+        <meta name="robots" content="noindex, nofollow">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,700" rel="stylesheet">
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            
+            <section>
+                <h1>Machine Learning Workshop by AndreasRef</h1>
+                <ul><a href="https://wetransfer.com/downloads/76a2fea0dacfb22895ddb0854798739020191128202418/2f293f2da19d42f4b944199a55810abc20191128202418/a0efcd" target="_blank">Andreas intro slides</a></ul>
+            </section>
+            
+            <section>           
+                <h1>ml5js</h1>
+                <h2>Templates, examples and exercises</h2>
+                <br>
+                
+                <h3>0) p5js online editor</h3>
+                <ul><a href="https://editor.p5js.org/" target="_blank">Setup an account with the p5js online editor</a></ul>
+                <br>
+
+                <h3>1) Teachable Machine</h3>
+                <ul><a href="https://teachablemachine.withgoogle.com/" target="_blank">Teachable Machine Website</a></ul>
+                <ul><img src="teachablemachine2.gif"></ul>
+                <h4>Teachable Machine basic templates: </h4>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/Jat_0EPd" target="_blank">Image Classification Template (p5js editor)</a></ul>
+                <ul><a href="https://www.exploring.technology/l/s/ml5/teachable-machine/sound-classification" target="_blank">Sound Classification Template (p5js editor)</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/DbLq8Xhf" target="_blank">Pose Classification Template (p5js editor)</a></ul>
+                
+                
+                <br>
+                <ul><em>Exercise 1 (individual): Train the Image Model of Teachable Machine using your webcam. Export the model and copy the url to the trained model into the sketch to update the <code>modelURL</code>. <br><br>See <a href="https://www.youtube.com/watch?v=n-zeeRLBgd0">this tutorial</a> for more info on exporting. <br><br>If you finish early check out <a href="https://medium.com/@warronbebster/teachable-machine-tutorial-bananameter-4bfffa765866">this article</a> for tips and tricks on how to train a more robust model with Teachable Machine.</em></ul> 
+                <br>
+                <h4>Teachable Machine + outputs</h4>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/KJ7aw7gp" target="_blank">Image Classification + Emoji Output (p5js editor)</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/cVs2ZusU" target="_blank">Image Classification + Image Output (p5js editor)</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/gqE6vCsYf" target="_blank">Image Classification + Sound Output (p5js editor)</a></ul>
+                
+                <br>
+                <ul><em>Exercise 2 (individual): Use an Image Model trained with Teachable Machine and add interactivity to it, so something happens based when you interact with the webcam and the classifications change. 
+                
+                <br><br>Remember to change <code>modelURL</code> in order to use your your own model.
+                    
+                <br><br>See <a href="https://p5js.org/examples/">p5js.org/examples</a> or <a href="https://p5js.org/reference/">p5js.org/reference</a> for more on how add interactivity to your sketch using p5js functions, but please go for quick proof of concepts rather than complex stuff (this is not a coding workshop).</em></ul> 
+                
+                <br>
+
+                <h3>2) ML5 MobileNet pretrained classification</h3>
+                <ul><img src="https://ml4a.github.io/images/demos_thumbs/ml5_mobilenet.jpg"></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/H1L-KrzFQ" target="_blank">Simple template: Mobilenet pretrained classification</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/Sk8M6mqh7" target="_blank">Advanced example: Classification to speech</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/present/AYNNRbR9A" target="_blank">Advanced example: Poems about things desktop</a> -> <a href="https://editor.p5js.org/AndreasRef/present/kf7Ro9Ceu">mobile</a> -> <a href ="http://andreasrefsgaard.dk/project/poems-about-things/" target="_blank">About the project</a></ul>
+                <ul><a href="https://github.com/ml5js/ml5-library/blob/master/src/utils/IMAGENET_CLASSES.js" target="_blank">ImageNet list of classes</a></ul>
+                <br>
+
+                <h3>3) ML5 regression with webcam</h3>
+                <ul><img src="https://ml4a.github.io/images/demos_thumbs/ml5_regression.jpg"></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/Z2OChCuHk" target="_blank">Simple template: Webcam regressor</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/HyEDToYnQ" target="_blank">Advanced example: Playback rate camera</a></ul>
+                
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/4K_YGuMik" target="_blank">Advanced example: Control Mister Bean with regression</a></ul>
+                <ul><img src="mrBeanGif.gif"></ul>
+                <br>
+                     
+<!--                <ul><em><strike>Exercise 3 (individual): Train the regressor and use the continuous output value <strong>slider.value()</strong> to control something. It is okay to leave the code as it is, and just focus on training the system</strike></em></ul><br>-->
+                
+                
+
+                <h3>4) ML5 PoseNet pose detection</h3>
+                <ul><img src="https://ml4a.github.io/images/demos_thumbs/ml5_posenet.jpg"></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/g8zrnIlng" target="_blank">Simple template: Webcam PoseNet part selection single users</a></ul>
+<!--                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/rkz42BzYQ" target="_blank">Simple template: Webcam PoseNet multiple users</a></ul>-->
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/RLv1QbuLa" target="_blank">Advanced example: Classify poses</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/r1_w73FhQ" target="_blank">Advanced example: Draw with your nose</a></ul>
+<!--                <ul><em><strike>Exercise 4 (group): Pick A or B <br>A) Edit the "Simple template" and use the x-y value of a bodypart to control something (e.g. the position of some images)  <br>B) Use "Classify poses" as a starting point and make something happen for three different (yoga?) poses</strike></em></ul>-->
+
+                <br>
+                
+                <h3>5) Beyond ML5: Speech and face</h3>
+                <ul><img src="face_emotions.png"></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/2ElDbMuHT" target="_blank">Pretrained Facial Emotions (with clm tracker)</a></ul>
+<!--                <ul><a href="https://andreasref.github.io/kochi/face_knn/index.html" target="_blank">KNN Facial Expressions (not in p5js editor - takes 30 seconds to load)</a> -> <a href="https://andreasref.github.io/ml5js/face_knn.zip">download zip</a> </ul>-->
+                <ul><a href="https://andreasref.github.io/ml/Face-Detection-JavaScript_web/" target="_blank">Facetracking + estimates of age, gender and mood with face-api</a> <em><a href="https://github.com/AndreasRef/andreasref.github.io/tree/master/ml/Face-Detection-JavaScript_web">source code (not in p5js editor)</a></em></ul>
+
+<!--
+                <ul><em>Exercise 5A (individual): Use one of the values from the four emotions (angryVal, sadVal, surprisedVal or happyVal) from the "Pretrained Facial Emotions" example to control something.</em></ul>
+                <br>
+-->
+                
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/DTNxwVdxf" target="_blank">Speech recognition (with annyang.js)</a></ul>
+                
+
+<!--                <ul><em>Exercise 5B (groups): Discuss ideas for a project you could build using speech recognition (a game, a service, a campaign site or something else) and try to build a small part of it to prove the interaction.</em></ul>-->
+                <br>
+                
+<!--
+                <br>
+                <ul><em>Exercise 5 (group): Use one of the three templates above as a starting point for making an interactive sketch that you control with sounds, speech or facial expressions.</em></ul>
+                <br>
+-->
+                
+<!--
+                <ul><em>Exercise 6 (individual): <br>Come up with as many ideas as possible for projects that can be build using the techniques you have learned so far in 15 minutes. You MUST make a least 10 ideas, and at least 1 idea for each of the five headlines: <br> 1) Train your own classification <br> 2) Pretrained classification <br> 3) Regression <br> 4) PoseNet <br> 5) Sound, speech and face <br><br> Each idea should be written on a single small post-it.</em></ul>
+                <br>
+                
+-->
+<!--
+                <ul><em>Exercise 6 (individual): <br>Come up with as many ideas as possible for projects that can be build using the techniques you have learned so far in 10 minutes. You MUST make a least 5 ideas. Each idea should be written on a single post-it with a descriptive title and a sketch and/or simple explanation.</em></ul>
+                <br>
+-->
+                
+<!--
+                <ul><em>Exercise 6 (group): <br>Spend the rest of today on coming up with a concept and making a small interactive demo using one of the techniques learned so far. Work in groups or alone. It is okay to build on top of work done at a previous exercise. Informal mini-presentations start at 16:30.</em></ul>
+                <br>
+-->
+                <h3>6) Start prototyping!</h3>
+                <ul><em>Exercise 6 (group):
+                    
+                    <br>Get into groups, do a quick brainstorm, pick a concept and build a fast prototype that shows a key interaction of your idea. You can make something creative, useful and/or silly - up to you - just make sure it has a machine learning component somewhere! <br><br>Since time is short, it is recommended to build something on top of a previous exercise and focus on a simple interaction. <br><br>How much coding you do is up to you, if you don't feel comfortable, you can choose to focus on concept or collecting data and training <a href="https://medium.com/@warronbebster/teachable-machine-tutorial-bananameter-4bfffa765866">a more robust model</a>. <br><br>Informal mini-presentations start at 12:40. </em></ul>
+                <br>
+                
+<!--                <ul><em>Exercise 7 (work in pairs): <br>Share all your ideas with the person next to you and discuss them. <br> It is okay to come up with more ideas and build on top of each others ideas as you share. <br> In the end pick the best three ideas per person, redo them on a big post-it with a clear descriptive title + a small sketch, so they are easy to read and understand. </em></ul>-->
+                <h3>7) If we have time...</h3>                
+                <ul><a href="https://kahoot.it" target="_blank">AI Quiz with Kahoot</a></ul>
+                <ul><img src="mario.gif"></ul>
+                    
+                <br>
+                <h3>Having issues running the examples?</h3>
+                <ul>Make sure you are running them in <a href="https://www.google.com/chrome/" target="_blank">Google Chrome</a></ul>
+                <ul><a href="https://support.google.com/chrome/answer/2693767?co=GENIE.Platform%3DDesktop&hl=en&oco=0" target="_blank">Allow camera and microphone in Google Chrome</a></ul>
+                <ul><a href="https://support.apple.com/guide/mac-help/control-access-to-your-camera-on-mac-mchlf6d108da/mac" target="_blank">Allow camera on MacOSX in System Preferences</a></ul>
+                <ul>Webcam access on Windows 10: Select Start > Settings > Privacy > Camera. Set "Let apps use my camera" to "On". Make sure Chrome has access to use the camera.</ul>
+                <ul>Older computers with less powerful graphics cards might run out of memory if you record hundreds or thousands of examples from the webcam, especially on Windows. If it happens, switch to another computer or be more modest when recording training data.</ul>
+                <br>
+                
+                <h3>Other links</h3>
+                <ul><a href="https://ml5js.org/reference/">Documentation + more examples on ml5js.org</a></ul>
+                <ul><a href="https://github.com/ml5js/ml5-examples/tree/master/javascript">ml5 examples in clean javaScript without p5js</a></ul>
+                <ul><a href="https://js.tensorflow.org/" target="_blank">Tensorflow.js website</a></ul>
+                <ul><a href="https://teachablemachine.withgoogle.com/" target="_blank">Teachable Machine</a></ul>
+                <ul><a href="https://runwayml.com/" target="_blank">Runway</a></ul>                
+                <ul><a href="https://github.com/justadudewhohacks/face-api.js?files=1" target="_blank">face-api.js</a></ul>
+                <ul><a href="http://booksby.ai/" target="_blank">BooksBy.Ai</a></ul>
+                
+                <br>
+                <ul><a href="https://editor.p5js.org/" target="_blank">Official p5.js editor</a></ul>
+                <ul><a href="https://p5js.org/reference/" target="_blank">Official p5.js reference</a></ul>
+                <ul><a href="https://andreasref.github.io/p5js/" target="_blank">Examples for p5.js aimed at beginners</a></ul>    
+    
+                <br>
+            
+                    
+            </section>
+
+
+
+            <section>
+
+                <h2>Contact Andreas Refsgaard</h2>
+                <p><a href="http://andreasrefsgaard.dk">Website</a> / <a href="mailto:mail@andreasrefsgaard.dk">Email</a> / <a href="https://www.facebook.com/andreasrefsgaard">Facebook</a> /&nbsp;<a href="https://twitter.com/AndreasRef">Twitter</a> / <a href="https://www.instagram.com/andreasref/">Instagram</a>  / <a href="https://github.com/AndreasRef">GitHub</a> / <a href="https://vimeo.com/user42241709">Vimeo</a> </p>
+
+            </section>
+
+        </div>
+
+    </body>
+</html>
