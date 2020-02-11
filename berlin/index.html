@@ -18,22 +18,6 @@
             
             <section>
                 
-                <h1>Logo</h1>
-                <h2>Interactive manipulations</h2>
-                <br>
-                
-                <h3>bonus) Manipulating the logo</h3>
-                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/5DeJiDdY" target="_blank">Logo manipulation with mouseX + mouseY</a></ul>
-                <br>
-                
-                
-                <h3>Affectiva</h3>
-                <ul><a href="https://jsfiddle.net/andreasref/70xLzgo6/show" target="_blank">Logo manipulation with facial expressions</a></ul>
-                <br>
-                
-                <br>
-                
-                
                 <h1>ml5js</h1>
                 <h2>Templates, examples and exercises</h2>
                 <br>
@@ -90,7 +74,7 @@
                 <ul><img src="mrBeanGif.gif"></ul>
                 <br>
                      
-<!--                <ul><em><strike>Exercise 3 (individual): Train the regressor and use the continuous output value <strong>slider.value()</strong> to control something. It is okay to leave the code as it is, and just focus on training the system</strike></em></ul><br>-->
+                <ul><em>Exercise 3 (individual): Train the regressor and use the continuous output value <strong>slider.value()</strong> to control something. It is okay to leave the code as it is, and just focus on training the system</em></ul><br>
                 
                 
 
@@ -104,9 +88,13 @@
 
                 <br>
                 
-                <h3>5) Beyond ML5: Speech and face</h3>
+                
+                
+                
+                
+                <h3>5) Beyond ML5: <strike>Speech and </strike>face</h3>
                 <ul><img src="face_emotions.png"></ul>
-                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/2ElDbMuHT" target="_blank">Pretrained Facial Emotions (with clm tracker)</a><em>for advanced coders needing more stable tracking, recognition, age estimation etc see </em><a href="https://github.com/justadudewhohacks/face-api.js?files=1" target="_blank">face-api.js</a> (external link)</ul>
+                <ul><strike><a href="https://editor.p5js.org/AndreasRef/sketches/2ElDbMuHT" target="_blank">Pretrained Facial Emotions (with clm tracker)</a><em>for advanced coders needing more stable tracking, recognition, age estimation etc see </em><a href="https://github.com/justadudewhohacks/face-api.js?files=1" target="_blank">face-api.js</a> (external link)</strike></ul>
 <!--                <ul><a href="https://andreasref.github.io/kochi/face_knn/index.html" target="_blank">KNN Facial Expressions (not in p5js editor - takes 30 seconds to load)</a> -> <a href="https://andreasref.github.io/ml5js/face_knn.zip">download zip</a> </ul>-->
 <!--                <ul><a href="https://andreasref.github.io/ml/Face-Detection-JavaScript_web/" target="_blank">Facetracking + estimates of age, gender and mood with face-api</a> <em><a href="https://github.com/AndreasRef/andreasref.github.io/tree/master/ml/Face-Detection-JavaScript_web">source code (not in p5js editor)</a></em></ul>-->
 
@@ -141,10 +129,40 @@
                 <ul><em>Exercise 6 (group): <br>Spend the rest of today on coming up with a concept and making a small interactive demo using one of the techniques learned so far. Work in groups or alone. It is okay to build on top of work done at a previous exercise. Informal mini-presentations start at 16:30.</em></ul>
                 <br>
 -->
-                <h3>6) Start prototyping!</h3>
-                <ul><em>Exercise 6 (group):
+                
+
+                
+                <h3>6) DAI logo manipulations </h3>
+                <ul><img src="dai_glitch.png"></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/5DeJiDdY" target="_blank">Logo manipulation with mouseX + mouseY</a></ul>
+                
+                <ul><a href="" target="_blank">Logo manipulation with ml5 classification</a></ul>
+                                
+                <ul><a href="" target="_blank">Logo manipulation with ml5 regression</a></ul>
+                                
+                <ul><a href="" target="_blank">Variable font manipulation with ml5 regression</a></ul>    
+                
+                <ul><a href="https://jsfiddle.net/andreasref/70xLzgo6/show" target="_blank">Affectiva facial expressions (opens in jsFiddle)</a></ul>
+                <br>
+                <br>
+                                
+                
+                <h3>7) RunwayML</h3>
+                <ul><img src="runway.png"></ul>
+                <ul><a href="https://www.youtube.com/watch?v=db1USOwbRPQ" target="_blank">Video tutorial on how to run a model in Runway</a></ul>
+                <ul><a href="https://github.com/runwayml/processing-library" target="_blank">Runway Library for Processing</a></ul>
+                <ul><a href="https://www.youtube.com/watch?v=zGdOKaLOjck&list=PLj598ZXODDO_oWYAiO5c0Ac05IyrPUG8t&index=6&t=0s" target="_blank">Video tutorial on how to use the Runway Library for Processing</a></ul>
+                <ul><a href="https://github.com/processing/processing-video/issues/134" target="_blank">On MacOS Catalina and having issues getting the camera to run in Processing🤷? You are not alone, but you might find a solution in this thread...</a></ul>
+                <ul><a href="sampleImages.zip">Zip of sample images to use when testing out Runway</a></ul>
+                
+                <ul><em>Exercise 7: <br>Get a feel for the different models in Runway by experimenting with them. Have patience when running models remotely, it often takes a few minutes to get them started. Recommended models to experiment with are im2txt, GPT-2, SPADE-Landscapes, PhotoSketch, YOLACT & Adaptive-Style-Transfer.</em></ul>
+                
+                <br>
+                
+                <h3>8) Start prototyping!</h3>
+                <ul><em>Exercise 8 (group):
                     
-                    <br>Get into groups, do a quick brainstorm, pick a concept and build a fast prototype that shows a key interaction of your idea. You can make something creative, useful and/or silly - up to you - just make sure it has a machine learning component somewhere! <br><br>Since time is short, it is recommended to build something on top of a previous exercise and focus on a simple interaction. <br><br> Often a good idea can be made into a lo-fi interactive prototype with 5-10 minutes of training, designing a few static images + changing a few lines in the code.<br><br>If you plan to train a classifier with Teachable Machine stick to a few (2-4) classes as a proof of concept rather than trying to make something work for a lot of different classes.<br><br>How much coding you do is up to you, if you don't feel comfortable, you can choose to focus on concept or collecting data and training <a href="https://medium.com/@warronbebster/teachable-machine-tutorial-bananameter-4bfffa765866">a more robust model</a>. <br><br>Informal mini-presentations start at 16:30. </em></ul>
+                    <br>Get into groups, do a quick brainstorm, pick a concept and build a fast prototype that shows a key interaction of your idea. You can make something creative, useful and/or silly - up to you - just make sure it has a machine learning component somewhere! <br><br>Since time is short, it is recommended to build something on top of a previous exercise and focus on a simple interaction. <br><br> Often a good idea can be made into a lo-fi interactive prototype with 5-10 minutes of training, designing a few static images + changing a few lines in the code.<br><br>If you plan to train a classifier with Teachable Machine stick to a few (2-4) classes as a proof of concept rather than trying to make something work for a lot of different classes.<br><br>How much coding you do is up to you, if you don't feel comfortable, you can choose to focus on concept, designing a fun output or collecting data and training <a href="https://medium.com/@warronbebster/teachable-machine-tutorial-bananameter-4bfffa765866">a more robust model</a>. <br><br>Informal mini-presentations start at 16:30. </em></ul>
                 <br>
                 
 <!--                <ul><em>Exercise 7 (work in pairs): <br>Share all your ideas with the person next to you and discuss them. <br> It is okay to come up with more ideas and build on top of each others ideas as you share. <br> In the end pick the best three ideas per person, redo them on a big post-it with a clear descriptive title + a small sketch, so they are easy to read and understand. </em></ul>-->
@@ -156,7 +174,7 @@
                     
 -->
                 <br>
-                <h3>Having issues running the examples?</h3>
+                <h3>Having issues running the examples in the browser?</h3>
                 <ul>Make sure you are running them in <a href="https://www.google.com/chrome/" target="_blank">Google Chrome</a></ul>
                 <ul><a href="https://support.google.com/chrome/answer/2693767?co=GENIE.Platform%3DDesktop&hl=en&oco=0" target="_blank">Allow camera and microphone in Google Chrome</a></ul>
                 <ul><a href="https://support.apple.com/guide/mac-help/control-access-to-your-camera-on-mac-mchlf6d108da/mac" target="_blank">Allow camera on MacOSX in System Preferences</a></ul>
