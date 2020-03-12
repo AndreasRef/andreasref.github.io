@@ -13,7 +13,7 @@
             
             <section>
                 <h1>Machine Learning Workshop by AndreasRef</h1>
-                <ul><a href="----" target="_blank">Andreas intro slides</a></ul>
+<!--                <ul><a href="----" target="_blank">Andreas intro slides</a></ul>-->
             </section>
             
             <section>
@@ -39,7 +39,7 @@
                 <ul><a href="https://editor.p5js.org/AndreasRef/sketches/BynhuHsqX" target="_blank">Advanced example: Trainable Camera</a></ul>
                 <ul><a href="https://editor.p5js.org/AndreasRef/sketches/lPfjVfcIA" target="_blank">Advanced example: Image Classifier flexible classes</a></ul>
 
-                <ul><em>Exercise 2 (individual): Try to change the <strong>Webcam classifier + image</strong> example so it outputs images that represent your two classes</em></ul> 
+                <ul><em>Exercise 2 (individual): Try to duplicate and change the <strong>Webcam classifier + image</strong> example so it outputs images that represent your two classes.<br><br>Stuck? Here is a <a href="https://youtu.be/rO6M5hj0V-o?t=96">tutorial on how to upload files to your sketch</a> - remember that you have to own/dublicate the sketch before you can add files to it.</em></ul> 
                 
                 <br>
                 
@@ -65,7 +65,7 @@
                 
                 
                 <br>
-                <ul><em>Exercise 2 (individual): Train the Image Model of Teachable Machine using your webcam. Export the model and copy the URL to the trained model into the sketch to update the <code>modelURL</code>. <br><br>See <a href="https://www.youtube.com/watch?v=n-zeeRLBgd0">this tutorial</a> for more info on exporting. <br><br>If you finish early check out <a href="https://medium.com/@warronbebster/teachable-machine-tutorial-bananameter-4bfffa765866">this article</a> for tips and tricks on how to train a more robust model with Teachable Machine.</em></ul> 
+                <ul><em>Exercise 3 (individual): Train the Image Model of Teachable Machine using your webcam (or a smaller dataset of still images if you happen to have one). Export the model and copy the URL to the trained model into the Image Classification Template sketch to update the <code>modelURL</code>. <br><br>See <a href="https://www.youtube.com/watch?v=n-zeeRLBgd0">this tutorial</a> for more info on exporting. <br><br>If you finish early check out <a href="https://medium.com/@warronbebster/teachable-machine-tutorial-bananameter-4bfffa765866">this article</a> for tips and tricks on how to train a more robust model with Teachable Machine.</em></ul> 
                 <br>
                 <h4>Teachable Machine + outputs</h4>
                 <ul><a href="https://editor.p5js.org/AndreasRef/sketches/KJ7aw7gp" target="_blank">Image Classification + Emoji Output</a></ul>
@@ -79,11 +79,13 @@
 <!--                <ul><a href="..." target="_blank">Sound Classification + Sound Output (p5js editor)</a></ul>-->
                 
                 <br>
-                <ul><em>Exercise 3 (individual): Use an Image Model trained with Teachable Machine and add interactivity to it, so something happens based when you interact with the webcam and the classifications change. 
+<!--
+                <ul><em>Exercise 4 (individual): Use an Image Model trained with Teachable Machine and add interactivity to it, so something happens based when you interact with the webcam and the classifications change. 
                 
                 <br><br>Remember to change <code>modelURL</code> in order to use your your own model.
                     
                 <br><br>See <a href="https://p5js.org/examples/">p5js.org/examples</a> or <a href="https://p5js.org/reference/">p5js.org/reference</a> for more on how to add interactivity to your sketch using p5js, but please go for quick proof of concepts rather than complex stuff (this is not a coding workshop 🤖).</em></ul> 
+-->
                 
                 <br>
                 <br>
@@ -96,7 +98,7 @@
                 <ul><img src="mrBeanGif.gif"></ul>
                 <br>
                      
-                <ul><em>Exercise 3 (individual): Train the regressor and use the continuous output value <strong>slider.value()</strong> to control something. It is okay to leave the code as it is, and just focus on training the system</em></ul><br>
+                <ul><em>Exercise 3 (individual): Train the regressor and use the continuous output value <strong>slider.value()</strong> to control something. It is okay to leave the code as it is, and just focus on training the system in a fun way!</em></ul><br>
                 
                 
 
@@ -111,10 +113,22 @@
                 <br>
                 
                 
-
+                <h3>6) ML5 Neural Network</h3>
+                <ul><img src="neural_network.png"></ul>
+                <ul><a href="https://editor.p5js.org/ml5/sketches/NeuralNetwork_xy_classifier" target="_blank">Simple example: X-Y mouse classifier</a></ul>
+                <ul><a href="https://editor.p5js.org/AndreasRef/sketches/zMEfp6YP" target="_blank">Advanced example: Classify stream of serial values</a> - needs <a href="https://github.com/p5-serial/p5.serialport">p5.serial</a> to connect to Arduino directly from the browser</ul>
+                <br>
+                
+                
+                
+                <h3>7) Start prototyping!</h3>
+                <ul><em>Exercise 7 (individual):
+                    
+                    <br>Do a quick brainstorm, pick a concept and build a fast prototype that shows a key interaction of your idea. You can make something creative, useful and/or silly - up to you - just make sure it has a machine learning component somewhere! It is more about getting hands on experience, than making something unique or brilliant. <br><br>Since time is short, it is recommended to build something on top of a previous exercise and focus on a simple interaction. <br><br> Often a good idea can be made into a lo-fi interactive prototype with 5 minutes of training, designing a few static images + changing a few lines in the code.<br><br>If you plan to train a classifier please stick to a few (2-3) classes as a proof of concept rather than trying to make something work for a lot of different classes.<br><br>How much coding you do is up to you, if you don't feel comfortable, you can choose to focus on concept, designing a fun output or collecting data and training a more robust model. <br><br><a href="https://docs.google.com/document/d/1NKaNVWs_9zB9WC5gPVugkvOTHVuFpKYkR84dVGVFp5U/edit">Tips for recording your own data.</a> <br><br>Informal mini-presentations start at 4:15 PM Seattle time- 1:15 AM Copenhagen time. </em></ul>
+                <br>
                                 
                 
-                <h3>6) RunwayML</h3>
+                <h3>8) RunwayML</h3>
                 <ul><img src="runway.png"></ul>
                 <ul><a href="https://www.youtube.com/watch?v=db1USOwbRPQ" target="_blank">Video tutorial on how to run a model in Runway</a></ul>
                 <ul><a href="https://github.com/runwayml/processing-library" target="_blank">Runway Library for Processing</a></ul>
@@ -122,15 +136,10 @@
                 <ul><a href="https://github.com/processing/processing-video/issues/134" target="_blank">On MacOS Catalina and having issues getting the camera to run in Processing🤷? You are not alone, but you might find a solution in this thread...</a></ul>
                 <ul><a href="sampleImages.zip">Zip of sample images to use when testing out Runway</a></ul>
                 
-                <ul><em>Exercise 7: <br>Get a feel for the different models in Runway by experimenting with them. Have patience when running models remotely, it often takes a few minutes to get them started. Recommended models to experiment with are im2txt, GPT-2, SPADE-Landscapes, PhotoSketch, YOLACT & Adaptive-Style-Transfer.</em></ul>
+                <ul><em>Exercise 8: <br>Get a feel for the different models in Runway by experimenting with them. Have patience when running models remotely, it often takes a few minutes to get them started. Recommended models to experiment with are im2txt, GPT-2, SPADE-Landscapes, PhotoSketch, YOLACT & Adaptive-Style-Transfer.</em></ul>
                 
                 <br>
                 
-                <h3>8) Start prototyping!</h3>
-                <ul><em>Exercise 8 (individual):
-                    
-                    <br>Do a quick brainstorm, pick a concept and build a fast prototype that shows a key interaction of your idea. You can make something creative, useful and/or silly - up to you - just make sure it has a machine learning component somewhere! It is more about getting hands on experience, than making something unique or brilliant. <br><br>Since time is short, it is recommended to build something on top of a previous exercise and focus on a simple interaction. <br><br> Often a good idea can be made into a lo-fi interactive prototype with 5-10 minutes of training, designing a few static images + changing a few lines in the code.<br><br>If you plan to train a classifier with Teachable Machine stick to a few (2-4) classes as a proof of concept rather than trying to make something work for a lot of different classes.<br><br>How much coding you do is up to you, if you don't feel comfortable, you can choose to focus on concept, designing a fun output or collecting data and training <a href="https://medium.com/@warronbebster/teachable-machine-tutorial-bananameter-4bfffa765866">a more robust model</a>. <br><br>Informal mini-presentations start at XX:XX. </em></ul>
-                <br>
                 
                 <br>
                 <h3>Having issues running the examples in the browser?</h3>
