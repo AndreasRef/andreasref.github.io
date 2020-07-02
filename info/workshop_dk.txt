@@ -1,0 +1,5 @@
+Machine Learning giver computere evnen til at lære uden at blive eksplicit programmeret. Denne hands on workshop går ud på at træne algoritmer til at genkende hunde, katte, ansigtsudtryk, kropspositioner, lyde og alt muligt andet. Vi skaber vores egne træningsdata på få minutter, og laver sjove, kunstneriske eller måske ligefrem nyttige interaktive programmer, der reagerer mere eller mindre intelligent på nye inputs.
+
+Fokus ligger på det kreative og det interaktive – ikke på at forstå algoritmerne bag machine learning til fulde eller skabe optimale træningssæt. Det er ikke en teoretisk eller akademisk workshop, men derimod et sjovt kortere undervisningsforløb, hvor vi går eksplorativt til værks og prøver at lave mindre interaktive eksperimenter med kunstig intelligens som drivkraft.
+
+Du skal medbringe din egen bærbare computer med funktionelt webkamera og mikrofon samt en opdateret version af Google Chrome. Alt programmering foregår i JavaScript, hvor vi benytter de to OpenSource biblioteker p5.js og ml5.js, men du behøver ikke at kende noget som helst til programmering i forvejen for at kunne deltage.
