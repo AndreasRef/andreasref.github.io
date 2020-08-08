@@ -97,7 +97,7 @@ video.addEventListener('play', () => {
             lastAges.push(detections[0].age);
 
             calculatedMeanAge = avg(lastAges);
-            console.log(calculatedMeanAge);
+            console.log(detections[0].age);
 
             lastAges = lastAges.slice(lastAges.length-30);
             
