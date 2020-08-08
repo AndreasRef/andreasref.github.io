@@ -7,7 +7,8 @@
 - Lille blinke-glitch en gang imellem...
 */
 const video = document.getElementById('video')
-const URL = "/weights"
+//const URL = "/weights"
+const URL = "https://rawgit.com/justadudewhohacks/face-api.js/master/weights";
 
 let state = 0;
 let dataURI;
