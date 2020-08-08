@@ -24,7 +24,7 @@ let calculatedMeanAge = 0;
 let bgMaskImg = new Image();
 bgMaskImg.src = 'background_masked.png';
 
-let debugMode = false;
+let debugMode = true;
 
 var myObj = {
   "suggestions":[ 
