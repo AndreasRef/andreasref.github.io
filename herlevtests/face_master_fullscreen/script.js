@@ -212,7 +212,10 @@ function draw() {
 }
 
 function mousePressed() {
-  console.log(faces);
+  //console.log(faces);
+  //let fs = fullscreen();
+  fullscreen(true);
+
 }
 
 
