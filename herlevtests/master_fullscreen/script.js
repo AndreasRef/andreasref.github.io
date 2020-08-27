@@ -49,9 +49,9 @@ video.addEventListener('play', () => {
 let noiseOffSet = 100000-0.01;
 
 let suggestions = [
-"(0-årige)",
-"(5-årige)",
-"(10-årige)",
+"Popsi og Krelle",
+"Baby Shark",
+"Joey Moe",
 "Ariana Grande",
 "Taylor Swift",
 "Lady Gaga",
@@ -66,10 +66,10 @@ let suggestions = [
 "Keld & The Donkeys",
 "Frank Sinatra",
 "Otto Brandenburg",
-"1949",
-"1944",
-"1939",
-"1934"
+"Raquel Rastenni",
+"Liva Weel",
+"Gustav Winckler",
+"Marguerite Viby"
 ];
 
 let textSpacing = 0.42;
@@ -83,7 +83,11 @@ let scaleFactor = videoWidth/720;
 
 let age = 0;
 
-let myFont
+let myFont;
+
+let leftBorder = 250;
+let rightBorder = 1720;
+
 function preload() {
   myFont = loadFont('VeraMoBd.ttf');
 }
@@ -99,25 +103,48 @@ function draw() {
   clear();
 
   //face stuff
-  //quick test
+  //Only look at and care about the first face...
+
+
+  /*
   if (faces.length > 0) {
     age = lerp(age, faces[0].age, 0.01);
   } else {
     age = lerp(age, noise(noiseOffSet)*100, 0.01);
     noiseOffSet+=0.0005;
   }
+  */
+
+ if (faces.length > 0) {
+   //Dont do anything, age lerping with faces happens in the loop
+  //age = lerp(age, faces[0].age, 0.01);
+} else {
+  age = lerp(age, noise(noiseOffSet)*100, 0.01);
+  noiseOffSet+=0.0005;
+}
+
 
   //the loop
   for (let i = 0; i<faces.length; i++) {
+
+    if (faces[i].alignedRect.box.x > leftBorder && faces[i].alignedRect.box.x + faces[i].alignedRect.box.width < rightBorder) {
+      age = lerp(age, faces[i].age, 0.01);
+
     //text("#" + i + ": age : " + round(faces[i].age), 25, 25*i + 50);
     push();
     noFill();
     translate((960-720),0);
 
     scale(1/scaleFactor, 1);
-    strokeWeight(3)
-    rect(faces[i].alignedRect.box.x, faces[i].alignedRect.box.y, faces[i].alignedRect.box.width, faces[i].alignedRect.box.height)
+    strokeWeight(10);
+    stroke(255,0,0);
+    //rect(faces[i].alignedRect.box.x, faces[i].alignedRect.box.y, faces[i].alignedRect.box.width, faces[i].alignedRect.box.height)
+    drawCorners(faces[i].alignedRect.box.x, faces[i].alignedRect.box.y, faces[i].alignedRect.box.width, faces[i].alignedRect.box.height, 6);
+
+    console.log(faces[i].alignedRect.box.x);
+
     pop();
+    }
   }
 
 
@@ -211,39 +238,23 @@ function draw() {
   //console.log(age);
 }
 
+function drawCorners(x,y,w,h, fraction) {
+  line(x, y, x, y + h/fraction);
+  line(x, y, x + w/fraction, y);
+  
+  line(x+w, y, x+w - w/fraction, y);
+  line(x+w, y, x+w, y + h/fraction);
+  
+  line(x, y + h, x, y + h - h/fraction);
+  line(x, y+h, x + w/fraction, y+h);
+  
+  line(x + w, y + h, x + w, y + h - h/fraction);
+  line(x + w, y+h, x + w - w/fraction, y+h);
+}
+
+
 function mousePressed() {
   //console.log(faces);
   //let fs = fullscreen();
   fullscreen(true);
-
 }
-
-
-
-/* OLD
-function setup() {
-  pixelDensity(1);
-  createCanvas(960, 540)
-  textSize(24);
-  
-}
-
-function draw() {
-  clear();  
-  text(faces.length + " face(s) detected", 25, 25)
-  
-  for (let i = 0; i<faces.length; i++) {
-    text("#" + i + ": age : " + round(faces[i].age), 25, 25*i + 50);
-    push();
-    noFill();
-    rect(faces[i].alignedRect.box.x, faces[i].alignedRect.box.y, faces[i].alignedRect.box.width, faces[i].alignedRect.box.height)
-    pop();
-  }
-}
-
-
-
-function mousePressed() {
-  console.log(faces);
-}
-*/
