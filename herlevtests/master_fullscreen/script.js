@@ -1,7 +1,3 @@
-/*To do
-
-*/
-
 const video = document.getElementById('video')
 //const URL = "/weights"
 //online URL
@@ -137,11 +133,11 @@ function draw() {
 
     scale(1/scaleFactor, 1);
     strokeWeight(10);
-    stroke(255,0,0);
+    stroke("#CC1F2E");
     //rect(faces[i].alignedRect.box.x, faces[i].alignedRect.box.y, faces[i].alignedRect.box.width, faces[i].alignedRect.box.height)
     drawCorners(faces[i].alignedRect.box.x, faces[i].alignedRect.box.y, faces[i].alignedRect.box.width, faces[i].alignedRect.box.height, 6);
 
-    console.log(faces[i].alignedRect.box.x);
+    //console.log(faces[i].alignedRect.box.x);
 
     pop();
     }
@@ -204,7 +200,7 @@ function draw() {
   //Left arrow
   push();
   noStroke();
-  fill(255, 0, 0);
+  fill("#CC1F2E");
   triangle(0, height*0.45, 0, height*0.55, height/3, height*0.5);
   pop();
   
@@ -218,7 +214,7 @@ function draw() {
   //Right arrow
   push();
   noStroke();
-  fill(255, 0, 0);
+  fill("#CC1F2E");
   triangle(width, height*0.475, width, height*0.525, width- height/6, height*0.5);
   pop();
 
