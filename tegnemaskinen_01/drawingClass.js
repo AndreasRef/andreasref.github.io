@@ -9,8 +9,9 @@ class drawing {
     this.y = Math.random()*master_canvas.height-canvas.height;
 
     if (this.category === "plant") {
-      this.x = getRandomArbitrary(0.27*master_canvas.width, master_canvas.width-canvas.width);
-      this.y = getRandomArbitrary(0.25*master_canvas.height, 0.8*master_canvas.height-canvas.height);
+      //this.x = getRandomArbitrary(0.27*master_canvas.width, master_canvas.width-canvas.width); //Sloppy
+      this.x = getRandomArbitrary(0, master_canvas.width*0.8-canvas.width); //reversed for new bg
+      this.y = getRandomArbitrary(0.20*master_canvas.height, 0.8*master_canvas.height-canvas.height);
       this.wiggleFactor = 0.02;
     } else if(this.category === "fish") {
       this.scaling = 0.3;
@@ -26,8 +27,8 @@ class drawing {
     }
      else if (this.category === "architecture" || this.category === "container" || this.category === "food"  || this.category === "fruit"  || this.category === "furniture"  
      || this.category === "garment" || this.category === "instrument"  || this.category === "technology"  || this.category === "tool" ) { //All the drawings we are not sure what are
-      this.x = Math.random()*master_canvas.width*0.25;
-      this.y = getRandomArbitrary(0.6*master_canvas.height, 0.8*master_canvas.height);
+      this.x = (master_canvas.width - canvas.width) + Math.random()*canvas.width*this.scaling*0.7;
+      this.y = getRandomArbitrary(0.6*master_canvas.height, 0.75*master_canvas.height);
       this.wiggleFactor = 0.2;
       this.scaling = 0.3;
     }    
@@ -65,21 +66,24 @@ class drawing {
       this.noiseY+=0.007;
       master_context.translate(xTrans,yTrans);
     } else if (this.category === "fish") {
-      let xTrans = generator.getVal(this.noiseX)*master_canvas.width*0.22*(1/this.scaling); //sloppy
+      //let xTrans = master_canvas.width*(1/this.scaling) - generator.getVal(this.noiseX)*master_canvas.width*0.22*(1/this.scaling); //sloppy
+      let xTrans = (master_canvas.width-WIDTH/3)*(1/this.scaling) - generator.getVal(this.noiseX)*master_canvas.width*0.21*(1/this.scaling); //sloppy
       let yTrans = generator.getVal(this.noiseY)*master_canvas.height * 0.25*(1/this.scaling)+0.25*master_canvas.height*(1/this.scaling); //sloppy
       this.noiseX+=0.001;
       this.noiseY+=0.004;
       master_context.translate(xTrans,yTrans);
     } else if (this.category === "ship") {
-      let xTrans = generator.getVal(this.noiseX)*master_canvas.width*0.21*(1/this.scaling); //sloppy
+      let xTrans = (master_canvas.width-WIDTH/3)*(1/this.scaling) - generator.getVal(this.noiseX)*master_canvas.width*0.21*(1/this.scaling); //sloppy
       let yTrans = generator.getVal(this.noiseY)*master_canvas.height * 0.25*(1/this.scaling)+0.15*master_canvas.height*(1/this.scaling); //sloppy
-      this.noiseX+=0.001;
+      this.noiseX+=0.002;
       this.noiseY+=0.004;
       master_context.translate(xTrans,yTrans);
     }else if (this.category === "humanoid" || this.category === "insect" || this.category === "quadruped") {
-      let xTrans = generator.getVal(this.noiseX)*(master_canvas.width-WIDTH*2)+master_canvas.width*0.2; //sloppy
+      //let xTrans = master_canvas.width*(1/this.scaling) - generator.getVal(this.noiseX)*(master_canvas.width-WIDTH*2)+master_canvas.width*0.2; //sloppy
+      let xTrans = master_canvas.width*(1/this.scaling)*generator.getVal(this.noiseX)*0.6;
+      //if (xTrans > master_canvas.width)
       let yTrans = generator.getVal(this.noiseY)*master_canvas.height * 0.5 + master_canvas.height*0.1;
-      this.noiseX+=0.001;
+      this.noiseX+=0.01;
       this.noiseY+=0.002;
       master_context.translate(xTrans,yTrans);
     } else if (this.category === "plant") {
@@ -93,7 +97,7 @@ class drawing {
       this.x+=generator.getVal(this.noiseX)*3 + 1;
       this.noiseX+=0.01;
       if (this.x > master_canvas.width) this.x = -WIDTH;
-      let yTrans = generator.getVal(this.noiseY+ this.y)*(master_canvas.height-WIDTH) * 0.2+0.85*(master_canvas.height-WIDTH);
+      let yTrans = generator.getVal(this.noiseY+ this.y)*(master_canvas.height-WIDTH) * 0.2+0.87*(master_canvas.height-WIDTH);
       //this.noiseY+=0.01
       //this.noiseY+=0.01
       master_context.translate(this.x,yTrans);

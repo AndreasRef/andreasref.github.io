@@ -38,7 +38,8 @@ var currentPrediction = "";
 var currentPredictionDK = "";
 
 var bgImg = new Image();
-bgImg.src = 'bg_test.png';
+//bgImg.src = 'bg_test.png';
+bgImg.src = 'bg_farve.png';
 
 //New master canvas
 var master_canvas = document.createElement("canvas");
@@ -50,7 +51,7 @@ master_canvas.height = window.innerHeight;
 var master_context = master_canvas.getContext("2d");
 
 //New (drawing) canvas embedded in QuickSettings
-QuickSettings.create(window.innerWidth - 20 - 278, 20, "Dobbeltklik for at åbne/lukke tegnepanel")
+QuickSettings.create(window.innerWidth - 20 - 278, 20, "Dobbeltklik for at åbne/lukke tegnepanel") 
   .setWidth(278)
   .addHTML("Tegn her", '<canvas id="canvas" width="256" height="256" style="border:1px solid #000000;">')
   .addButton("Tryk for at vække tegning til live", function (value) { transfer() })
