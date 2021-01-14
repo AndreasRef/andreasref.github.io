@@ -83,7 +83,7 @@ class drawing {
       let xTrans = master_canvas.width*(1/this.scaling)*generator.getVal(this.noiseX)*0.6;
       //if (xTrans > master_canvas.width)
       let yTrans = generator.getVal(this.noiseY)*master_canvas.height * 0.5 + master_canvas.height*0.1;
-      this.noiseX+=0.01;
+      this.noiseX+=0.002;
       this.noiseY+=0.002;
       master_context.translate(xTrans,yTrans);
     } else if (this.category === "plant") {
