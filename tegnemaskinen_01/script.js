@@ -35,7 +35,9 @@ var noiseY = 0;
 
 var currentPrediction = "";
 
-var currentPredictionDK = "";
+var currentPredictionDK = "StartTekst DK";
+
+var readyToGuess = false;
 
 var bgImg = new Image();
 //bgImg.src = 'bg_test.png';
@@ -102,6 +104,7 @@ function onmousedown() {
 function onmouseup() {
   mouseIsDown = false;
   SEL_NODE = 0;
+  readyToGuess = true;
   process();
 }
 
@@ -140,27 +143,31 @@ function main() {
     currentPredictionDK = "Er det "
     //Quick'n'dirty translations
     if (currentPrediction == "bird") {
-      currentPredictionDK += "en fugl";
+      currentPredictionDK += "en fugl?";
     } else if (currentPrediction == "fish") {
-      currentPredictionDK += "en fisk";
+      currentPredictionDK += "en fisk?";
     } else if (currentPrediction == "humanoid") {
-      currentPredictionDK += "et menneske";
+      currentPredictionDK += "et menneske?";
     } else if (currentPrediction == "insect") {
-      currentPredictionDK += "et insekt";
+      currentPredictionDK += "et insekt?";
     } else if (currentPrediction == "plant") {
-      currentPredictionDK += "en plante";
+      currentPredictionDK += "en plante?";
     } else if (currentPrediction == "quadruped") {
-      currentPredictionDK += "et firbenet dyr";
+      currentPredictionDK += "et firbenet dyr?";
     } else if (currentPrediction == "ship") {
-      currentPredictionDK += "et skib";
+      currentPredictionDK += "et skib?";
     } else if (currentPrediction == "vehicle") {
-      currentPredictionDK += "et køretøj";
+      currentPredictionDK += "et køretøj?";
     } else {
       context.fillStyle = "grey";
       //currentPredictionDK = currentPrediction;
-      currentPredictionDK = "Jeg er ikke sikker"
+      if(readyToGuess) {
+        currentPredictionDK = "Jeg er ikke sikker?"
+      } else {
+        currentPredictionDK = ""
+      }
     }
-    context.fillText(currentPredictionDK + "?", 10, 30);
+    context.fillText(currentPredictionDK, 10, 30);
   }
 }
 
@@ -239,7 +246,7 @@ document.body.onload = async function () {
   console.log("Loading model...");
   await NN.loadModel('models/tfjs-model-8571367962526639.json');
   console.log("Guessing model loaded...");
-  //process(); //Hope this does not break stuff!
+  process(); //Hope this does not break stuff!
 }
 
 window.setInterval(main, 10);
