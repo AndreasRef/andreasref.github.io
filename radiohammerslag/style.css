@@ -1,0 +1,76 @@
+/*
+@font-face{
+    font-family: "HammerSmithOne";
+    src: url('fonts/HammersmithOne-Regular.ttf'),
+    url('fonts/HammerSmithOne.eot'); 
+}
+
+@font-face{
+    font-family: "Lobster";
+    src: url('fonts/Lobster.ttf'),
+    url('fonts/Lobster.eot'); 
+}
+
+@font-face{
+    font-family: "Pacifico";
+    src: url('fonts/Pacifico.ttf'),
+    url('fonts/Pacifico.eot'); 
+}*/
+
+body {
+    margin: 0;
+    height: 100%;
+
+	background: -webkit-radial-gradient( #F6D2BE, #CB957D); /* Safari 5.1 to 6.0 */
+	background: -o-radial-gradient( #F6D2BE, #CB957D); /* For Opera 11.6 to 12.0 */
+	background: -moz-radial-gradient( #F6D2BE, #CB957D); /* For Firefox 3.6 to 15 */
+	background: radial-gradient( #F6D2BE, #CB957D); /* Standard syntax */
+}
+
+body #container
+{
+	margin: 0 auto;
+	width: 1000px;
+	height: 1000px;
+}
+
+#container 
+{
+	text-align: center;
+}
+
+#container #headerText
+{
+	color: white;
+	text-decoration: underline;
+	font-size: 82px;
+	height: 60px;
+}
+
+#container #hammerText
+{
+
+	font-family: 'HammerSmith One', Times, serif;
+}
+
+#container #fmText
+{
+	font-family: 'Lobster', Times, serif;
+}
+
+#container #subText
+{
+	color: white;
+	font-family: 'Pacifico', Times, serif;
+	font-size: 32px;
+}
+
+body #radio 
+{
+
+}
+
+body #radio img
+{
+	max-width: 1000px;
+}
