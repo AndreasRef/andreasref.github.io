@@ -80,9 +80,25 @@ data[9] = [ //torshavn
 ];
 
 
+let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+function updateMonth1(val) {
+  document.getElementById("sliderMonthLabel1").innerHTML = months[val]; 
+}
+
+function updateMonth2(val) {
+  document.getElementById("sliderMonthLabel2").innerHTML = months[val]; 
+}
+
+function updateMonth3(val) {
+  document.getElementById("sliderMonthLabel3").innerHTML = months[val]; 
+}
+
 function column1Changed() {
   let city = document.getElementById("city1").value;
-  let month = document.getElementById("month1").value;
+  //let month = document.getElementById("month1").value;
+  let month = document.getElementById("sliderMonth1").value;
 
   let hum = data[city][0][month];
   let temp = data[city][1][month];
@@ -102,7 +118,8 @@ function column1Changed() {
 
 function column2Changed() {
   let city = document.getElementById("city2").value;
-  let month = document.getElementById("month2").value;
+  //let month = document.getElementById("month2").value;
+  let month = document.getElementById("sliderMonth2").value;
 
   let hum = data[city][0][month];
   let temp = data[city][1][month];
@@ -123,7 +140,8 @@ function column2Changed() {
 
 function column3Changed() {
   let city = document.getElementById("city3").value;
-  let month = document.getElementById("month3").value;
+  //let month = document.getElementById("month3").value;
+  let month = document.getElementById("sliderMonth3").value;
 
   let hum = data[city][0][month];
   let temp = data[city][1][month];

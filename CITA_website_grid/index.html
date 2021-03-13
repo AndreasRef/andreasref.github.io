@@ -24,7 +24,10 @@
       <option value="9">Torshavn</option>
 	</select>
     
-    <select id="month1" onchange="column1Changed()">
+  <input type="range" id="sliderMonth1" min="0" max="11" value ="0" oninput="updateMonth1(this.value)" onchange="column1Changed()">
+  <label id="sliderMonthLabel1">Jan</label>
+
+    <!-- <select id="month1" onchange="column1Changed()">
       <option value="0">January</option>
       <option value="1">February</option>
       <option value="2">March</option>
@@ -37,7 +40,7 @@
       <option value="9">October</option>
       <option value="10">November</option>
       <option value="11">December</option>
-	</select>
+	</select> -->
 
     <!-- <h2>Column 1</h2> -->
     <img id="image1" class="responsive" src="https://via.placeholder.com/256.png" style="display:none" width="1024" height="1024">
@@ -58,8 +61,11 @@
       <option value="8">Nuuk</option>
       <option value="9">Torshavn</option>
 	</select>
+
+  <input type="range" id="sliderMonth2" min="0" max="11" value ="0" oninput="updateMonth2(this.value)" onchange="column2Changed()">
+  <label id="sliderMonthLabel2">Jan</label>
     
-    <select id="month2" onchange="column2Changed()">
+    <!-- <select id="month2" onchange="column2Changed()">
       <option value="0">January</option>
       <option value="1">February</option>
       <option value="2">March</option>
@@ -72,7 +78,7 @@
       <option value="9">October</option>
       <option value="10">November</option>
       <option value="11">December</option>
-	</select>
+	</select> -->
   
     <!-- <h2>Column 2</h2> -->
     <img id="image2" class="responsive" src="https://via.placeholder.com/256.png" style="display:none" width="1024" height="1024">
@@ -93,8 +99,11 @@
       <option value="8">Nuuk</option>
       <option value="9">Torshavn</option>
 	</select>
+
+  <input type="range" id="sliderMonth3" min="0" max="11" value ="0" oninput="updateMonth3(this.value)" onchange="column3Changed()">
+  <label id="sliderMonthLabel3">Jan</label>
     
-    <select id="month3" onchange="column3Changed()">
+    <!-- <select id="month3" onchange="column3Changed()">
       <option value="0">January</option>
       <option value="1">February</option>
       <option value="2">March</option>
@@ -107,7 +116,7 @@
       <option value="9">October</option>
       <option value="10">November</option>
       <option value="11">December</option>
-	</select>
+	</select> -->
     <!-- <h2>Column 3</h2> -->
     <img id="image3" class="responsive" src="https://via.placeholder.com/256.png" style="display:none" width="1024" height="1024">
     <p id="text3">Select city and month to see possible change to your house</p>
