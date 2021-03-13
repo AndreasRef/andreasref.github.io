@@ -84,28 +84,33 @@ let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oc
 
 
 function updateMonth1(val) {
-  document.getElementById("sliderMonthLabel1").innerHTML = months[val]; 
+  document.getElementById("sliderMonthLabel1").innerHTML = months[Math.floor(val/10)];
+  column1Changed(); 
 }
 
 function updateMonth2(val) {
   document.getElementById("sliderMonthLabel2").innerHTML = months[val]; 
+  column2Changed();
 }
 
 function updateMonth3(val) {
   document.getElementById("sliderMonthLabel3").innerHTML = months[val]; 
+  column3Changed();
 }
 
 function column1Changed() {
   let city = document.getElementById("city1").value;
   //let month = document.getElementById("month1").value;
-  let month = document.getElementById("sliderMonth1").value;
+  //let month = document.getElementById("sliderMonth1").value;
+  let monthWithSubdivision = document.getElementById("sliderMonth1").value;
+  let month = Math.floor(monthWithSubdivision/10);
 
   let hum = data[city][0][month];
   let temp = data[city][1][month];
   let co2 = 10;
   let cost = 50;
 
-  document.getElementById("image1").src = "https://via.placeholder.com/226?text=img["+city+"]["+month+"]";
+  document.getElementById("image1").src = "https://via.placeholder.com/226?text=img["+city+"]["+monthWithSubdivision+"]";
   document.getElementById("image1").style.display = "inline";
 
   document.getElementById("text1").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost;
