@@ -110,8 +110,12 @@ function column1Changed() {
   let co2 = 10;
   let cost = 50;
 
-  document.getElementById("image1").src = "https://via.placeholder.com/226?text=img["+city+"]["+monthWithSubdivision+"]";
+  //document.getElementById("image1").src = "https://via.placeholder.com/226?text=img["+city+"]["+monthWithSubdivision+"]";
+  document.getElementById("image1").src = "CopenhagenFinal/Copenhagen"+monthWithSubdivision+".jpg";
   document.getElementById("image1").style.display = "inline";
+
+  document.getElementById("image1thermal").src = "CopenhagenThermal/CopenhagenThermal"+monthWithSubdivision+".png";
+  document.getElementById("image1thermal").style.display = "inline";
 
   document.getElementById("text1").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost;
   console.log(city + " " + month);
