@@ -1,34 +1,3 @@
-/*
-let copenhagenHum = [87,	85,	83,	76,	68,	68,	71,	74,	78,	83,	87,	88];
-// let odenseHum = [87,	84,	78,	70,	64,	65,	67,	69,	73,	79,	86,	89];
-let tonderHum = [91,	90,	87,	79,	71,	71,	72,	73,	76,	83,	88,	92];
-// let aalborgHum = [87,	82,	76,	66,	60,	62,	65,	67,	71,	78,	86,	89];
-// let esbjergHum = [89,	89,	87,	83,	78,	76,	78,	79,	82,	86,	90,	94];
-// let naesgaardHum = [91,	89,	84,	76,	71,	70,	73,	74,	78,	84,	89,	91];
-// let bornholmHum = [87,	87,	86,	82,	80,	80,	82,	83,	83,	84,	85,	88];
-let thuleHum = [64,	63,	63,	62,	63,	69,	71,	72,	69,	69,	66,	67];
-let nuukHum = [78,	79,	81,	81,	84,	84,	87,	87,	83,	78,	76,	77];
-let torshavnHum = [90,	89,	89,	87,	88,	88,	90,	90,	90,	90,	89,	90];
-
-let copenhagenTemp = [0,0,2,7,12,16,18,17,14,9,5,3]
-// let odenseTemp = [0,0,2,7,12,15,17,16,13,9,5,2]
-let tonderTemp = [0,0,2,7,12,15,17,17,14,9,5,2]
-// let aalborgTemp = [-1,-1,1,6,11,14,16,16,13,8,4,2]
-// let esbjergTemp = [1,0,2,7,11,15,17,17,14,10,6,3]
-// let naesgaardTemp = [0,0,2,6,11,15,17,17,14,9,5,2]
-// let bornholmTemp = [1,0,1,5,9,14,17,17,14,10,6,3]
-let thuleTemp = [-23.3,-24.6,-24.1,-17,-5.6,1.5,4.6,3.8,-1.7,-9.8,-16.6,-21.6]
-let nuukTemp = [-7.4,-7.8,-8,-3.9,0.6,3.9,6.5,6.1,3.5,-0.6,-3.6,-6.2]
-let torshavnTemp = [3.4,3.6,3.8,4.9,6.9,9,10.3,10.6,9.1,7.5,4.8,3.8]
-
-
-var copenhagen = {
-  temps: [0,0,2,7,12,16,18,17,14,9,5,3],
-  hums: [87,	85,	83,	76,	68,	68,	71,	74,	78,	83,	87,	88]
-}
-
-*/
-
 let data = [];
 
 data[0] = [ //copenhagen
@@ -59,8 +28,7 @@ data[4] = [ //torshavn
 
 let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-let 
-
+let cities = ["Copenhagen", "Tonder", "Thule", "Nuuk", "Torshavn"]
 
 function updateMonth1(val) {
   document.getElementById("sliderMonthLabel1").innerHTML = months[Math.floor(val/10)];
@@ -90,10 +58,14 @@ function column1Changed() {
   let cost = 50;
 
   //document.getElementById("image1").src = "https://via.placeholder.com/226?text=img["+city+"]["+monthWithSubdivision+"]";
-  document.getElementById("image1").src = "CopenhagenFinal/Copenhagen"+monthWithSubdivision+".jpg";
+  //document.getElementById("image1").src = "CopenhagenFinal/Copenhagen"+monthWithSubdivision+".jpg"; //Old
+
+  document.getElementById("image1").src = cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg";
   document.getElementById("image1").style.display = "inline";
 
-  document.getElementById("image1thermal").src = "CopenhagenThermal/CopenhagenThermal"+monthWithSubdivision+".png";
+  //document.getElementById("image1thermal").src = "CopenhagenThermal/CopenhagenThermal"+monthWithSubdivision+".png"; //Old
+  document.getElementById("image1thermal").src = cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png"; 
+  console.log(cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png");
   document.getElementById("image1thermal").style.display = "inline";
 
   document.getElementById("text1").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost;
