@@ -18,7 +18,7 @@
 }
 
 .responsive {
-  width: 85%; /* was 100 before */
+  width: 50%; /* was 100 before */
   height: auto;
 }
 
