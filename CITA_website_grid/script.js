@@ -41,7 +41,8 @@ function updateMonth2(val) {
 }
 
 function updateMonth3(val) {
-  document.getElementById("sliderMonthLabel3").innerHTML = months[val]; 
+  //document.getElementById("sliderMonthLabel3").innerHTML = months[val]; 
+  document.getElementById("sliderMonthLabel3").innerHTML = months[Math.floor(val/10)];
   column3Changed();
 }
 
@@ -119,6 +120,31 @@ function column2Changed() {
 
 
 function column3Changed() {
+
+  let city = document.getElementById("city3").value;
+  let monthWithSubdivision = document.getElementById("sliderMonth3").value;
+  let month = Math.floor(monthWithSubdivision/10);
+
+  let hum = data[city][0][month];
+  let temp = data[city][1][month];
+  let co2 = 10;
+  let cost = 50;
+
+  document.getElementById("image3").src = cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg";
+  console.log(cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg");
+  document.getElementById("image3").style.display = "inline";
+
+  document.getElementById("image3thermal").src = cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png"; 
+  console.log(cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png");
+  document.getElementById("image3thermal").style.display = "inline";
+
+  document.getElementById("text3").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost;
+  console.log(city + " " + month);
+  console.log("hum " + data[city][0][month]);
+  console.log("temp " + data[city][1][month]);
+
+
+  /*
   let city = document.getElementById("city3").value;
   //let month = document.getElementById("month3").value;
   let month = document.getElementById("sliderMonth3").value;
@@ -135,4 +161,5 @@ function column3Changed() {
   console.log(city + " " + month);
   console.log("hum " + data[city][0][month]);
   console.log("temp " + data[city][1][month]);
+  */
 }
