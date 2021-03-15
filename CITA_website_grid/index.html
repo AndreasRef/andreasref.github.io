@@ -48,18 +48,13 @@
   <div class="column" style="background-color:rgb(255, 255, 255);">
   	<select id="city2" onchange="column2Changed()">
       <option value="0">Copenhagen</option>
-      <option value="1">Odense</option>
-      <option value="2">Tonder</option>
-      <option value="3">Aalborg</option>
-      <option value="4">Esbjerg</option>
-      <option value="5">Naesgaard</option>
-      <option value="6">Bornholm</option>
-      <option value="7">Thule</option>
-      <option value="8">Nuuk</option>
-      <option value="9">Torshavn</option>
+      <option value="1">Tonder</option>
+      <option value="2">Thule</option>
+      <option value="3">Nuuk</option>
+      <option value="4">Torshavn</option>
 	</select>
 
-  <input type="range" id="sliderMonth2" min="0" max="11" value ="0" oninput="updateMonth2(this.value)">
+  <input type="range" id="sliderMonth2" min="0" max="119" value ="0" oninput="updateMonth2(this.value)">
   <label id="sliderMonthLabel2">Jan</label>
     
     <!-- <select id="month2" onchange="column2Changed()">
@@ -79,6 +74,7 @@
   
     <!-- <h2>Column 2</h2> -->
     <img id="image2" class="responsive" src="https://via.placeholder.com/256.png" style="display:none" width="1024" height="1024">
+    <img id="image2thermal" class="responsive" src="https://via.placeholder.com/256.png" style="display:none" width="1024" height="1024">
     <p id="text2">Select city and month to see possible change to your house</p>
   </div>
 

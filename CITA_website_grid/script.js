@@ -36,7 +36,7 @@ function updateMonth1(val) {
 }
 
 function updateMonth2(val) {
-  document.getElementById("sliderMonthLabel2").innerHTML = months[val]; 
+  document.getElementById("sliderMonthLabel2").innerHTML = months[Math.floor(val/10)];
   column2Changed();
 }
 
@@ -47,8 +47,6 @@ function updateMonth3(val) {
 
 function column1Changed() {
   let city = document.getElementById("city1").value;
-  //let month = document.getElementById("month1").value;
-  //let month = document.getElementById("sliderMonth1").value;
   let monthWithSubdivision = document.getElementById("sliderMonth1").value;
   let month = Math.floor(monthWithSubdivision/10);
 
@@ -57,13 +55,10 @@ function column1Changed() {
   let co2 = 10;
   let cost = 50;
 
-  //document.getElementById("image1").src = "https://via.placeholder.com/226?text=img["+city+"]["+monthWithSubdivision+"]";
-  //document.getElementById("image1").src = "CopenhagenFinal/Copenhagen"+monthWithSubdivision+".jpg"; //Old
-
   document.getElementById("image1").src = cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg";
+  console.log(cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg");
   document.getElementById("image1").style.display = "inline";
 
-  //document.getElementById("image1thermal").src = "CopenhagenThermal/CopenhagenThermal"+monthWithSubdivision+".png"; //Old
   document.getElementById("image1thermal").src = cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png"; 
   console.log(cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png");
   document.getElementById("image1thermal").style.display = "inline";
@@ -77,6 +72,30 @@ function column1Changed() {
 
 
 function column2Changed() {
+
+  let city = document.getElementById("city2").value;
+  let monthWithSubdivision = document.getElementById("sliderMonth2").value;
+  let month = Math.floor(monthWithSubdivision/10);
+
+  let hum = data[city][0][month];
+  let temp = data[city][1][month];
+  let co2 = 10;
+  let cost = 50;
+
+  document.getElementById("image2").src = cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg";
+  console.log(cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg");
+  document.getElementById("image2").style.display = "inline";
+
+  document.getElementById("image2thermal").src = cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png"; 
+  console.log(cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png");
+  document.getElementById("image2thermal").style.display = "inline";
+
+  document.getElementById("text2").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost;
+  console.log(city + " " + month);
+  console.log("hum " + data[city][0][month]);
+  console.log("temp " + data[city][1][month]);
+
+  /*
   let city = document.getElementById("city2").value;
   //let month = document.getElementById("month2").value;
   let month = document.getElementById("sliderMonth2").value;
@@ -94,6 +113,7 @@ function column2Changed() {
   console.log(city + " " + month);
   console.log("hum " + data[city][0][month]);
   console.log("temp " + data[city][1][month]);
+  */
 }
 
 
