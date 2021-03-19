@@ -100,7 +100,7 @@ function column1Changed() {
   document.getElementById("image1thermal").style.display = "inline";
 
   //document.getElementById("text1").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost; // old
-  document.getElementById("text1").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>wallCost: " + wallCost + " dkk <br>roofCO2: " + roofCO2 + " kg <br>roofCost: " + roofCost + " dkk"; 
+  document.getElementById("text1").innerHTML = "<strong>Local Climate</strong><br>Humidity: " + hum + "%<br>Temperature: " + temp + "°C<br><br><strong>External Insulation:</strong><br>Cost: " + wallCost + " dkk <br><br><strong>Green Roof:</strong><br>CO2 saved: " + roofCO2 + " kg <br>Cost: " + roofCost + " dkk"; 
   //console.log(city + " " + month);
   //console.log("hum " + data[city][0][month]);
   //console.log("temp " + data[city][1][month]);
@@ -133,7 +133,8 @@ function column2Changed() {
   document.getElementById("image2thermal").style.display = "inline";
 
   //document.getElementById("text2").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost; // old
-  document.getElementById("text2").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>wallCost: " + wallCost + " dkk <br>roofCO2: " + roofCO2 + " kg <br>roofCost: " + roofCost + " dkk"; 
+  //document.getElementById("text2").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>wallCost: " + wallCost + " dkk <br>roofCO2: " + roofCO2 + " kg <br>roofCost: " + roofCost + " dkk"; 
+  document.getElementById("text2").innerHTML = "<strong>Local Climate</strong><br>Humidity: " + hum + "%<br>Temperature: " + temp + "°C<br><br><strong>External Insulation:</strong><br>Cost: " + wallCost + " dkk <br><br><strong>Green Roof:</strong><br>CO2 saved: " + roofCO2 + " kg <br>Cost: " + roofCost + " dkk"; 
   //console.log(city + " " + month);
   //console.log("hum " + data[city][0][month]);
   //console.log("temp " + data[city][1][month]);
@@ -187,7 +188,8 @@ function column3Changed() {
 
   //document.getElementById("text3").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost; //old
 
-  document.getElementById("text3").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>wallCost: " + wallCost + " dkk <br>roofCO2: " + roofCO2 + " kg <br>roofCost: " + roofCost + " dkk"; 
+  //document.getElementById("text3").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>wallCost: " + wallCost + " dkk <br>roofCO2: " + roofCO2 + " kg <br>roofCost: " + roofCost + " dkk"; 
+  document.getElementById("text3").innerHTML = "<strong>Local Climate</strong><br>Humidity: " + hum + "%<br>Temperature: " + temp + "°C<br><br><strong>External Insulation:</strong><br>Cost: " + wallCost + " dkk <br><br><strong>Green Roof:</strong><br>CO2 saved: " + roofCO2 + " kg <br>Cost: " + roofCost + " dkk"; 
 
   //console.log(city + " " + month);
   //console.log("hum " + data[city][0][month]);
