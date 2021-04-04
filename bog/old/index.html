@@ -1,0 +1,185 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Bogprojekt kodeskitser</title>
+    <script src="//toolness.github.io/p5.js-widget/p5-widget.js"></script>
+    <script type="text/p5" data-p5-version="0.9.0"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,700" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <h1>Bogprojekt kodeskitser</h1>
+    
+    <h2>Kapitel 1</h2>
+
+    <h3>Sol Lewitt Wall Drawing #104</h3>
+    <script type="text/p5" data-height="500" data-preview-width="650" data-p5-version="1.0.0" data-autoplay>
+function setup() {
+  createCanvas(600, 450);
+  background(255);
+  for (let i = 0; i < 10000; i++) {
+    let v1 = createVector(random(width), random(height));
+    let v2 = p5.Vector.random2D();
+    v2.setMag(10);
+    line(v1.x, v1.y, v1.x + v2.x, v1.y + v2.y);
+  }
+}
+    </script>
+
+    <h2>Kapitel 2</h2>
+    <h3>En opskrift på en stol</h3>
+    <script type="text/p5" data-height="526" data-preview-width="525" data-p5-version="1.0.0" data-autoplay>
+// PARAMETERIZED CHAIR adapted from http://formandcode.com/code-examples/parameterize-chair
+
+let chairSeatHeight = 100;
+let chairWidth = 50;
+let chairDepth = 50;
+let chairBackHeight = 100;
+let chairFrameThickness = 10;
+
+function setup() {
+  createCanvas(512, 512, WEBGL);
+  background(0);
+  
+  chairSeatHeight = createSlider(0,255,100).position(10, 10);
+  chairWidth = createSlider(0,255,100).position(10, 30);
+  chairDepth = createSlider(0,255,100).position(10, 50);
+  chairBackHeight = createSlider(0,255,100).position(10, 70);
+  chairFrameThickness = createSlider(0,50,5).position(10, 90);
+  
+  fill(0);
+  strokeWeight(3);
+  stroke(255);
+}
+
+function draw() {
+  background(0);
+  ortho();
+  push();
+  translate(-100, -100, 200);
+  rotateX(-PI / 9);
+  rotateY(PI / 8);
+  drawChair();
+  pop();
+}
+
+function drawChair() {
+  // back
+  push();
+  translate(chairWidth.value() / 2, chairBackHeight.value() / 2);
+  box(chairWidth.value(), chairBackHeight.value(), chairFrameThickness.value());
+  pop();
+
+  // seat
+  push();
+  translate(chairWidth.value() / 2, chairBackHeight.value() + chairFrameThickness.value() / 2, chairDepth.value() / 2 - chairFrameThickness.value() / 2);
+  box(chairWidth.value(), chairFrameThickness.value(), chairDepth.value());
+  pop();
+
+  // legs
+  push();
+  translate(chairFrameThickness.value() / 2, chairBackHeight.value() + chairSeatHeight.value() / 2 + chairFrameThickness.value(), 0);
+  box(chairFrameThickness.value(), chairSeatHeight.value(), chairFrameThickness.value());
+  pop();
+
+  push();
+  translate(chairWidth.value() - chairFrameThickness.value() / 2, chairBackHeight.value() + chairSeatHeight.value() / 2 + chairFrameThickness.value(), 0);
+  box(chairFrameThickness.value(), chairSeatHeight.value(), chairFrameThickness.value());
+  pop();
+
+  push();
+  translate(chairWidth.value() - chairFrameThickness.value() / 2, chairBackHeight.value() + chairSeatHeight.value() / 2 + chairFrameThickness.value(), chairDepth.value() - chairFrameThickness.value());
+  box(chairFrameThickness.value(), chairSeatHeight.value(), chairFrameThickness.value());
+  pop();
+
+  push();
+  translate(chairFrameThickness.value() / 2, chairBackHeight.value() + chairSeatHeight.value() / 2 + chairFrameThickness.value(), chairDepth.value() - chairFrameThickness.value());
+  box(chairFrameThickness.value(), chairSeatHeight.value(), chairFrameThickness.value());
+  pop();
+}
+    </script>
+    
+
+    <h3>Poesi-robotten</h3>
+    <script type="text/p5" data-height="600" data-preview-width="650" data-p5-version="0.9.0" data-autoplay>
+let firstWords = ["deres", "byens", "min", "hans", "farmors", "Frankrigs"];
+let secondWords = ["store", "behårede","blå","skræmmende","grønne", "søde","grædende","flotte"];
+let thirdWords = ["kat", "hund","fisk","aubergine", "postmand", "traktor"];
+let fourthWords = ["hikker", "knipser","danser","spiser","sluprer","drømmer"];
+let fifthWords = ["elegant", "langsomt","skørt","alene","flot", "skønt"];
+
+
+function setup() {
+  createCanvas(600, 500);
+  fill(0);
+  textFont('monospace', 48);
+  noLoop();
+}
+
+function draw() {
+  background(255);
+  
+  let word1 = firstWords[int(random(firstWords.length))];
+  let word2 = secondWords[int(random(secondWords.length))];
+  let word3 = thirdWords[int(random(thirdWords.length))];
+  let word4 = fourthWords[int(random(fourthWords.length))];
+  let word5 = fifthWords[int(random(fifthWords.length))];
+  
+  text(word1,150,50); 
+  text(word2,150,150);
+  text(word3,150,250);
+  text(word4,150,350);
+  text(word5,150,450);
+}
+
+
+function mousePressed() {
+ redraw(); 
+}
+
+
+    </script>
+    
+    <h2>Kapitel 3</h2>
+    <h3>Poems About Things</h3>
+    <img src="https://andreasrefsgaard.dk/wp-content/uploads/2019/02/PoemsAboutThingsWeb.jpg">
+    <p><a href="https://editor.p5js.org/AndreasRef/sketches/pglTkcFO7">Prøv værket online (mobil + computer)</a></p>
+    
+    <br>
+    <br>
+    
+    <h3>Tilfældighed vs Støj</h3>
+    <img src="https://i.stack.imgur.com/ezAat.png">
+    <p>[Link kommer snart...]</p>
+    
+    
+    <br>
+    <br>
+    
+    <h3>Generer tekst med Markow Kæder</h3>
+    <img src="https://mbenhaddou.com/wp-content/uploads/2017/07/markov-chain.png">
+    <p><a href="https://editor.p5js.org/AndreasRef/sketches/H1UZZNiv7">Link på ny side</a></p>
+    
+    <br>
+    <br>
+    <h3>Genetic Paintings</h3>
+    <img src="http://andreasrefsgaard.dk/wp-content/uploads/2016/12/geneticPaintingGIF.gif">
+    <p><a href="https://andreasrefsgaard.dk/p5js/geneticPaintingWeb/">Link på ny side</a></p>
+    
+    
+    <br>
+    <br>
+    <h2>Kapitel 4</h2>
+    <h3>StyleTransfer</h3>
+    <img src="https://miro.medium.com/max/1400/1*xap0Mey0k_MnaSSbkRavbQ.jpeg">
+    <p><a href="https://reiinakano.com/arbitrary-image-stylization-tfjs/">Link på ekstern side (vi kan selv lave noget lignende)</a></p>
+    
+    
+
+</body>
+
+</html>
