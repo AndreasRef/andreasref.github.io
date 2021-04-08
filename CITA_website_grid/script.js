@@ -71,7 +71,6 @@ function updateMonth2(val) {
 }
 
 function updateMonth3(val) {
-  //document.getElementById("sliderMonthLabel3").innerHTML = months[val]; 
   document.getElementById("sliderMonthLabel3").innerHTML = months[Math.floor(val/10)];
   column3Changed();
 }
@@ -88,9 +87,6 @@ function column1Changed() {
   let roofCO2 = data[city][3][monthWithSubdivision];
   let roofCost = data[city][4][monthWithSubdivision];
 
-  //let co2 = 10;
-  //let cost = 50;
-
   document.getElementById("image1").src = cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg";
   console.log(cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg");
   document.getElementById("image1").style.display = "inline";
@@ -98,12 +94,7 @@ function column1Changed() {
   document.getElementById("image1thermal").src = cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png"; 
   console.log(cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png");
   document.getElementById("image1thermal").style.display = "inline";
-
-  //document.getElementById("text1").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost; // old
   document.getElementById("text1").innerHTML = "<strong>Local Climate</strong><br>Humidity: " + hum + "%<br>Temperature: " + temp + "°C<br><br><strong>External Insulation:</strong><br>Cost: " + wallCost + " dkk <br><br><strong>Green Roof:</strong><br>CO2 saved: " + roofCO2 + " kg <br>Cost: " + roofCost + " dkk"; 
-  //console.log(city + " " + month);
-  //console.log("hum " + data[city][0][month]);
-  //console.log("temp " + data[city][1][month]);
 }
 
 
@@ -121,9 +112,6 @@ function column2Changed() {
   let roofCO2 = data[city][3][monthWithSubdivision];
   let roofCost = data[city][4][monthWithSubdivision];
 
-  //let co2 = 10;
-  //let cost = 50;
-
   document.getElementById("image2").src = cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg";
   console.log(cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg");
   document.getElementById("image2").style.display = "inline";
@@ -132,32 +120,7 @@ function column2Changed() {
   console.log(cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png");
   document.getElementById("image2thermal").style.display = "inline";
 
-  //document.getElementById("text2").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost; // old
-  //document.getElementById("text2").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>wallCost: " + wallCost + " dkk <br>roofCO2: " + roofCO2 + " kg <br>roofCost: " + roofCost + " dkk"; 
   document.getElementById("text2").innerHTML = "<strong>Local Climate</strong><br>Humidity: " + hum + "%<br>Temperature: " + temp + "°C<br><br><strong>External Insulation:</strong><br>Cost: " + wallCost + " dkk <br><br><strong>Green Roof:</strong><br>CO2 saved: " + roofCO2 + " kg <br>Cost: " + roofCost + " dkk"; 
-  //console.log(city + " " + month);
-  //console.log("hum " + data[city][0][month]);
-  //console.log("temp " + data[city][1][month]);
-
-  /*
-  let city = document.getElementById("city2").value;
-  //let month = document.getElementById("month2").value;
-  let month = document.getElementById("sliderMonth2").value;
-
-  let hum = data[city][0][month];
-  let temp = data[city][1][month];
-  let co2 = 10;
-  let cost = 50;
-
-  document.getElementById("image2").src = "https://via.placeholder.com/226?text=img["+city+"]["+month+"]";
-  document.getElementById("image2").style.display = "inline";
-
-
-  document.getElementById("text2").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost;
-  console.log(city + " " + month);
-  console.log("hum " + data[city][0][month]);
-  console.log("temp " + data[city][1][month]);
-  */
 }
 
 
@@ -175,9 +138,6 @@ function column3Changed() {
   let roofCO2 = data[city][3][monthWithSubdivision];
   let roofCost = data[city][4][monthWithSubdivision];
 
-  //let co2 = 10;
-  //let cost = 50;
-
   document.getElementById("image3").src = cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg";
   console.log(cities[city] + "Final/" + cities[city] + monthWithSubdivision+".jpg");
   document.getElementById("image3").style.display = "inline";
@@ -185,33 +145,5 @@ function column3Changed() {
   document.getElementById("image3thermal").src = cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png"; 
   console.log(cities[city] + "Thermal/" + cities[city] + "Thermal" + monthWithSubdivision+".png");
   document.getElementById("image3thermal").style.display = "inline";
-
-  //document.getElementById("text3").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost; //old
-
-  //document.getElementById("text3").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>wallCost: " + wallCost + " dkk <br>roofCO2: " + roofCO2 + " kg <br>roofCost: " + roofCost + " dkk"; 
   document.getElementById("text3").innerHTML = "<strong>Local Climate</strong><br>Humidity: " + hum + "%<br>Temperature: " + temp + "°C<br><br><strong>External Insulation:</strong><br>Cost: " + wallCost + " dkk <br><br><strong>Green Roof:</strong><br>CO2 saved: " + roofCO2 + " kg <br>Cost: " + roofCost + " dkk"; 
-
-  //console.log(city + " " + month);
-  //console.log("hum " + data[city][0][month]);
-  //console.log("temp " + data[city][1][month]);
-
-
-  /*
-  let city = document.getElementById("city3").value;
-  //let month = document.getElementById("month3").value;
-  let month = document.getElementById("sliderMonth3").value;
-
-  let hum = data[city][0][month];
-  let temp = data[city][1][month];
-  let co2 = 10;
-  let cost = 50;
-
-  document.getElementById("image3").src = "https://via.placeholder.com/226?text=img["+city+"]["+month+"]";
-  document.getElementById("image3").style.display = "inline";
-
-  document.getElementById("text3").innerHTML = "hum: " + hum + "<br>temp: " + temp + "<br>co2: " + co2 + "<br>cost: " + cost;
-  console.log(city + " " + month);
-  console.log("hum " + data[city][0][month]);
-  console.log("temp " + data[city][1][month]);
-  */
 }
