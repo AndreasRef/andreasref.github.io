@@ -1,0 +1,687 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>FabLearnDK 2021</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="648fb8ff-e6f0-4e39-bef4-41b6cdbecf33" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/VideoPainter.png"/></div><h1 class="page-title">FabLearnDK 2021</h1></header><div class="page-body"><p id="6de8fcf6-5bf6-4432-9244-b02efdb0ba6f" class="">
+</p><p id="6e865b9c-f887-4da5-b853-e35af984b488" class="">Maskinlæring og kunstig intelligens ved <a href="https://andreasrefsgaard.dk/">Andreas Refsgaard</a> 15/4/2021</p><p id="c297a552-5102-4d83-8b8b-d1c0368659ca" class="">
+</p><h2 id="88bd8db1-866a-4fd3-afcf-c32852b4b6e2" class=""><strong>Dagens program</strong></h2><p id="48e948e8-e35f-4bd9-8413-1916ce435a8f" class="">1) Teachable Machine: Træn din egen billedegenkendelsesalgoritme 🤖 
+</p><p id="75cb5348-790b-4887-af0f-e04df06aff7e" class="">2) Tracking af ansigter: Overvågning, profilering og etik 👤 
+</p><p id="e497b5bd-b8a6-444d-9eac-7ae3664ef6a3" class=""><em>Kort pause</em></p><p id="17d08820-f7e5-4a8b-8b05-67545c80f475" class="">
+</p><p id="7a7e81ff-012f-48c9-b07f-916329db33b7" class="">3) Poesi og kode: Kode som poetisk værktøj ✍️ 
+</p><p id="c3f0a8e5-1a98-4a43-8c0a-04a6f181ff02" class="">4) Når maskinerer genererer: GAN-netværk og fake news 🎨 </p><p id="feaded29-2fd5-4ef5-bd4c-0a5572e6dbc4" class="">
+</p><p id="10bae5a1-b020-48fc-be21-dc62b778d31a" class="">
+</p><h1 id="af4a4968-3f05-4a34-bd38-0d2a86168bd2" class="">1) Teachable Machine 🤖</h1><figure id="1e461d08-5d8b-4dad-a68b-5f216a66ad71" class="image"><a href="https://andreasref.github.io/cita/teachablemachine2.gif"><img style="width:384px" src="https://andreasref.github.io/cita/teachablemachine2.gif"/></a></figure><p id="1a8ef720-726c-4220-9e0f-d5e31b5a106b" class="">Link: <a href="http://teachablemachine.withgoogle.com/">TeachableMachine.withgoogle.com</a></p><h3 id="b60b1423-c0ab-433d-a825-a84d291d2eef" class="">Træn TM trin-for-trin</h3><ol id="7b93e22f-13f2-454b-807c-89b769dfdfae" class="numbered-list" start="1"><li>Gå til <a href="http://teachablemachine.withgoogle.com/">TeachableMachine.withgoogle.com</a></li></ol><ol id="c7ea9d2d-3888-4d79-9046-17fcb87733bc" class="numbered-list" start="2"><li>Tryk på  “get started” knappen</li></ol><ol id="ea0db416-0422-4b5a-b99a-ca9a265fff64" class="numbered-list" start="3"><li>Tryk på “image project”</li></ol><ol id="838ec926-ef15-4647-9253-46c7749d71c1" class="numbered-list" start="4"><li>Tilføj så mange klasser du vil og giv dem navne</li></ol><figure id="9ceb8eae-3dde-4bc4-aa0f-e6d351a0d312" class="image"><a href="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/0_rCj4e12llDVwG1aH.png"><img style="width:480px" src="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/0_rCj4e12llDVwG1aH.png"/></a></figure><p id="577bc276-178b-40de-959a-b14e12d23704" class="">
+</p><ol id="bdde48c3-e631-4fe5-87cc-23b7138b95d5" class="numbered-list" start="1"><li>Optag eksempler på hver klasse gennem dit webkamera</li></ol><figure id="4f1e0dab-36b7-458e-9207-94bb7edcdf72" class="image"><a href="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/0_ymnHiaKa5dIFkCbj.gif"><img style="width:432px" src="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/0_ymnHiaKa5dIFkCbj.gif"/></a></figure><figure id="bdfb4ace-71c3-4998-87d7-cdbf4eba76c8" class="image"><a href="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/0_v5DL_GStG1cLLoRb.gif"><img style="width:432px" src="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/0_v5DL_GStG1cLLoRb.gif"/></a></figure><p id="f64063b7-3c1f-4767-8ae7-a584253d03ed" class="">2. Try på “Train Model”</p><figure id="0ae26b66-30c2-4b73-af77-6b7a4d0584df" class="image"><a href="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/0_YtOobQkpflCEAWsE.gif"><img style="width:432px" src="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/0_YtOobQkpflCEAWsE.gif"/></a></figure><p id="539d1612-b82b-418b-ac34-a0249fe8ccdf" class="">
+</p><p id="468da2ce-b32e-40d7-bfdd-c599bde7f135" class="">3. Vent til modellen er trænet færdig. Test derefter om den virker under &quot;preview&quot;</p><figure id="e7cf4804-f18b-48d5-8762-d6a8332cf85b" class="image"><a href="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/0_4hg7fS-BPMDn-kbc.gif"><img style="width:432px" src="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/0_4hg7fS-BPMDn-kbc.gif"/></a></figure><p id="9a1dabf2-12be-4114-b889-f97949ed54d0" class="">
+</p><p id="dd89d3a5-dab1-4a7c-bea4-d815ccd2f2ff" class="">
+</p><h3 id="40f72653-5e9e-4b6a-a894-17392e24f14c" class="">Har du tekniske problemer😬 ?</h3><p id="45df91a8-e4e8-477e-b9e5-d6cdbcd2fb1e" class="">Så tjek den tekniske troubleshoot guide nederst på denne side, eller prøv i stedet en af disse præ-trænede klassifikationsmodeller:</p><p id="6ffbc686-918c-477a-9e20-ce6777269f45" class=""><a href="https://cloud.google.com/vision/docs/drag-and-drop">Google Cloud Vision</a> (upload dit eget billede)</p><p id="b9180084-4549-4fd2-b966-c1faf5718314" class=""><a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/#features">Microsoft Computer Vision</a> (upload dit eget billede)</p><p id="c6e4cc48-e229-45ec-88b8-130ad999ebe1" class="">eller hav det sjovt med <a href="https://tegnemaskinen.vejlebib.dk/">Tegnemaskinen</a>, lavet for Vejle Bibliotek</p><p id="a35416f3-be4d-4168-bd6a-a600dbf5a444" class="">
+</p><p id="e6c36e98-fa57-4f09-85a6-f61667c965d9" class="">
+</p><h1 id="f9c88ea0-4918-4074-8f61-7afd71e6fbbf" class="">2) Tracking af ansigter 👤 </h1><p id="4c0f03d7-556f-4543-9bc7-274a2d61b2eb" class="">
+</p><p id="965cd1cd-8c77-48ec-bca0-d2efc88c8a19" class=""><a href="https://andreasref.github.io/ml/Face-Detection-JavaScript_web/">Facetracking med estimator på alder, køn og humør</a> <a href="https://github.com/AndreasRef/andreasref.github.io/tree/master/ml/Face-Detection-JavaScript_web"><em>kildekode</em></a></p><figure id="0281e51c-75bc-40c8-b949-71d5f88ea3d4" class="image"><a href="https://andreasref.github.io/silkeborg/faceExpression.png"><img style="width:432px" src="https://andreasref.github.io/silkeborg/faceExpression.png"/></a></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b60a6959-e227-49e4-b251-b50f051e5dbb"><div style="font-size:1.5em"><span class="icon">👉</span></div><div style="width:100%">Opgave: Afprøv modellen ovenfor og vurder om alder, køn og humør stemmer overens med dit ansigt. Hav tålmodighed med modellen, der kan godt gå et par minutter, før den er loadet, og du ser et resultat på skærmen. 
+
+Post din oplevelse i chatten 
+
+Virker demoen ovenfor ikke, eller giver den meget skæve resultater? 
+Så prøv evt et af disse alternativer:
+<a href="https://www.visagetechnologies.com/HTML5/latest/Samples/ShowcaseDemo/ShowcaseDemo.html">Visage Technologies</a> (med webcam) 
+<a href="https://www.facelytics.io/#try-it">Facelytics</a> (med upload af billede)</div></figure><p id="996e19c6-4468-4e60-81a3-494a6755227b" class="">
+</p><p id="837442b2-a84f-464b-938d-ca810fa66613" class="">
+</p><p id="bfae7918-8ac5-48fd-ab35-902b6bd273b7" class=""><a href="https://andreasref.github.io/ml/simpleWebcamFaceRecognition_web/">Genkend personer ud fra et enkelt billede</a> <a href="https://github.com/AndreasRef/andreasref.github.io/tree/master/ml/simpleWebcamFaceRecognition_web"><em>kildekode</em></a></p><figure id="7ae67a0f-e6b2-49ae-8593-023407762b92" class="image"><a href="https://andreasref.github.io/silkeborg/face_recognition.png"><img style="width:432px" src="https://andreasref.github.io/silkeborg/face_recognition.png"/></a></figure><div id="c8ac190e-1a6a-45d1-9014-8bcdd964f98c" class="column-list"><div id="d5bc91ca-34c7-4669-b94d-0bc98617ce18" style="width:33.333333333333336%" class="column"><figure id="e52cff63-5b23-4e4b-a46b-dd1999dcb90f" class="image"><a href="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/andreas.jpg"><img style="width:144px" src="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/andreas.jpg"/></a></figure><p id="210b8d6c-af2b-45d7-9077-673d927606f1" class="">
+</p></div><div id="50711a0c-ea55-4810-a7ee-7f8f5d0018d0" style="width:33.33333333333333%" class="column"><figure id="1b788c88-1396-4b62-8b6e-d6706f712b4f" class="image"><a href="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/barack.jpg"><img style="width:144px" src="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/barack.jpg"/></a></figure><p id="8fc1f903-6766-4ccc-bce8-5dff2d3114ad" class="">
+</p></div><div id="f62fa4b3-8c66-4cf5-89cb-0e93b57c7f4c" style="width:33.33333333333334%" class="column"><figure id="e6544e6e-4081-427f-9c81-afc57fc283ec" class="image"><a href="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/donald.jpg"><img style="width:288px" src="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/donald.jpg"/></a></figure><p id="c2e1e30f-7147-4250-9d0a-ffa502a000a7" class="">
+</p></div></div><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="01e8256e-a4cb-4cd7-a6c1-baf4083c2159"><div style="font-size:1.5em"><span class="icon">👉</span></div><div style="width:100%">Opgave: Find et billede af Andreas Refsgaard, Barack Obama og/eller Donald Trump på internettet, og prøv at vise det til webkameraet i demoen ovenfor fra din telefon. Modellen er burde være i stand til at genkende de tre personer, selvom den kun er trænet med et enkelt billede af hver person. Hav tålmodighed med modellen, der kan godt gå et par minutter, før den er loadet, og du ser et resultat på skærmen. 
+
+Virker demoen ovenfor ikke på din computer? Så prøv evt dette alternativ:
+<a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/#demo">Microsoft Azure Faciale Recognition</a> (<em>klik på &quot;Face Verification&quot; og upload to billeder af samme person</em>) 
+</div></figure><p id="e02ef6a5-08ee-46b0-8906-14e38734e5f6" class="">
+</p><h1 id="e7bbb673-7ac6-46c8-8297-14680fc07c1c" class="">3) Poesi og kode ✍️ </h1><p id="e908d09e-8285-4a8d-a720-7ff5ef94f55b" class="">
+</p><p id="73c962a0-3410-47b6-ae32-27e5bb61f566" class=""><a href="https://editor.p5js.org/AndreasRef/present/bS7EoUWeS">Mal med EkstraBladet.dk</a></p><figure id="cac2b0cb-12df-4f64-9750-bca1e0f2c7ea" class="image"><a href="https://andreasref.github.io/poesi/malmedekstrabladet.png"><img style="width:336px" src="https://andreasref.github.io/poesi/malmedekstrabladet.png"/></a></figure><p id="ab2ad8ef-ea21-4f57-abb8-e2ab46877841" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="0cfae837-ae78-49ef-9f7c-092b74665d30"><div style="font-size:1.5em"><span class="icon">👉</span></div><div style="width:100%">Opgave: Tegn noget flot med dagens overskrifter fra EkstraBladet.dk med din mus. Reload siden, hvis der står &quot;loading&quot; i lang tid. Tryk på backspace/slet for at få et friskt lærred. Gem dine bedste malerier som screenshots og del dem i chatten.</div></figure><p id="7a73a008-6660-489f-b778-d22bfea99275" class="">
+</p><p id="f035916e-9ca1-4528-b788-e49f9cfaa111" class="">
+</p><p id="5a569778-17a2-47c0-9b2f-2b98c83842a7" class=""><a href="https://talktotransformer.com/">Lad en AI skrive videre på din tekst </a>(Talk to Transformer)</p><figure id="4322ac13-7195-43b1-bff5-56d48c19ccde" class="image"><a href="https://andreasref.github.io/poesi/openAI.png"><img style="width:288px" src="https://andreasref.github.io/poesi/openAI.png"/></a></figure><p id="e987877d-3566-49a0-b84b-191197cb6684" class="">
+</p><p id="12ceead7-fffd-4c1d-a8d3-f0ee1a1aaffa" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e3b43415-e218-492b-ae5f-d679a491d13a"><div style="font-size:1.5em"><span class="icon">👉</span></div><div style="width:100%">Opgave: Skriv din egen tekst på engelsk(!) og lad en machine learning model skrive videre. Forsøg med forskellige genrer af tekst (artikel, historie, madopskrift, digt etc) og vælg &quot;custom prompt&quot;.
+
+Tommelfingerregel: Jo mere (ensartet) tekst man selv skriver, desto bedre virker det. Gem dine bedste tekster som screenshots og del dem i chatten.</div></figure><p id="b577244f-8214-42f7-b952-40891a2f9d74" class="">
+</p><p id="ff4c4600-18e4-4b7f-866f-c8e9523dc75b" class="">
+</p><h1 id="155307b5-eb3d-495d-aad5-c1b74acdaceb" class="">4) Når maskiner genererer 🎨 </h1><p id="f65234bf-6d5a-4f4f-8405-ff700a14254e" class="">
+</p><p id="cbf90e45-b2e1-44e0-9e6a-fb0b967efd0e" class=""><a href="http://nvidia-research-mingyuliu.com/gaugan/">GauGAN online demo af NVIDIA</a></p><figure id="b5a6538b-8972-4f68-a67d-7e2c9c724378" class="image"><a href="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/gauGAN.gif"><img style="width:520px" src="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/gauGAN.gif"/></a></figure><p id="726c0cf7-2ac1-4c05-b43c-4f3d7d0e4231" class="">
+</p><p id="0c015eca-1832-4fd4-8621-19cd15611f76" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d601f8c4-defb-4de5-b54c-93079dfdde27"><div style="font-size:1.5em"><span class="icon">👉</span></div><div style="width:100%">Opgave: <em>Tryk på linket ovenfor. Sørg for at sætte flueben i det boxen markeret med rød nederst til venstre (scroll ned, hvis du ikke ser den). Mal på lærredet til venstre med forskellige farver der repræsenterer forskellige kategorier. Tryk på -&gt; pilen. Se dine resultater på lærredet til højre. Gem flotte resultater og del dem i chatten</em></div></figure><p id="709f455e-1e45-482a-ac19-d57401c60c1a" class="">
+</p><p id="14a4c1f9-83a2-4d75-a5ef-c813deedb41b" class="">
+</p><p id="81ac1c95-f861-43e9-899e-c66170ad59c7" class=""><a href="https://thisxdoesnotexist.com/">ThisXdoesNotExist</a></p><figure id="f2700b8f-132c-41be-835a-5e2065ef3eec" class="image"><a href="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/Screenshot_2021-04-14_at_12.24.05.png"><img style="width:1139px" src="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/Screenshot_2021-04-14_at_12.24.05.png"/></a></figure><p id="3d630bb5-2f97-44c9-a53d-72423c1603b5" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="de4eeada-a55f-4f30-aa22-a0c06cb7c122"><div style="font-size:1.5em"><span class="icon">👉</span></div><div style="width:100%">Opgave: <em>Tryk på linket ovenfor og klik dig videre til forskellige billeder af personer, katte, lejligheder, heste, mv... Undersøg de generede billeder, tekster mv. og overvej om de er realistiske nok til at kunne snyde dig selv, hvis ikke du vidste, at de var computergenerede? Gem flotte/mærkelige/realistiske resultater og del dem i chatten</em></div></figure><p id="e1b94131-cf76-4aa5-9b08-5c22c5355768" class="">
+</p><p id="cc03e6ff-fa27-403c-bca2-d4b2043dcd0d" class="">
+</p><h3 id="60716e66-ec9e-42d3-84ca-c36efa7a3f93" class="">5) Noget der ikke virker😬?</h3><p id="df0f402b-f8bc-48ff-b084-cf79ba0f98c7" class="">Prøv at køre eksemplerne i <a href="https://www.google.com/chrome/">Google Chrome</a></p><p id="b5047671-a365-40be-afa4-729502e08916" class="">Giv tilladelse til kamera: <a href="https://support.google.com/chrome/answer/2693767?co=GENIE.Platform%3DDesktop&amp;hl=en&amp;oco=0">Allow camera and microphone in Google Chrome</a></p><p id="779e607e-fd2f-4acf-938e-3fe08cf35e8d" class="">Problemer på Mac: <a href="https://support.apple.com/guide/mac-help/control-access-to-your-camera-on-mac-mchlf6d108da/mac">Allow camera on MacOSX in System Preferences</a></p><p id="d34bc911-430e-4216-ac91-ebff9ea9c3d1" class="">Problemer på Windows: 
+1) Webcam access on Windows 10: Select Start &gt; Settings &gt; Privacy &gt; Camera. Set “Let apps use my camera” to “On”. Make sure Chrome has access to use the camera.
+2) Turn off your webcam in all other applications if you are on Windows.
+
+Har du noget andet software kørende, der styrer dit webcam, som fx SnapCam? Prøv at afinstallere dette...</p><p id="380010fa-7a98-467b-8c2c-cbfc9469cc97" class="">
+</p><p id="675f7d4b-c4b8-4231-853f-ab06ed78e9e2" class="">Virker webcam stadig ikke? Du kan godt bruge Teachable Machine uden webcam ved at bruge billeder i stedet. Download fx dette datasæt med billeder af forskellige typer affald:</p><p id="fc0b4660-626e-4264-a36a-e42f522f1bd1" class=""><a href="https://github.com/garythung/trashnet/blob/master/data/dataset-resized.zip">https://github.com/garythung/trashnet/blob/master/data/dataset-resized.zip</a> (Tryk på &quot;download&quot;) eller</p><p id="da6015d5-8af1-4f93-858b-8b6fd95f1275" class=""><a href="https://github.com/garythung/trashnet/raw/master/data/dataset-resized.zip">https://github.com/garythung/trashnet/raw/master/data/dataset-resized.zip</a> (direkte download)</p><p id="6b40dfed-ca6b-47b2-8add-8174dd987e69" class="">
+</p><p id="773d9df5-8100-4b69-b57e-4eb9904ab9b6" class="">Ældre computere med svage/intet grafikkort kan godt have problemer med at køre enkelte af programmerne, særligt på Windows. Det er svært at gøre noget ved, men kan nogle gange imødekommes ved at skifte browser. Ellers prøv eksemplerne på en kraftigere / nyere computer hvis det er muligt, eller arbejd sammen med en der har en computer der kan køre tingene. </p><p id="c069ee5a-3c00-435a-a47c-7ea632c39558" class="">
+</p><p id="a43edc37-75f5-4fb4-a741-88e44aa35dbd" class="">
+</p><p id="061e3aa1-41ba-48a9-ae48-eb1d1dc14608" class="">
+</p><p id="214c7e94-e1fd-4b68-9c41-a07ac8831968" class=""><strong>Workshop af Andreas Refsgaard</strong></p><figure id="0306126b-cb16-4a07-8596-cd1063a31377" class="image"><a href="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/VideoPainterGIF.gif"><img style="width:384px" src="FabLearnDK%202021%209ceb8eae3dde4bc4aa0fe6d351a0d312/VideoPainterGIF.gif"/></a></figure><p id="b8d260fa-f40a-435b-abcb-a731d9c31219" class="">
+</p><p id="b0a4a08c-7a6d-4e83-bf43-37a3b574e617" class=""><a href="http://andreasrefsgaard.dk/">Website</a> / <a href="mailto:mail@andreasrefsgaard.dk">Email</a> / <a href="https://twitter.com/AndreasRef">Twitter</a> / <a href="https://www.instagram.com/andreasref/">Instagram</a> / <a href="https://github.com/AndreasRef">GitHub</a></p></div></article></body></html>
