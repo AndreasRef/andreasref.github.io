@@ -7,6 +7,10 @@ body {
   color: #666;
 }
 
+p {
+  max-width: 1200px;
+}
+
 img {
     max-width: 800px;
 }
