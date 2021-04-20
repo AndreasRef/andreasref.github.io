@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:300,700" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="https://use.typekit.net/yge4zwy.css">
+    <link rel="shortcut icon" href="https://samfundslitteratur.dk/sites/default/files/favicon.ico" type="image/vnd.microsoft.icon" />
 </head>
 
 <body>
@@ -20,7 +21,7 @@
     <p><img src="assets/andreas_refsgaard_mads_korsgaard_book_stroke.jpg"></p>
 
     <p>Denne bog handler om, hvordan computeralgoritmer og nye digitale teknologier som machine learning og kunstig intelligens kan udvide rammerne for kreativt arbejde. Bogen tilbyder en forståelse af, hvordan algoritmer kan anvendes kreativt, og den indeholder massevis af eksempler. Desuden diskuterer bogen nogle af de konsekvenser, det kan have, når vi begynder at integrere kunstig intelligens i kreative arbejdsprocesser.</p> 
-    <p><a href="https://www.madskorsgaard.dk/">Mads Korsgaard</a> er psykolog med speciale i mekanismerne bag kreativitet og innovation, og <a href="https://andreasrefsgaard.dk/">Andreas Refsgaard</a> er digital kunstner med en legende tilgang til kunstig intelligens. Ved at kombinere deres forskellige fagområder udforsker forfatterne computerteknologiens kreative mulighedsrum. <a href="https://samfundslitteratur.dk/bog/skabt-af-en-kunstig-intelligens">Køb bogen her</a>.</p>
+    <p><a href="https://www.madskorsgaard.dk/">Mads Korsgaard</a> er psykolog med speciale i mekanismerne bag kreativitet og innovation, og <a href="https://andreasrefsgaard.dk/">Andreas Refsgaard</a> er digital kunstner med en legende tilgang til kunstig intelligens. Ved at kombinere deres forskellige fagområder udforsker forfatterne computerteknologiens kreative mulighedsrum. <a href="https://www.academicbooks.dk/da/content/skabt-af-en-kunstig-intelligens">Køb bogen her</a>.</p>
 
 
     <br>
@@ -28,21 +29,22 @@
 
     <h2>Guide til at komme i gang</h2>
     <p>På denne side har vi lavet en samling af interaktive kodeeksempler, der relaterer sig til bogens kapitler og emner, samt en samling af yderligere ressourcer med links til software, lærebøger og videoguides nederst på siden.</p>
-    <p>Flere af eksemplerne kan køres direkte på siden, mens de mere avancerede eksempler åbner på eksterne websider.</p>
-    <p>Eksemplerne er alle designet til laptops og stationære computere, og er derfor ikke optimeret til smartphones eller tablets.</p>
-    <p>De fleste af eksemplerne fra kapitel 4, 5 og 6 benytter sig af maskinlæringsalgoritmer, der kræver en nyere computer for at blive afviklet korrekt. De vil derfor ikke nødvendigvis fungere på svage eller ældre computere. Flertallet af dem kræver desuden adgang til computerens kamera eller mikrofon. Se guiden nedenfor, for løsninger på typiske problemer, der kan opstå.</p>
+    <p>Nogle af eksemplerne kan køres direkte på siden, mens de mere avancerede eksempler åbner på eksterne websider.</p>
+    <p>Eksemplerne er alle designet til laptops og stationære computere og er derfor ikke optimeret til smartphones eller tablets.</p>
+    <p>Flere af eksemplerne kører bedst i browseren Google Chrome.</p>
+    <p>De fleste af eksemplerne fra kapitel 4, 5 og 6 benytter sig af machine learning-algoritmer, der kræver en nyere computer for at blive afviklet korrekt. De vil derfor ikke nødvendigvis fungere på svage eller ældre computere. Flertallet af dem kræver desuden adgang til computerens kamera eller mikrofon. Se guiden nedenfor for løsninger på typiske problemer, der kan opstå.</p>
     
     <br>
     <h3>Noget der ikke virker?</h3>
     <p>- Prøv at køre eksemplerne i <a href="https://www.google.com/chrome/">Google Chrome</a>.</p>
 
-    <p>- Undersøg om du har andet software, der styrer eller blokerer dit webcam, fx SnapCam, OBS, antivirus software eller lignende. Sluk for dit webcam samt mikrofon i alle andre programmer.</p>
+    <p>- Undersøg om du har andet software, der styrer eller blokerer dit webkamera, fx SnapCam, OBS, antivirus software eller lignende. Sluk for dit webkamera samt mikrofon i alle andre programmer.</p>
 
     <p>- Giv tilladelse til kamera og mikrofon i Chrome: <a href="https://support.google.com/chrome/answer/2693767?co=GENIE.Platform%3DDesktop&hl=en&oco=0">Allow camera and microphone in Google Chrome</a>.</p> 
 
-    <p>- Problemer på Mac: <a href="https://support.apple.com/guide/mac-help/control-access-to-your-camera-on-mac-mchlf6d108da/mac">Se denne guide</a>.</p>
+    <p>- Problemer med kameraadgang på Mac: <a href="https://support.apple.com/guide/mac-help/control-access-to-your-camera-on-mac-mchlf6d108da/mac">Se denne guide</a>.</p>
 
-    <p>- Problemer på Windows: <a href="https://support.microsoft.com/en-us/windows/camera-doesn-t-work-in-windows-10-32adb016-b29c-a928-0073-53d31da0dad5#:~:text=Uninstall%20your%20camera%20driver%20and%20scan%20for%20hardware%20changes&text=In%20Device%20Manager,%20on%20the,opening%20the%20Camera%20app%20again">Se denne guide</a>.</p>
+    <p>- Problemer med kameraadgang på Windows: <a href="https://support.microsoft.com/en-us/windows/camera-doesn-t-work-in-windows-10-32adb016-b29c-a928-0073-53d31da0dad5#:~:text=Uninstall%20your%20camera%20driver%20and%20scan%20for%20hardware%20changes&text=In%20Device%20Manager,%20on%20the,opening%20the%20Camera%20app%20again">Se denne guide</a>.</p>
     
 
     <br>
@@ -163,7 +165,7 @@ function drawChair() {
 
     <h3>Poesi-robotten</h3>
     <script type="text/p5" data-height="600" data-preview-width="650" data-p5-version="0.9.0" data-autoplay>
-let nouns = ["postenmanden", "auberginen", "farmor", "du", "vi", "den", "COVID-19", "Nem-ID", "Bubber", "computeren"];
+let nouns = ["postmanden", "auberginen", "farmor", "du", "vi", "den", "COVID-19", "Nem-ID", "Bubber", "computeren"];
 let verbs = ["hikker", "knipser", "danser", "spiser", "sluprer", "drømmer", "taber", "twerker", "bider", "elsker"];
 let adjectives = ["elegant", "langsomt", "skørt", "alene", "flot", "skønt", "dårligt", "forsigtigt", "grundigt", "kommunalt"]; 
 
@@ -227,7 +229,7 @@ function mousePressed() {
     <h2>Kapitel 5: At interagere</h2>
     <h3>Mal med næsen</h3>
     <img src="assets/paint_with_nose.jpg">
-    <p><a href="NOLINKYET" target="_blank">Prøv værket (åbner i en ny fane)</a></p>
+    <p><a href="https://editor.p5js.org/AndreasRef/sketches/o4IudhdeJ" target="_blank">Prøv værket (åbner i en ny fane)</a></p>
     
     <br>
     <br>
@@ -310,7 +312,7 @@ function draw() {
     <br>
 
     <h3>Software</h3>
-    <p><a href="https://p5js.org/" target="_blank">p5.js</a>: softwarebibliotek i JavaScript rettet mod kunstnere, designere, undervisere og begyndere. Alle eksempler fra denne bog er lavet med p5.js</p> 
+    <p><a href="https://p5js.org/" target="_blank">p5.js</a>: Softwarebibliotek i JavaScript rettet mod kunstnere, designere, undervisere og begyndere. Alle eksempler fra denne bog er lavet med p5.js</p> 
     <p><a href="https://ml5js.org/" target="_blank">ml5.js</a>: Et simpelt og lettilgængeligt bibliotek til at eksperimentere med kunstig intelligens direkte i browseren. Fungerer godt sammen med p5.js</p>
     <p><a href="https://processing.org/" target="_blank">Processing</a>: Desktopsoftware i Java rettet mod kunstnere, designere, undervisere og begyndere</p>
     <p><a href="https://rednoise.org/rita/" target="_blank">RiTA</a>: Et softwarebibliotek rettet mod generativ litteratur. Fungerer godt sammen med Processing og p5.js</p>
@@ -332,7 +334,7 @@ function draw() {
     <h3>YouTube kanaler med tutorials</h3>
     <p><a href="https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw" target="_blank">The Coding Train</a> af Daniel Shiffman om p5.js, ml5.js og meget mere</p>
     <p><a href="https://www.youtube.com/channel/UCRSqTiVe7Rho95hNtd3hJBQ" target="_blank">Kreativ Kodning (på dansk!)</a> af Kristian Gårdhus Wichmann om p5.js</p>
-    <p><a href="https://www.youtube.com/user/bustbright" target="_blank">Artificial Images</a> af Derrick Schultz om visuelt kunst med kunstig intelligens</p>
+    <p><a href="https://www.youtube.com/user/bustbright" target="_blank">Artificial Images</a> af Derrick Schultz om visuel kunst med kunstig intelligens</p>
 
 </body>
 </html>
