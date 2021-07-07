@@ -1,0 +1,51 @@
+/* https://pavellaptev.medium.com/css-weekly-2-an-image-on-the-left-text-on-the-left-a5e59b2acdb5  */
+
+
+body {
+  /* background-color: black; */
+}
+
+.container {
+    /* border: 3px solid blue; */
+    padding: 20px 40px 40px;
+    max-width: 1200px;
+  }
+
+  .container__text {
+    display: inline;
+  }
+  
+  .p5Canvas {
+    width: 250px;
+    margin: 0px 40px 0px;
+    float: left;
+  }
+
+  #poem {
+    display: inline;
+  }
+
+  .color0 {
+    color: green;
+    color: black;
+  }
+
+  .color1 {
+    color: blue;
+    color: black;
+  }
+
+  .color2 {
+    color: red;
+    color: black;
+  }
+
+  .color3 {
+    color: darkorange;
+    color: black;
+  }
+
+  .color4 {
+    color: magenta;
+    color: black;
+  }
