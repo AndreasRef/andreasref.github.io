@@ -1,0 +1,48 @@
+/* https://pavellaptev.medium.com/css-weekly-2-an-image-on-the-left-text-on-the-left-a5e59b2acdb5  */
+
+.container {
+  /* border: 3px solid blue; */
+  padding: 40px 40px 40px;
+  max-width: 1200px;
+}
+
+.container__text {
+  display: inline;
+}
+
+.p5Canvas {
+  width: 250px;
+  margin: 0px 40px 0px;
+  float: left;
+}
+
+#poem {
+  display: inline;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#linkToAbout {
+  position: fixed;
+  top: 0;
+  right: 10;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#instruction {
+  position: fixed;
+  top: 0;
+  left: 120;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
