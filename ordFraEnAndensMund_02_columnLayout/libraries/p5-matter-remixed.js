@@ -691,7 +691,7 @@ var matter = (function() {
      */
     var Sign = function(text, x, y, options) {
       this.text = text;
-      Block.call(this, x, y, textWidth(text)-5, textSize()-5, options); //Here I abitrarily make the stuff smaller
+      Block.call(this, x, y, textWidth(text)*1.0, textSize()*1.0, options); //Here I abitrarily make the stuff smaller
     };
     Sign.prototype = Object.create(Block.prototype);
     Sign.prototype.constructor = Sign;
@@ -708,7 +708,7 @@ var matter = (function() {
     Sign.prototype.show = function() {
       push();
       translate(this.getPositionX(),
-        this.getPositionY() + this.getHeight() * 0.25);
+        this.getPositionY() + this.getHeight() * 0.25); //What happens if we change this number?
       rotate(this.getAngle());
       textAlign(CENTER);
       text(this.getText(), 0, 0);

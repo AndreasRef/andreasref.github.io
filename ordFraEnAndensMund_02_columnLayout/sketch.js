@@ -8,10 +8,17 @@ let pg;
 
 let track = true;
 
+
 let facemesh;
 let video;
 let predictions = [];
 let isMouthOpen = false;
+
+//let pallette = ["#82FAF2", "#96F2C4", "#93DB98", "#BAF788", "#FAFA8C"]
+//let pallette = ["#F2BDDA", "#A6CAE5", "#E6E6FA", "#D5C7F8", "#40B5AD"]
+
+let pallette = ["#D5E6CF", "#D1D2E8", "#E0E8DC", "#E8D8D1", "#9C918C"]
+
 
 //Face keypoints
 var leftEyeInnerX = 0;
@@ -116,8 +123,12 @@ function setup() {
 
   pg.background(255)
 
-  pg.textSize(18);
-  pg.textFont('Gill Sans');
+  pg.textSize(20);
+  textSize(20);
+  
+  //pg.textFont('Gill Sans');
+  pg.textFont('Courier New');
+  textFont('Courier New');
 
   //createCanvas(640, 480);
   if (track) { //For easier dev and debugging of non face stuff
@@ -153,6 +164,10 @@ function draw() {
     //image(video, 0, 0, width, height - 80);
     pg.background(0);
     pg.image(video, 0, 0);
+    pg.push();
+    pg.fill(0,50)
+    pg.rect(0,0,pg.width, pg.height);
+    pg.pop();
   } else {
     pg.background(0);
   }
@@ -160,7 +175,7 @@ function draw() {
   if (!modelLoaded && track) {
     pg.push();
     pg.fill(220);
-    pg.textSize(24);
+    pg.textSize(28);
     pg.text("Loader...", 10, 50)
     pg.pop();
   }
@@ -173,6 +188,7 @@ function draw() {
   pg.translate(ground.getPositionX(), ground.getPositionY());
   pg.rotate(ground.getAngle());
   pg.rectMode(CENTER);
+  pg.fill(0)
   pg.rect(0, 0, ground.getWidth(), ground.getHeight());
   pg.pop();
 
@@ -185,14 +201,28 @@ function draw() {
   //pg.rect(0,height-extraHeight - 50/2,width, extraHeight+50/2 + 500); //Sloppy 
 
   pg.fill(255);
+  //Make the signs
   for (i = 0; i < signs.length; i++) {
-    signs[i].show();
+    //signs[i].show();
 
+    //Boxes
     pg.push();
-    pg.translate(signs[i].getPositionX(), signs[i].getPositionY() + signs[i].getHeight() * 0.25);
+    //pg.translate(signs[i].getPositionX(), signs[i].getPositionY() + signs[i].getHeight() * 0.25);
+    pg.translate(signs[i].getPositionX(), signs[i].getPositionY() + signs[i].getHeight() * 0.0);
+    pg.rotate(signs[i].getAngle());
+    //pg.textAlign(CENTER);
+    pg.fill(0);
+    pg.rectMode(CENTER);
+    pg.rect(0,0, signs[i].getWidth()*1, signs[i].getHeight()*1)
+    pg.pop();
+
+    //Signs
+    pg.push();
+    //pg.translate(signs[i].getPositionX(), signs[i].getPositionY() + signs[i].getHeight() * 0.25);
+    pg.translate(signs[i].getPositionX(), signs[i].getPositionY() + signs[i].getHeight() * 0.0);
     pg.rotate(signs[i].getAngle());
     pg.textAlign(CENTER);
-    pg.text(signs[i].getText(), 0, 0);
+    pg.text(signs[i].getText(), 0, signs[i].getHeight() * 0.25);
     pg.pop();
 
   }
@@ -216,6 +246,7 @@ function draw() {
 
       //Rects
       //fill(125, 255-j*25)
+      pg.fill(pallette[i]);
       pg.rect(p.x+offSet*j, p.y-offSet*j, 100, 100);
 
       //images
@@ -265,7 +296,7 @@ function cleanAndSplitText(rawText) {
 
 
 function keyPressed() {
-  clearAll();
+  if(!track) clearAll();
   // for (i = 0; i < signs.length; i++) {
   //   matter.forget(signs[i]);
   // }
@@ -281,7 +312,7 @@ function mousePressed() {
   //   density: 0.001
   // }));
   //addWord(mouseX, mouseY);
-  addWord(mouseX *(sketchW/width), mouseY * (sketchH/height));
+  if (!track) addWord(mouseX *(sketchW/width), mouseY * (sketchH/height));
   // document.getElementById("poem").innerHTML+=myWords[wordIndex] + " ";
   // wordIndex++;
   // if (wordIndex > myWords.length - 1) wordIndex = 0;
@@ -324,7 +355,7 @@ function addWord(x, y) {
     signs.push(matter.makeSign(myWords[wordIndex].replace("<br/>", ""), x, y, {
       //signs.push(matter.makeSign(myWords[wordIndex], width/2, height/2, {
       restitution: 0.8,
-      density: 0.001
+      density: 0.01
     }));
 
     document.getElementById("poem").innerHTML += myWords[wordIndex] + " ";
@@ -440,7 +471,8 @@ function updatePersonaHTML(personaCat, catCounter) {
   let imgPrefix = personaCategories[personaCat]
 
   document.getElementById("roundImg").src = "imgs/"+ imgPrefix + catCounter +".jpeg";
-  document.getElementById("infoText").innerHTML = personaOneliners[personaCat]
+  document.getElementById("infoText").innerHTML = "<strong>"+personaOneliners[personaCat]+"</strong>";
+  document.getElementById("column2").style.backgroundColor = pallette[personaCat]
 }
 
 // Resizing canvas
