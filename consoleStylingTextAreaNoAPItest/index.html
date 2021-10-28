@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+
+  </head>
+  <body>
+    <script src="sketch.js"></script>
+
+    <!-- <h3>A conversation between agents</h3> -->
+    <p>Select agents: 
+    
+    
+    <select id="firstAgent">    
+      <option value="0">lifecoach</option>
+      <option value="1">dog</option>
+      <option value="2">jar of honey</option>
+      <option value="3">God</option>
+      <option value="4" selected>radical deconstructionist</option>
+    </select>
+
+    <select id="secondAgent">    
+      <option value="0" selected>lifecoach</option>
+      <option value="1">dog</option>
+      <option value="2">jar of honey</option>
+      <option value="3">God</option>
+      <option value="4">radical deconstructionist</option>
+    </select>
+
+    </p>
+    <p>Topic: <input type="text" id="userTheme" value="cars">
+    <!-- <button class="myButton" onclick="generate()">Start conversation</button> -->
+    <button class="myButton" onclick="generateLoremIpsum()">Start conversation</button>
+    </p>
+    
+
+    <div id='text'>
+      <textarea style="resize: none;" id='textArea' columns="10" rows="5" readonly>
+    </textarea>
+    </div>
+
+  </body>
+</html>
