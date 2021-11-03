@@ -1,0 +1,116 @@
+body {
+  background-color: black;
+  background-image: radial-gradient(rgba(0, 150, 0, 0.75), black 120%);
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  padding: 2rem;
+  color: white;
+  font: 1.3rem Inconsolata, monospace;
+  text-shadow: 0 0 5px #C8C8C8;
+  overflow-anchor: none;
+}
+body::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 1px, transparent 1px, transparent 2px);
+  pointer-events: none;
+}
+
+::selection {
+  background: #0080FF;
+  text-shadow: none;
+}
+
+pre {
+  margin: 0;
+}
+
+/* tetxarea stuff */
+html,
+body {
+line-height: 1;
+/* background: #F8F8F8; */
+font-size: 22px;
+height: 100%;
+width: 100%;
+}
+
+#text {
+width: 95%;
+height: 100%;
+margin-left: 0;
+margin-right: auto;
+margin-top: 10px;
+clear: both;
+}
+
+#textArea {
+width: 95%;
+/* height:auto !important; */
+/* real browsers */
+height: 70%;
+/* IE6: treaded as min-height*/
+/* min-height: 50%; */
+/* real browsers */
+/* max-width: 902px; */
+margin-left: auto;
+margin-top: 5px;
+background-color: rgba(255, 0, 0, 0.0);
+/*background-color: blue; */
+
+color: white;
+font: 1.3rem Inconsolata, monospace;
+text-shadow: 0 0 5px #C8C8C8;
+border-color: white;
+border-width: 2px;
+box-shadow: 0 0 5px #C8C8C8;
+/* border: none; */
+outline: none;
+}
+
+#continueButton {
+/* position: absolute;
+left: 50%;
+margin-left: -50px;
+top: 95%;
+margin-top: -50px; */
+
+position: absolute;
+top: 95%;
+left: 2rem;
+
+}
+
+.myButton {
+/* background-color:#050505;
+border-radius:28px;
+border:1px solid #18ab29;
+display:inline-block;
+cursor:pointer;
+color: white;
+font: 0.5rem Inconsolata, monospace;
+text-shadow: 0 0 5px #C8C8C8;
+border: none;
+outline: none; */
+
+/* color:#ffffff;
+font-family:Arial;
+font-size:17px;
+padding:16px 31px;
+text-decoration:none;
+text-shadow:0px 1px 0px #2f6627; */
+}
+
+
+.myButton:hover {
+/* background-color:#5cbf2a; */
+}
+.myButton:active {
+/* position:relative;
+top:1px; */
+}
