@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+    <script src="generated.js"></script>
+  </head>
+  <body>
+  <div id="top">
+    <h3>A conversation between a
+    
+    <select id="firstAgent" onchange="firstAgentChanged()">    
+      <option value="0" disabled>computer</option>
+      <option value="1">dog</option>
+      <option value="2">salesperson</option>
+      <option value="3">politician</option>
+      <option value="4" selected>deconstructionist</option>
+    </select>
+    and a 
+    <select id="secondAgent" onchange="secondAgentChanged()">    
+      <option value="0" selected>computer</option>
+      <option value="1">dog</option>
+      <option value="2">salesperson</option>
+      <option value="3">politician</option>
+      <option value="4" disabled>deconstructionist</option>
+    </select>
+
+    
+    about 
+    <select id="topic" onchange="topicChanged()">    
+      <option value="0">Luck</option>
+      <option value="1">Yoga</option>
+      <option value="2">The Internet</option>
+      <option value="3">Pizza</option>
+      <option value="4">Netflix</option>
+      <option value="5">[Decide your own topic]</option>
+    </select>
+
+    <input type="text" id="userTheme" value="" size="15" style="display:none" onkeyup="userThemeChanged()">
+  </h3>
+    <button class="myButton" id="GPT-3Button" onclick="generate()">Start conversation</button>
+    <!-- <button class="myButton" onclick="generateLoremIpsum()">Generate without GPT-3</button> -->
+    <button class="myButton" onclick="clearConversation()">Clear conversation</button>
+    <button id="fullScreenButton" onclick="openFullscreen();">Open Fullscreen</button>
+    <!-- <button onclick="isFullScreen()">log fullscreen state</button> -->
+  </div>
+
+    <div id='text'>
+      <textarea style="resize: none;" id='textArea' columns="10" rows="5" readonly>This is demo version where all conversations are pre-generated using GPT-3. 
+  
+Select the two agents, a topic and hit "Start conversation".
+    </textarea>
+    </div>
+    
+    <button id="continueButton" style="display:none" onclick="continueConversation()">continue the conversation</button>
+    
+    <script src="sketch.js"></script>
+  </body>
+</html>
