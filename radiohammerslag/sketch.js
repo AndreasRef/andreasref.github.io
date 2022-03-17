@@ -9,7 +9,7 @@ function preload() {
         soundclips[i] = loadSound("mp3/" + i + ".mp3");
         console.log(i + "loaded");
     }
-    backtrack.loop();
+    //backtrack.loop();
 }
 
 function setup() {
@@ -46,4 +46,5 @@ function mousePressed() {
 
 function playBacktrack() {
     backtrack.play();
+    backtrack.onended(playBacktrack);
 }
