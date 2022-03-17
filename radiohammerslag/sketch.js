@@ -1,6 +1,6 @@
 var soundclips = [];
-var button;
-var backtrackButton;
+// var button;
+// var backtrackButton;
 var backtrack;
 
 function preload() {
@@ -14,12 +14,13 @@ function preload() {
 
 function setup() {
     noCanvas();
-    button = createButton('start Hammerslag');
-    button.position(0, 0);
-    button.mousePressed(afspil);
-    backtrackButton = createButton('start backtrack');
-    backtrackButton.position(150, 0);
-    backtrackButton.mousePressed(playBacktrack);
+   
+    // button = createButton('start Hammerslag');
+    // button.position(0, 0);
+    // button.mousePressed(afspil);
+    // backtrackButton = createButton('start backtrack');
+    // backtrackButton.position(150, 0);
+    // backtrackButton.mousePressed(playBacktrack);
 
 }
 
