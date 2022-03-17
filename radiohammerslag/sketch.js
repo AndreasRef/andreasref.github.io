@@ -1,4 +1,5 @@
 var soundclips = [];
+var button;
 
 function preload() {
     for (var i = 0; i<280; i++) {
@@ -8,8 +9,10 @@ function preload() {
 }
 
 function setup() {
-    soundclips[0].play();
-    soundclips[0].onended(playNewClip);
+    noCanvas();
+    button = createButton('start');
+    button.position(0, 0);
+    button.mousePressed(afspil);
 }
 
 function draw() {
@@ -20,4 +23,14 @@ function playNewClip () {
     var n = floor(random(soundclips.length));
     soundclips[n].play();
     soundclips[n].onended(playNewClip);
+}
+
+function afspil() {
+    soundclips[0].play();
+    soundclips[0].onended(playNewClip);
+}
+
+function mousePressed() {
+    soundclips[0].play();
+    soundclips[0].onended(playNewClip);
 }
