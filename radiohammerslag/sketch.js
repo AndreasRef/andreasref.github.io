@@ -4,7 +4,7 @@ var soundclips = [];
 var backtrack;
 
 function preload() {
-    backtrack = loadSound('backtrack.mp3');
+    
     for (var i = 0; i<280; i++) {
         soundclips[i] = loadSound("mp3/" + i + ".mp3");
         console.log(i + "loaded");
@@ -14,6 +14,8 @@ function preload() {
 
 function setup() {
     noCanvas();
+    backtrack = loadSound('backtrack.mp3', backTrackLoaded);
+    //backtrack = loadSound('unknown.mp3', playSoundtrack);
    
     // button = createButton('start Hammerslag');
     // button.position(0, 0);
@@ -26,6 +28,10 @@ function setup() {
 
 function draw() {
   
+}
+
+function backTrackLoaded() {
+    console.log("backTrackLoaded");
 }
 
 function playNewClip () {
