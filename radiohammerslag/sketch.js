@@ -35,6 +35,7 @@ function playNewClip () {
 }
 
 function afspil() {
+    console.log("play hammerslag");
     soundclips[0].play();
     soundclips[0].onended(playNewClip);
 }
@@ -45,6 +46,7 @@ function mousePressed() {
 }
 
 function playBacktrack() {
+    console.log("play backtrack");
     backtrack.play();
     backtrack.onended(playBacktrack);
 }
