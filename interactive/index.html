@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rune Interactive</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="#">
+    
+    <!-- preload all the images files -->
+    <link rel="preload" as="image" href="0.png">
+    <link rel="preload" as="image" href="1.png">
+    <link rel="preload" as="image" href="2.png">
+    <link rel="preload" as="image" href="3.png">
+    <link rel="preload" as="image" href="4.png">
+
+    <!-- preload all the mp3 files -->
+    <!-- <link rel="preload=auto" as="audio" href="1.mp3">
+    <link rel="preload=auto" as="audio" href="2.mp3">
+    <link rel="preload=auto" as="audio" href="3.mp3">
+    <link rel="preload=auto" as="audio" href="4.mp3"> -->
+
+    <!--
+    prefetch - next page
+    preload - current page
+    as options:
+    script
+    style
+    audio
+    video
+    image
+    font
+    document
+    track
+    worker
+    fetch
+    object
+    embed
+    -->
+
+    <!-- stylesheet -->
+
+
+  
+</head>
+<body>
+    <img src="0.png">
+</body>
+
+
+<script>
+
+  //Create an array of sounds uisng new Audio()
+  var sounds = [
+    new Audio("1.mp3"),  
+    new Audio("2.mp3"),
+    new Audio("3.mp3"),
+    new Audio("4.mp3")
+  ];
+
+
+  var sound1 = new Audio('1.mp3');
+  var sound2 = new Audio('2.mp3');
+  var sound3 = new Audio('3.mp3');
+  var sound4 = new Audio('4.mp3');
+
+  //When an image is pressed, display the next image
+  var images = ["0.png", "1.png", "2.png", "3.png", "4.png"];
+  var i = 0;
+  var image = document.getElementsByTagName("img")[0];
+  image.src = images[i];
+  image.addEventListener("click", function() {
+    i++;
+    
+    //pause all sounds from the array
+
+    sounds.forEach(function(sound) {
+      sound.pause();
+      sound.currentTime = 0;
+    });
+
+    if (i >= images.length) {
+      i = 0;
+      //audioElement.pause();
+    } else {
+      sounds[i-1].play();
+      sounds[i-1].loop = true;
+      //audioElement.src = i + ".mp3";
+      //audioElement.play();
+      //audioElement.loop = true;
+    }
+
+    image.src = images[i];
+  }
+  );
+</script>
+
+</html>
