@@ -49,7 +49,7 @@ function onResults(results) {
 
       //Could we perhaps also scale this??
       canvasCtx.scale(0.65, 0.65);
-      canvasCtx.translate(canvasElement.height/4 - landmarks.x*canvasElement.width, canvasElement.height/4  - landmarks.y*canvasElement.height + 50);
+      canvasCtx.translate(canvasElement.height/4 - landmarks.x*canvasElement.width + 100, canvasElement.height/4  - landmarks.y*canvasElement.height + 250);
       //canvasCtx.translate(landmarks.x*100, landmarks.y*100);
     }
 
