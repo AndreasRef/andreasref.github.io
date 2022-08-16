@@ -16,11 +16,19 @@ let ground;
 let allowSoundOverlap = true;
 let mouthImg;
 
+
+let soundArray = [];
+
 function preload() {
   // load sound
   //hitSound = loadSound('./slap-soundmaster13-49669815.mp3');
   hitSound = loadSound('Yawn2.mp3');
   hitSound.playMode('sustain');
+
+  //push all sounds () into array
+  for (let i = 0; i < 11; i++) {
+    soundArray.push(loadSound(i + '.mp3'));
+  }
 
   mouthImg = loadImage('mouth100x100.png');
 }
@@ -46,15 +54,21 @@ function setup() {
 
   // setup hit sound
   Matter.Events.on(engine, 'collisionStart', function (event) {
+
+    let randomNumber = Math.floor(Math.random() * soundArray.length);
+
     const pairs = event.pairs[0];
     const bodyA = pairs.bodyA;
     const bodyB = pairs.bodyB;
     if (bodyA.label === "ground" || bodyB.label === "ground") {
 
-      if (allowSoundOverlap) hitSound.play();
-      else {
+      if (allowSoundOverlap) {
+        soundArray[randomNumber].play();
+        //hitSound.play();
+      } else {
         if (!hitSound.isPlaying()) {
-          hitSound.play();
+          soundArray[randomNumber].play();
+          //hitSound.play();
         }
       }
 
@@ -62,10 +76,13 @@ function setup() {
 
       console.log(bodyA.label + " " + bodyB.label);
     } else if (bodyA.label === "Rectangle Body" && bodyB.label === "Rectangle Body" || bodyA.label === "Circle Body" && bodyB.label ==="Circle Body") { //For whatever reason the label for the rectangle bodies is "Rectangle Body", not the assigned label
-      if (allowSoundOverlap) hitSound.play();
-      else {
+      if (allowSoundOverlap) {
+        soundArray[randomNumber].play();
+        //hitSound.play();
+      } else {
         if (!hitSound.isPlaying()) {
-          hitSound.play();
+          soundArray[randomNumber].play();
+        //hitSound.play();
         }
       }
     }
