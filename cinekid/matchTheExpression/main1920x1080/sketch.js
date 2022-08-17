@@ -11,6 +11,8 @@ const img2 = new Image();
 img2.src = 'paintingWithHoles.png'; // Set source path
 
 
+let imgCounter = 0;
+
 
 let mouseDown = false;
 document.body.onmousedown = () => {
@@ -18,6 +20,12 @@ document.body.onmousedown = () => {
 };
 document.body.onmouseup = () => {
   mouseDown = false;
+  imgCounter++;
+  if (imgCounter > 6) {
+    imgCounter = 0;
+  }
+  img.src = imgCounter + 'full.png';
+  img2.src = imgCounter + '.png'; 
 };
 
 function onResults(results) {
