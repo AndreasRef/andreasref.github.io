@@ -1,21 +1,33 @@
-// from https://b-g.github.io/p5-matter-examples/docs/ 
-// slap sound from
-// http://soundbible.com/1948-Slap.html
-// slap-soundmaster13-49669815.mp3
+// p5 matter based on examples from Bene: https://b-g.github.io/p5-matter-examples/docs/ 
+
+/* To do:
+Clean up
+Could the mouths show a closed mouth when not making a sound?
+Experiment with spring factors, desired length, stiffness, damping etc
+Make fullscreen
+Delete all bodies that exits the screen
+Work on sound stuff
+
+Play a sound when something comes out of the mouth
+
+Go back to the layout from https://andreasref.github.io/soundsFromTheMouth/basicMouthPhysics/ it is a lot more fun and intuitive...
+*/
+
 
 Matter.use('matter-wrap');
 let engine;
 let world;
-let mouse;
+//let mouse;
 let hitSound;
 let ball;
 let angle = 0;
+let mouths = [];
 let balls = [];
 let ground;
-
-let allowSoundOverlap = true;
 let mouthImg;
+let mouthImgClosed;
 
+let debugMode = false;
 
 let soundArray = [];
 
@@ -38,11 +50,12 @@ var mouthLowerInnerLipY = 0;
 
 //For face graphics 
 let mouthKeypoints = [];
-let pgMouths = [];
+//let pgMouths = [];
 
 let modelLoaded = false;
-
 let mouthPG;
+
+//let mouthPGclosed;
 
 function preload() {
   // load sound
@@ -54,34 +67,34 @@ function preload() {
   for (let i = 0; i < 11; i++) {
     soundArray.push(loadSound(i + '.mp3'));
   }
-
   mouthImg = loadImage('mouth100x100.png');
+  mouthImgClosed = loadImage('closedMouth.jpg');
 }
 
 function setup() {
   const canvas = createCanvas(640, 480);
-  video = createCapture(VIDEO);
-  video.size(width, height);
-  video.hide();
-
-  facemesh = ml5.facemesh(video, modelReady);
-    // This sets up an event that fills the global variable "predictions"
-    // with an array every time new predictions are made
+  if (!debugMode) {
+    video = createCapture(VIDEO);
+    video.size(width, height);
+    video.hide();  
+    facemesh = ml5.facemesh(video, modelReady);
     facemesh.on("predict", (results) => {
       predictions = results;
     });
-    // Hide the video element, and just show the canvas
-  
-  mouthPG = createGraphics(50, 50);
+  }
 
+  mouthPG = createGraphics(50, 50);
+  mouthPGclosed = createGraphics(50, 50);
+
+  mouthImgClosed.resize(50, 50);
   mouthImg.resize(50, 50);
   // create an engine
   engine = Matter.Engine.create();
   world = engine.world;
 
   // setup ground
-  ground = new Block(world, { x: width / 2, y: 450, w: width, h: 30, color: 'grey' }, {
-    isStatic: true, angle: PI * 0.0, label: 'ground'
+  ground = new Block(world, { x: width / 2, y: 450, w: width * 1.5, h: 30, color: 'grey' }, {
+    isStatic: true, angle: PI * 0.05, label: 'ground', restitution: 1.4
   });
 
   // wrap
@@ -93,41 +106,30 @@ function setup() {
   // setup hit sound
   Matter.Events.on(engine, 'collisionStart', function (event) {
 
-    let randomNumber = Math.floor(Math.random() * soundArray.length);
-
+    //let randomNumber = Math.floor(Math.random() * soundArray.length);
     const pairs = event.pairs[0];
     const bodyA = pairs.bodyA;
     const bodyB = pairs.bodyB;
+
+    let idNumber = bodyB.id % soundArray.length;
+    //console.log(bodyB);
+
+    //Collision with ground
     if (bodyA.label === "ground" || bodyB.label === "ground") {
-
-      if (allowSoundOverlap) {
-        soundArray[randomNumber].play();
-        //hitSound.play();
-      } else {
-        if (!hitSound.isPlaying()) {
-          soundArray[randomNumber].play();
-          //hitSound.play();
-        }
+      soundArray[idNumber].play();
+      if (bodyA.label != "ground") {
+        //bodyA.attributes.image = mouthImg;
       }
-
-      //if hitSounds is not playing, play it
-
-      console.log(bodyA.label + " " + bodyB.label);
-    } else if (bodyA.label === "Rectangle Body" && bodyB.label === "Rectangle Body" || bodyA.label === "Circle Body" && bodyB.label ==="Circle Body") { //For whatever reason the label for the rectangle bodies is "Rectangle Body", not the assigned label
-      if (allowSoundOverlap) {
-        soundArray[randomNumber].play();
-        //hitSound.play();
-      } else {
-        if (!hitSound.isPlaying()) {
-          soundArray[randomNumber].play();
-        //hitSound.play();
-        }
-      }
+    }
+    //Collisions between mouths
+    //console.log(bodyA.label + " " + bodyB.label);
+    else if (bodyA.label === "Rectangle Body" && bodyB.label === "Rectangle Body" || bodyA.label === "Circle Body" && bodyB.label === "Circle Body") { //For whatever reason the label for the rectangle bodies is "Rectangle Body", not the assigned label
+      //soundArray[randomNumber].play();
     }
   });
 
   // setup mouse
-  mouse = new Mouse(engine, canvas);
+  //mouse = new Mouse(engine, canvas);
 
   // run the engine
   Matter.Runner.run(engine);
@@ -140,69 +142,116 @@ function modelReady() {
 
 function draw() {
   background('black');
-  image(video, 0, 0);
-
-  yawnScore();
-  console.log("isMouthOpen: " + isMouthOpen)
-
-  if (isMouthOpen && frameCount % 10 == 0) {
-    //text("open", 10, 10);
-    addBody(mouthKeypoints[0]+mouthKeypoints[2]/2, mouthKeypoints[1] + mouthKeypoints[3]/2, mouthKeypoints[2], mouthKeypoints[3]) //This is the syntax if adding a rect, but actually not what we are using now
+  if (!debugMode) {
+    image(video, 0, 0);
+    yawnScore();
+    if (isMouthOpen && frameCount % 25 == 0) {
+      //text("open", 10, 10);
+      addBody(mouthKeypoints[0] + mouthKeypoints[2] / 2, mouthKeypoints[1] + mouthKeypoints[3] / 2, mouthKeypoints[2], mouthKeypoints[3]);
+    }
   }
-
 
   fill(255);
   textAlign(CENTER, CENTER);
-  text('Click: New Body\nRight Click: Remove Body', width / 2, 50);
+  text('Click: New Body\nRight Click: Remove Body\nPress SPACE: Delete all', width / 2, 50);
 
   noStroke();
   fill(255);
+
+  //THIS IS SUPER MESSY, PERHAPS DELETE IT and start over?
   // visualize collision
-  for (const ball of balls) {
-    ball.attributes.color = 'white';
-    const collided = Matter.Collision.collides(ground.body, ball.body);
+  
+  if (frameCount % 2  == 0) ground.attributes.color = 'white';
+
+  for (const mouth of mouths) {    
+    let collided = Matter.Collision.collides(ground.body, mouth.body);
+    //console.log(collided);
+
+     // visualize collision
     if (collided) {
-      ball.attributes.color = 'red';
+      ground.attributes.color = 'red';
     } else {
-      ball.attributes.color = 'white';
+      
     }
-    //ball.draw();
+
+    /*
+    if (collided) {
+      if (mouth.label === undefined) {
+        if (debugMode) {
+          mouth.attributes.image = mouthImg;
+        } else {
+          //mouth.attributes.image = mouthPG;
+        }
+        mouth.attributes.color = 'red';      
+        setTimeout(changeMouthBack, 1000, mouth);
+      } else {
+        if (debugMode) {
+          mouth.attributes.image = mouthImgClosed;
+        } else {
+          //mouth.attributes.image = mouthPGclosed;
+        }
+        //mouth.attributes.image = mouthImgClosed;
+        mouth.attributes.color = 'white';
+      }
+    } else { //if not collided
+      //mouth.attributes.image = mouthImgClosed;
+    }
+    
+    */
+
+    //console.log(mouth.label);
+    mouth.draw();
   }
 
-  //Detect if two balls are touching
-  for (let i = 0; i < balls.length; i++) {
-    //balls[i].attributes.color = 'white';
-    for (let j = i + 1; j < balls.length; j++) {
-      //balls[j].attributes.color = 'white';
-      const collided = Matter.SAT.collides(balls[i].body, balls[j].body);
-      if (collided) {
-        balls[i].attributes.color = 'green';
-        balls[j].attributes.color = 'green';
-      } else {
-        balls[i].attributes.color = 'white';
-        balls[j].attributes.color = 'white';
-      }
-    }
-    balls[i].draw();
-  }
-  
   fill(128);
   ground.draw();
 
-  image(mouthPG,0,0);
-  mouse.draw();
+  //if (mouseIsPressed && !debugMode) mouthPG = get(mouthKeypoints[0] + mouthKeypoints[2] / 2, mouthKeypoints[1] + mouthKeypoints[3] / 2, mouthKeypoints[2], mouthKeypoints[3]);
+  //if (!debugMode) image(mouthPGclosed, 0, 0);
+  
+  //mouse.draw();
 }
 
+function keyReleased() {
+  if (key == ' ') {
+    //Delete all bodies
+    console.log("Delete all bodies");
+    const bodies = Matter.Composite.allBodies(engine.world);
+    Matter.World.clear(engine.world, bodies);
+
+    //Delete all mouths
+    mouths = [];
+
+    
+  }
+  else {
+    //mouthPGclosed = get(mouthKeypoints[0], mouthKeypoints[1], mouthKeypoints[2], mouthKeypoints[3]);
+    //mouthPGclosed.resize(50, 50);
+  }
+  
+}
+
+function changeMouthBack(mouth) {
+  mouth.label = "collidedWithGround";
+  mouth.attributes.color = 'red';
+  console.log("a collision has ended")
+}
 
 function addBody(_x, _y, _w, _h) {
-  push();
-  //const newBall = new Ball(world, { x: _x, y: _y, r: 29, color: 'white', image: mouthImg });
-  //const newBall = new Ball(world, { x: _x, y: _y, r: 29, color: 'white', image: mouthPG });
-  mouthPG = get(mouthKeypoints[0], mouthKeypoints[1], _w, _h);
-  pop();
-  const newBall = new Block(world, { x: _x, y: _y, w: _w, h: _h, image: mouthPG });
+  if (debugMode) {
+    const newMouth = new Block(world, { x: mouseX, y: mouseY, w: 50, h: 50, color: 'white', label: 'ball', image: mouthImgClosed }, { density: 0.0001 });
+    mouths.push(newMouth);
+  } else {
+    mouthPG = get(mouthKeypoints[0], mouthKeypoints[1], _w, _h);
+    //mouthPG.resize(50, 50);
+    //Make it always 50 x 50 for now
+    //const newMouth = new Block(world, { x: _x, y: _y, w: 50, h: 50, image: mouthPGclosed });
+    const newMouth = new Block(world, { x: _x, y: _y, w: _w, h: _h, image: mouthPG });
+    //newMouth.attributes.image = mouthImgClosed; //debug photoshop mouth
+    mouths.push(newMouth);
+    
+  }
   //const newBall = new Block(world, { x: mouseX, y: mouseY, w: 50, h: 50, color: 'white', label: 'ball', image: mouthImg }, { density: 0.0001 });
-  balls.push(newBall);
 }
 
 function removeBody() {
@@ -212,7 +261,7 @@ function removeBody() {
   if (found.length > 0) {
     const clickedBody = found[0];
     Matter.World.remove(world, clickedBody);
-    balls = balls.filter(ball => ball.body !== clickedBody);
+    mouths = mouths.filter(mouth => mouth.body !== clickedBody);
   }
 }
 
@@ -223,7 +272,7 @@ document.oncontextmenu = function () {
 
 function mouseReleased(event) {
   if (mouseButton === LEFT) {
-    addBody(mouseX, mouseY);
+    addBody(mouseX, mouseY, 50, 50);
   }
   if (mouseButton === RIGHT) {
     removeBody();
@@ -237,7 +286,6 @@ function yawnScore() {
 
     //save the mouth keypoints (164, 57, 18 & 287) in an array (x, y, w, h)
     mouthKeypoints = [keypoints[57][0], keypoints[164][1], keypoints[287][0] - keypoints[57][0], keypoints[18][1] - keypoints[164][1]];
-
 
     for (let j = 0; j < keypoints.length; j += 1) {
       const [x, y] = keypoints[j];
@@ -272,12 +320,11 @@ function yawnScore() {
 
     var yawnFactor = mouthOpen / eyeDist;
     yawnFactor = constrain(yawnFactor, 0, 1);
-    //console.log(yawnFactor);
 
     if (yawnFactor > 0.4) {
       isMouthOpen = true;
     } else {
       isMouthOpen = false;
-    }
+    } 
   }
 }
