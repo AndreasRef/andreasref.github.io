@@ -5,6 +5,7 @@ Clean up
 
 Experiment with spring factors, desired length, stiffness, damping etc
 Make fullscreen
+Make the mouth drops more responsive using a better logic than framecount (use something that )
 Delete all bodies that exits the screen
 Work on sound stuff
 
@@ -20,10 +21,17 @@ let world;
 //let mouse;
 let hitSound;
 let ball;
-let angle = 0;
+
 let mouths = [];
 let balls = [];
 let ground;
+
+let polygon; //Delete?
+
+let propeller;
+let angle = 0;
+
+
 let mouthImg;
 let mouthImgClosed;
 
@@ -55,7 +63,7 @@ let mouthKeypoints = [];
 let modelLoaded = false;
 let mouthPG;
 
-let polygon;
+
 //let mouthPGclosed;
 
 function preload() {
@@ -118,6 +126,13 @@ function setup() {
     { x: width/2, y: height-25, points: points, color: 'white' } , {
       isStatic: true, angle: PI * 0.0, label: 'ground', restitution: 1.4
     }
+  );
+
+
+  // propeller
+  propeller = new Block(world,
+    { x: 100, y: 250, w: 200, h: 20, color: 'white' },
+    { isStatic: true, angle: angle, label: 'ground', restitution: 0.3 }
   );
 
   // wrap
@@ -184,10 +199,14 @@ function draw() {
   //THIS IS SUPER MESSY, PERHAPS DELETE IT and start over?
   // visualize collision
   
-  if (frameCount % 2  == 0) ground.attributes.color = 'grey';
+  if (frameCount % 2  == 0) {
+    ground.attributes.color = 'grey';
+    propeller.attributes.color = 'grey';
+  } 
 
   for (const mouth of mouths) {    
     let collided = Matter.Collision.collides(ground.body, mouth.body);
+    let collidedPropeller = Matter.Collision.collides(propeller.body, mouth.body);
     //console.log(collided);
 
      // visualize collision
@@ -195,6 +214,10 @@ function draw() {
       ground.attributes.color = 'red';
     } else {
       
+    }
+
+    if (collidedPropeller) {
+      propeller.attributes.color = 'red';
     }
 
     /*
@@ -228,6 +251,13 @@ function draw() {
 
   fill(128);
   ground.draw();
+
+  // animate angle property of propeller
+  Matter.Body.setAngle(propeller.body, angle);
+  Matter.Body.setAngularVelocity(propeller.body, 0.15);
+  angle += 0.07;
+
+  propeller.draw();
   //polygon.draw();
 
   //if (mouseIsPressed && !debugMode) mouthPG = get(mouthKeypoints[0] + mouthKeypoints[2] / 2, mouthKeypoints[1] + mouthKeypoints[3] / 2, mouthKeypoints[2], mouthKeypoints[3]);
