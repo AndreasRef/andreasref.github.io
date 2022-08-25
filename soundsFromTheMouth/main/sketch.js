@@ -2,7 +2,7 @@
 
 /* To do:
 Clean up
-Could the mouths show a closed mouth when not making a sound?
+
 Experiment with spring factors, desired length, stiffness, damping etc
 Make fullscreen
 Delete all bodies that exits the screen
@@ -55,6 +55,7 @@ let mouthKeypoints = [];
 let modelLoaded = false;
 let mouthPG;
 
+let polygon;
 //let mouthPGclosed;
 
 function preload() {
@@ -93,9 +94,31 @@ function setup() {
   world = engine.world;
 
   // setup ground
-  ground = new Block(world, { x: width / 2, y: 450, w: width * 1.5, h: 30, color: 'grey' }, {
-    isStatic: true, angle: PI * 0.05, label: 'ground', restitution: 1.4
+  /*
+  ground = new Block(world, { x: width / 2, y: 500, w: width * 1.2, h: 200, color: 'grey' }, {
+    isStatic: true, angle: PI * 0.08, label: 'ground', restitution: 1.4
+
   });
+  */
+
+  //Pyramid ground setup
+/*  ground = new Block(world, { x: width / 2, y: 500, w: 300, h: 300, color: 'grey' }, {
+    isStatic: true, angle: PI * 0.25, label: 'ground', restitution: 1.4
+
+  });
+  */
+
+//Pyramid ground setup
+  const points = [
+    { x: 0, y: 0 },
+    { x: width, y: 0 },
+    { x: width/2, y: -100}
+  ];
+  ground = new PolygonFromPoints(world,
+    { x: width/2, y: height-25, points: points, color: 'white' } , {
+      isStatic: true, angle: PI * 0.0, label: 'ground', restitution: 1.4
+    }
+  );
 
   // wrap
   const wrap = {
@@ -161,7 +184,7 @@ function draw() {
   //THIS IS SUPER MESSY, PERHAPS DELETE IT and start over?
   // visualize collision
   
-  if (frameCount % 2  == 0) ground.attributes.color = 'white';
+  if (frameCount % 2  == 0) ground.attributes.color = 'grey';
 
   for (const mouth of mouths) {    
     let collided = Matter.Collision.collides(ground.body, mouth.body);
@@ -205,6 +228,7 @@ function draw() {
 
   fill(128);
   ground.draw();
+  //polygon.draw();
 
   //if (mouseIsPressed && !debugMode) mouthPG = get(mouthKeypoints[0] + mouthKeypoints[2] / 2, mouthKeypoints[1] + mouthKeypoints[3] / 2, mouthKeypoints[2], mouthKeypoints[3]);
   //if (!debugMode) image(mouthPGclosed, 0, 0);
