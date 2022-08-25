@@ -6,7 +6,7 @@ Clean up
 Experiment with spring factors, desired length, stiffness, damping etc
 Make fullscreen
 Make the mouth drops more responsive using a better logic than framecount (use something that )
-Delete all bodies that exits the screen
+Delete all bodies that exits the screen - see https://github.com/CodingTrain/website-archive/tree/main/Courses/natureofcode/5.19_matter_delete_bodies
 Work on sound stuff
 
 Play a sound when something comes out of the mouth
@@ -35,7 +35,7 @@ let angle = 0;
 let mouthImg;
 let mouthImgClosed;
 
-let debugMode = false;
+let debugMode = true;
 
 let soundArray = [];
 
@@ -264,12 +264,31 @@ function draw() {
   //if (!debugMode) image(mouthPGclosed, 0, 0);
   
   //mouse.draw();
+  console.log(mouths.length, world.bodies.length);
+
+  //This works, but does not remove it from the mouth array
+  /*
+  for (const mouth of mouths) {    
+    if (mouth.body.position.y > height + 100) {
+      Matter.World.remove(world, mouth.body);
+    }
+  }
+  */
+ //Delete offscreen bodies
+  //Adapted from https://github.com/CodingTrain/website-archive/tree/main/Courses/natureofcode/5.19_matter_delete_bodies
+  for (var i = 0; i < mouths.length; i++) {
+    if (mouths[i].body.position.y > height + 100) {
+      Matter.World.remove(world, mouths[i].body);
+      mouths.splice(i, 1);
+      i--;
+    }
+  }
 }
 
 function keyReleased() {
   if (key == ' ') {
     //Delete all bodies
-    console.log("Delete all bodies");
+    console.log("Delete all mouths");
     const bodies = Matter.Composite.allBodies(engine.world);
     Matter.World.clear(engine.world, bodies);
 
