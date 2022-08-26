@@ -14,7 +14,9 @@ Lav toner ligesom et piano
 
 Propellen skal have en særlig lyd / effekt
 
+Big mouth = loud sound
 
+Left = lower notes, right higher notes
 
 Experiment with spring factors, desired length, stiffness, damping etc
 Make fullscreen
@@ -27,6 +29,7 @@ Play a sound when something comes out of the mouth
 Go back to the layout from https://andreasref.github.io/soundsFromTheMouth/basicMouthPhysics/ it is a lot more fun and intuitive...
 */
 
+let debugMode = false;
 
 Matter.use('matter-wrap');
 let engine;
@@ -39,16 +42,11 @@ let mouths = [];
 let balls = [];
 let ground;
 
-let polygon; //Delete?
-
 let propeller;
 let angle = 0;
 
-
 let mouthImg;
 let mouthImgClosed;
-
-let debugMode = false;
 
 let soundArray = [];
 
@@ -87,8 +85,15 @@ function preload() {
 
   //push all sounds () into array
   for (let i = 0; i < 11; i++) {
-    soundArray.push(loadSound(i + '.mp3'));
+    //soundArray.push(loadSound(i + '.mp3'));
   }
+
+
+  //New array with the sounds in scale
+  for (let i = 0; i < 7; i++) {
+    soundArray.push(loadSound("/scaleNumbered/" +i + '.mp3'));
+  }
+
   mouthImg = loadImage('mouth100x100.png');
   mouthImgClosed = loadImage('closedMouth.jpg');
 }
@@ -122,13 +127,6 @@ function setup() {
   });
   */
 
-  //Pyramid ground setup
-/*  ground = new Block(world, { x: width / 2, y: 500, w: 300, h: 300, color: 'grey' }, {
-    isStatic: true, angle: PI * 0.25, label: 'ground', restitution: 1.4
-
-  });
-  */
-
 //Pyramid ground setup
   const points = [
     { x: 0, y: 0 },
@@ -144,8 +142,8 @@ function setup() {
 
   // propeller
   propeller = new Block(world,
-    { x: 100, y: 250, w: 200, h: 20, color: 'white' },
-    { isStatic: true, angle: angle, label: 'ground', restitution: 0.3 }
+    { x: 100, y: 250, w: 200, h: 30, color: 'white' },
+    { isStatic: true, angle: angle, label: 'propeller', restitution: 0.3 }
   );
 
   // wrap
@@ -163,15 +161,23 @@ function setup() {
     const bodyB = pairs.bodyB;
 
     let idNumber = bodyB.id % soundArray.length;
-    //console.log(bodyB);
+    console.log(idNumber);
 
     //Collision with ground
     if (bodyA.label === "ground" || bodyB.label === "ground") {
       soundArray[idNumber].play();
+      //soundArray[1].play();
       if (bodyA.label != "ground") {
         //bodyA.attributes.image = mouthImg;
       }
     }
+
+
+    //Special sound when colliding with propeller
+    if (bodyA.label === "propeller" || bodyB.label === "propeller") {
+      soundArray[0].play();
+    }
+
     //Collisions between mouths
     //console.log(bodyA.label + " " + bodyB.label);
     else if (bodyA.label === "Rectangle Body" && bodyB.label === "Rectangle Body" || bodyA.label === "Circle Body" && bodyB.label === "Circle Body") { //For whatever reason the label for the rectangle bodies is "Rectangle Body", not the assigned label
@@ -212,7 +218,7 @@ function draw() {
   //THIS IS SUPER MESSY, PERHAPS DELETE IT and start over?
   // visualize collision
   
-  if (frameCount % 2  == 0) {
+  if (frameCount % 10  == 0) {
     ground.attributes.color = 'grey';
     propeller.attributes.color = 'grey';
   } 
@@ -230,35 +236,8 @@ function draw() {
     }
 
     if (collidedPropeller) {
-      propeller.attributes.color = 'red';
+      propeller.attributes.color = 'green';
     }
-
-    /*
-    if (collided) {
-      if (mouth.label === undefined) {
-        if (debugMode) {
-          mouth.attributes.image = mouthImg;
-        } else {
-          //mouth.attributes.image = mouthPG;
-        }
-        mouth.attributes.color = 'red';      
-        setTimeout(changeMouthBack, 1000, mouth);
-      } else {
-        if (debugMode) {
-          mouth.attributes.image = mouthImgClosed;
-        } else {
-          //mouth.attributes.image = mouthPGclosed;
-        }
-        //mouth.attributes.image = mouthImgClosed;
-        mouth.attributes.color = 'white';
-      }
-    } else { //if not collided
-      //mouth.attributes.image = mouthImgClosed;
-    }
-    
-    */
-
-    //console.log(mouth.label);
     mouth.draw();
   }
 
@@ -271,22 +250,8 @@ function draw() {
   angle += 0.07;
 
   propeller.draw();
-  //polygon.draw();
+  //console.log(mouths.length, world.bodies.length); //Keep track of the number of mouths and if they are deleted okay?
 
-  //if (mouseIsPressed && !debugMode) mouthPG = get(mouthKeypoints[0] + mouthKeypoints[2] / 2, mouthKeypoints[1] + mouthKeypoints[3] / 2, mouthKeypoints[2], mouthKeypoints[3]);
-  //if (!debugMode) image(mouthPGclosed, 0, 0);
-  
-  //mouse.draw();
-  console.log(mouths.length, world.bodies.length);
-
-  //This works, but does not remove it from the mouth array
-  /*
-  for (const mouth of mouths) {    
-    if (mouth.body.position.y > height + 100) {
-      Matter.World.remove(world, mouth.body);
-    }
-  }
-  */
  //Delete offscreen bodies
   //Adapted from https://github.com/CodingTrain/website-archive/tree/main/Courses/natureofcode/5.19_matter_delete_bodies
   for (var i = 0; i < mouths.length; i++) {
@@ -306,15 +271,8 @@ function keyReleased() {
     Matter.World.clear(engine.world, bodies);
 
     //Delete all mouths
-    mouths = [];
-
-    
+    mouths = []; 
   }
-  else {
-    //mouthPGclosed = get(mouthKeypoints[0], mouthKeypoints[1], mouthKeypoints[2], mouthKeypoints[3]);
-    //mouthPGclosed.resize(50, 50);
-  }
-  
 }
 
 function changeMouthBack(mouth) {
@@ -329,15 +287,9 @@ function addBody(_x, _y, _w, _h) {
     mouths.push(newMouth);
   } else {
     mouthPG = get(mouthKeypoints[0], mouthKeypoints[1], _w, _h);
-    //mouthPG.resize(50, 50);
-    //Make it always 50 x 50 for now
-    //const newMouth = new Block(world, { x: _x, y: _y, w: 50, h: 50, image: mouthPGclosed });
     const newMouth = new Block(world, { x: _x, y: _y, w: _w, h: _h, image: mouthPG });
-    //newMouth.attributes.image = mouthImgClosed; //debug photoshop mouth
     mouths.push(newMouth);
-    
   }
-  //const newBall = new Block(world, { x: mouseX, y: mouseY, w: 50, h: 50, color: 'white', label: 'ball', image: mouthImg }, { density: 0.0001 });
 }
 
 function removeBody() {
