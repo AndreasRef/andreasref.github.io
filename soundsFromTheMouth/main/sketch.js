@@ -3,6 +3,19 @@
 /* To do:
 Clean up
 
+Graphic design soundwave, søg på pinterest
+
+Grundmønster der bevæger sig ved en kollision
+Blå = stilhed
+Rød = ramme
+Måske lav trekanten som fft
+
+Lav toner ligesom et piano
+
+Propellen skal have en særlig lyd / effekt
+
+
+
 Experiment with spring factors, desired length, stiffness, damping etc
 Make fullscreen
 Make the mouth drops more responsive using a better logic than framecount (use something that )
@@ -35,7 +48,7 @@ let angle = 0;
 let mouthImg;
 let mouthImgClosed;
 
-let debugMode = true;
+let debugMode = false;
 
 let soundArray = [];
 
