@@ -91,7 +91,7 @@ function preload() {
 
   //New array with the sounds in scale
   for (let i = 0; i < 7; i++) {
-    soundArray.push(loadSound("/scaleNumbered/" +i + '.mp3'));
+    soundArray.push(loadSound("scaleNumbered/" +i + '.mp3'));
   }
 
   mouthImg = loadImage('mouth100x100.png');
