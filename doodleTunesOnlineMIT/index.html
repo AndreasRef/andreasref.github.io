@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- import the webpage's stylesheet -->
+  <!-- <link rel="stylesheet" href="/style.css"> -->
+
+  <!-- DOODLEGUESS STUFF -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+  <!--     <script src="https://okb.glitch.me/Okb.js"></script> -->
+  <!-- <script src="nn17.js"></script> -->
+  <script src="nn345.js"></script>
+
+  <!-- import the webpage's javascript file -->
+  <script src="doodleScript.js" defer></script>
+
+
+  <!-- TONEJS STUFF -->
+  <script src="webcomponents-bundle.js"></script>
+  <link href="css" rel="stylesheet">
+  <script src="Tone.js"></script>
+  <script src="tone-ui.js"></script>
+  <script src="components.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  
+
+</head>
+
+<body>
+  <!-- TONEJS STUFF -->
+  
+  <tone-mute>
+    <button aria-label="mute">
+      <mwc-icon class="">
+        volume_up
+      </mwc-icon>
+    </button>
+  </tone-mute>
+  <script src="toneScript.js"></script>
+
+
+  <!-- DOODLEGUESS STUFF -->
+  <p style="font-size:24px;">Draw <img style='vertical-align:middle;' src='icons/piano.png'> piano,    <img style='vertical-align:middle;' src='icons/drums.png'>drums,   <img style='vertical-align:middle;' src='icons/bass.png'>(bass) guitar,   <img style='vertical-align:middle;' src='icons/sax.png'>saxophone,   <img style='vertical-align:middle;' src='icons/bike.png'>bicycle,   <img style='vertical-align:middle;' src='icons/saw.png'>saw,   <img style='vertical-align:middle;' src='icons/dog.png'>dog or <img style='vertical-align:middle;' src='icons/bird.png'>bird<br>Click "add sound" if your drawing is recognised</p>
+  <button id="addButton" onclick="addInstrument()">add sound🎶</button>
+  <button onclick="clearCanvas()">clear current canvas</button>
+  <button onclick="clearAll()">clear all</button>
+  <button id="instrumentModeButton" onclick="switchMode()">switch to hard mode</button>
+  
+  <p id="guess">no guess yet</p>
+  <div id="ret_div"></div>
+</body>
+
+</html>
