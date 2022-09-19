@@ -18,14 +18,14 @@ document.getElementById("addButton").disabled = true;
 var instrumentOnlyMode = true;
 
 //var instructionText = "Draw something! 🎹🥁🎸🎷🚲🪚🐶🐤";
-var instructionText = "";
+var instructionText = "<h3>Draw something</h3>";
 
 var instruments = [
-  'piano', 'drums', 'guitar', 'saxophone', 'bicycle', 'saw', 'dog', 'bird'
+  'piano', 'drums', 'guitar', 'saxophone'
 ];
 
 var emojis = [
-  "🎹","🥁","🎸","🎷","🚲","🪚","🐶","🐤"
+  "🎹","🥁","🎸","🎷"
 ]
 
 var pianoCount = 0;
@@ -60,10 +60,6 @@ drawnInstruments.push(new instrument("piano", "piano")); //Emojis are not used!!
 drawnInstruments.push(new instrument("drums", "drum"));
 drawnInstruments.push(new instrument("guitar", "bass"));
 drawnInstruments.push(new instrument("saxophone", "saxophone"));
-drawnInstruments.push(new instrument("bicycle", "bicycle"));
-drawnInstruments.push(new instrument("saw", "saw"));
-drawnInstruments.push(new instrument("bird", "bird"));
-drawnInstruments.push(new instrument("dog", "dog"));
 
 
 function aoran(x) {
@@ -98,14 +94,16 @@ in_canvas.style.transformOrigin = "0% 0%";
 in_canvas.style.opacity = 0.8;
 document.body.appendChild(in_canvas);
 
+var xOffset = window.innerWidth*0.2;
 var canvas = document.createElement("canvas");
 var context = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = window.innerWidth*0.75;
+canvas.height = window.innerHeight*0.6;
 canvas.style.position = "absolute";
-canvas.style.left = "0px";
-canvas.style.top = "0px";
+canvas.style.left = "20%";
+canvas.style.top = "30%px";
 canvas.style.zIndex = -1;
+canvas.style.outline = "3px solid black";
 document.body.appendChild(canvas);
 
 //Lets move the ret_div out into index.html
@@ -170,6 +168,7 @@ function addInstrument() {
     }
   }
   nDrawings++;
+  document.getElementById("addButton").disabled = true;
 }
 
 function switchMode() {
@@ -243,10 +242,12 @@ function process() {
   if (STROKES.length > 0) {
     ret = NN.predict(STROKES);
     var dist = ret.probabilityDistribution;
+    console.log(dist[0][0])
     lastPrediction = dist[0][0];
+    var filteredDist = [];
 
     if (instrumentOnlyMode) { //Easy mode where it only tries to recognise instruments (and piano & keyboard are the same)
-      var filteredDist = [];
+      
       var firstKeyOrPiano = true;
 
       for (var i = 0; i < dist.length; i++) {
@@ -273,7 +274,18 @@ function process() {
 
       ret_div.innerHTML = res_str;
       lastPrediction = filteredDist[0][0];
-      var guess_str = "Did you draw " + filteredDist[0][0]+"?";
+
+      var guess_str = "..."
+
+      if (filteredDist[0][1] < 0.05) {
+        console.log(filteredDist[0][1])
+        guess_str = "Not sure... perhaps " + dist[0][0] + "?";
+      } else {
+        console.log(filteredDist[0][1])
+        guess_str = "Did you draw " + filteredDist[0][0]+"?";
+      }
+
+      
 
     } else { //Original hard mode
       var res_str = "";
@@ -302,7 +314,8 @@ function process() {
     console.log("lastPrediction: " + lastPrediction)
 
     //Disable / enable button
-    if (instruments.includes(lastPrediction)) {
+    
+    if (instruments.includes(lastPrediction) && (filteredDist[0][1] > 0.05)) {
       document.getElementById("addButton").disabled = false;
     } else {
       document.getElementById("addButton").disabled = true;
@@ -316,5 +329,14 @@ document.body.onload = async function () {
   await NN.loadModel('models/tfjs-model-8571367962526639.json');
   title.innerHTML = '';
 }
+
+
+//Disable select for better drawing (not sure if this is the best idea)
+// const disableselect = (e) => {  
+//   return false  
+// }  
+// document.onselectstart = disableselect  
+// document.onmousedown = disableselect
+
 
 window.setInterval(main, 10);

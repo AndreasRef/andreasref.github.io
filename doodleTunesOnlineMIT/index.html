@@ -26,6 +26,10 @@
   <script src="Tone.js"></script>
   <script src="tone-ui.js"></script>
   <script src="components.js"></script>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kalam">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Indie+Flower">
+  
   <link rel="stylesheet" type="text/css" href="style.css">
   
 
@@ -45,11 +49,12 @@
 
 
   <!-- DOODLEGUESS STUFF -->
-  <p style="font-size:24px;">Draw <img style='vertical-align:middle;' src='icons/piano.png'> piano,    <img style='vertical-align:middle;' src='icons/drums.png'>drums,   <img style='vertical-align:middle;' src='icons/bass.png'>(bass) guitar,   <img style='vertical-align:middle;' src='icons/sax.png'>saxophone,   <img style='vertical-align:middle;' src='icons/bike.png'>bicycle,   <img style='vertical-align:middle;' src='icons/saw.png'>saw,   <img style='vertical-align:middle;' src='icons/dog.png'>dog or <img style='vertical-align:middle;' src='icons/bird.png'>bird<br>Click "add sound" if your drawing is recognised</p>
-  <button id="addButton" onclick="addInstrument()">add sound🎶</button>
+  <!-- <p style="font-size:24px;">Draw <img style='vertical-align:middle;' src='icons/piano.png'> piano,    <img style='vertical-align:middle;' src='icons/drums.png'>drums,   <img style='vertical-align:middle;' src='icons/bass.png'>(bass) guitar,   <img style='vertical-align:middle;' src='icons/sax.png'>saxophone,   <img style='vertical-align:middle;' src='icons/bike.png'>bicycle,   <img style='vertical-align:middle;' src='icons/saw.png'>saw,   <img style='vertical-align:middle;' src='icons/dog.png'>dog or <img style='vertical-align:middle;' src='icons/bird.png'>bird<br>Click "add sound" if your drawing is recognised</p> -->
+  <p style="font-size:24px;">Draw a single <img style='vertical-align:middle;' src='icons/piano.png'> piano,    <img style='vertical-align:middle;' src='icons/drums.png'>drum,   <img style='vertical-align:middle;' src='icons/bass.png'>(bass) guitar or   <img style='vertical-align:middle;' src='icons/sax.png'>saxophone<br>Click "add instrument" if your drawing is recognised with over 5% accuracy. The more instruments you add, the more notes they play.</p>
+  <button id="addButton" onclick="addInstrument()">add instrument🎶</button>
   <button onclick="clearCanvas()">clear current canvas</button>
   <button onclick="clearAll()">clear all</button>
-  <button id="instrumentModeButton" onclick="switchMode()">switch to hard mode</button>
+  <button id="instrumentModeButton" onclick="switchMode()" hidden>switch to hard mode</button>
   
   <p id="guess">no guess yet</p>
   <div id="ret_div"></div>
