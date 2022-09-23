@@ -6,7 +6,7 @@ Fix logik med lyd-arrays
 Sæt en tidsramme for dem (linje 219)
 */
 
-let debugMode = true;
+let debugMode = false;
 
 //Sound analysis
 let amplitude;
