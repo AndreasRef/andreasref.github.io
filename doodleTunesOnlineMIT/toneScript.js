@@ -24,16 +24,10 @@ const piano = new Tone.Player({
     loop: true
 }).toDestination().sync().start(0); 
 
-
 const saxophone = new Tone.Player({
     url: "sounds/saxophone_0.mp3",
     loop: true
 }).toDestination().sync().start(0); 
-
-const bicycle = new Tone.Player({
-    url: "sounds/bicycle_0.mp3",
-    loop: true
-}).toDestination().sync().start(0);
 
 
 
@@ -43,9 +37,9 @@ class instrument {
       this.filename = filename;
       this.count = 0;
 
-
        this.myPlayer = new Tone.Player({
-        url: "sounds/"+this.filename+"_0.mp3",
+        //url: "sounds/"+this.filename+"_0.mp3", //old version
+        url: "calebSounds/"+this.filename+"1.0.mp3", //Caleb version
         loop: true
     }).toDestination().sync().start(0);
     }
@@ -59,7 +53,8 @@ class instrument {
 
     loadTrack() {
         //console.log("hey " + this.name + " " + this.count)
-        this.myPlayer.load("sounds/"+this.filename+"_"+this.count +".mp3")
+        //this.myPlayer.load("sounds/"+this.filename+"_"+this.count +".mp3") //old version
+        this.myPlayer.load("calebSounds/"+this.filename + (Math.floor(Math.random() * 4) + 1) + "."+ this.count +".mp3") //Caleb version
         Tone.Transport.start()
     }
 }

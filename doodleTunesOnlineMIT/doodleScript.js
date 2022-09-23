@@ -17,8 +17,10 @@ document.getElementById("addButton").disabled = true;
 
 var instrumentOnlyMode = true;
 
+var guessThreshold = 0.02;
+
 //var instructionText = "Draw something! 🎹🥁🎸🎷🚲🪚🐶🐤";
-var instructionText = "<h3>Draw something</h3>";
+var instructionText = "<h3>Draw something! Tip: Try to imitate the drawings above.</h3>";
 
 var instruments = [
   'piano', 'drums', 'guitar', 'saxophone'
@@ -277,7 +279,7 @@ function process() {
 
       var guess_str = "..."
 
-      if (filteredDist[0][1] < 0.05) {
+      if (filteredDist[0][1] < guessThreshold) {
         console.log(filteredDist[0][1])
         guess_str = "Not sure... perhaps " + dist[0][0] + "?";
       } else {
@@ -315,7 +317,7 @@ function process() {
 
     //Disable / enable button
     
-    if (instruments.includes(lastPrediction) && (filteredDist[0][1] > 0.05)) {
+    if (instruments.includes(lastPrediction) && (filteredDist[0][1] > guessThreshold)) {
       document.getElementById("addButton").disabled = false;
     } else {
       document.getElementById("addButton").disabled = true;
