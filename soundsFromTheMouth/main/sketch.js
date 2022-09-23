@@ -1,34 +1,12 @@
 // p5 matter based on examples from Bene: https://b-g.github.io/p5-matter-examples/docs/ 
 /* To do:
-BUG HVOR DEN LAVER ALT FOR MANGE MUNDE 
 
-***RESET CASE***
-Slet alle mouths hvis frameRate er for lav eller der er over 50 mouths
-Måske rent faktisk reset det der sker i setup, hvis lydene fucker op, se: https://www.youtube.com/watch?v=lm8Y8TD4CTM&ab_channel=TheCodingTrain
-Se højre museklik - location.reload(true);
-Få den til at resette af sig selv...
-
-
-***Tracking***
-Kun få munde ud, hvis man lige har åbnet munden (og den før var lukket)
-Der opstår problemer, hvis man har munden lige omkring threshold. Hvordan laver man en penalty, så den ikke trigger hele tiden
-hvis score fx veksler mellem 0.4 og 0.6?
-
-***GRAFIK***
-Graphic design soundwave, søg på pinterest
-Grundmønster der bevæger sig ved en kollision
-Blå = stilhed
-Rød = ramme
-
-
-***LYD***
-Der er et problem med lydgengivelsen, når for mange lyde spiller samtidig. En måde at fikse det på, er ved kun at tillade at et klip spilles, hvis ikke det allerede spiller
-Jeg har prøvet en masse potentielle fixes med compressor, måle max output lyd på samlede + enkelte lyde, sætte volumen ned, men intet virker rigtigt...
-Propellen skal have en særlig lyd / effekt
-Big mouth = loud sound
+***Freday 23. september***
+Fix logik med lyd-arrays
+Sæt en tidsramme for dem (linje 219)
 */
 
-let debugMode = false;
+let debugMode = true;
 
 //Sound analysis
 let amplitude;
@@ -62,6 +40,10 @@ let mouthImg;
 let mouthImgClosed;
 
 let soundArray = [];
+let shuffleArrays = [];
+let altSoundArray = [];
+let originalSoundArray = [];
+let soundArrayCounter = 0;
 
 let facemesh;
 let video;
@@ -96,14 +78,37 @@ let propellerSound;
 
 function preload() {
   //New array with the sounds in scale
-  for (let i = 0; i < nBlocksAndSounds; i++) {
-    soundArray.push(loadSound("scaleNumbered/" +i + '.mp3'));
-    
-    //soundArray.push(loadSound("shortSounds/" +i + '.mp3'));
-    //soundArray.push(loadSound("shortScaleNumbered/" +i + '.mp3'));
-    soundArray[i].setVolume(0.6)
+  for (let j = 0; j< 2; j++) {
+    shuffleArrays[j] = []; 
+    for (let i = 0; i < nBlocksAndSounds; i++) {
+      //soundArray.push(loadSound("scaleNumbered/" +i + '.mp3'));
+      //soundArray.push(loadSound("OhEbMinor/" +i + '.mp3'));
+      
+      soundArray.push(loadSound("shortSounds/" +i + '.mp3'));
+      //soundArray.push(loadSound("shortScaleNumbered/" +i + '.mp3'));
+      soundArray[i].setVolume(0.6)
+  
+      //Test with alternative soundArray (for shuffling between them)
+      //altSoundArray.push(loadSound("scaleNumbered/" +i + '.mp3'));
+      //altSoundArray[i].setVolume(0.6)
+  
+      //shuffleArrays[j].push(loadSound("scaleNumbered/" +i + '.mp3'));
+      if (j == 0) {
+        shuffleArrays[j][i] = loadSound("scaleNumbered/" +i + '.mp3');
+        shuffleArrays[j][i].setVolume(0.6)
+      } else if (j == 1) {
+        shuffleArrays[j][i] = loadSound("shortSounds/" +i + '.mp3');
+        shuffleArrays[j][i].setVolume(0.6)
+      }
+      
+  
+      //shuffleArrays[1].push(loadSound("scaleNumbered/" +i + '.mp3'));
+      //shuffleArrays[1][i].setVolume(0.6)
+    }
   }
-  propellerSound = loadSound("1.mp3")
+  
+  originalSoundArray = soundArray;
+  propellerSound = loadSound("av_sound.mp3")
   propellerSound.setVolume(0.6);
 
   mouthImg = loadImage('mouth100x100.png');
@@ -111,7 +116,6 @@ function preload() {
 }
 
 function setup() {
-  //const canvas = createCanvas(640, 480);
   const canvas = createCanvas(1920, 1080);
   if (!debugMode) {
     video = createCapture(VIDEO);
@@ -132,11 +136,6 @@ function setup() {
   engine = Matter.Engine.create();
   world = engine.world;
 
-  
-  /* Ground setup
-  ground = new Block(world, { x: width / 2, y: 500, w: width * 1.2, h: 200, color: 'grey' }, {
-    isStatic: true, angle: PI * 0.08, label: 'ground', restitution: 1.4
-  }); */
 
 //Pyramid ground setup
 let _x = (640-200)/nBlocksAndSounds;
@@ -149,11 +148,9 @@ let curveY = 35;
     { x: _x, y: 0 },
     { x: _x, y: extraY },
     { x: 0, y: extraY },
-    
   ];
   
   const points2 = [
-
     { x: 0, y: 0 },
     { x: -_x, y: -curveY},
     { x: -_x, y: 0 },
@@ -163,27 +160,10 @@ let curveY = 35;
 
   //Redo ground with multiple blocks instead of one
   for (let i = 0; i<nBlocksAndSounds; i++) {
-    // if (i<floor(nBlocksAndSounds/2)+1) {   
-    //   //grounds[i] = new Block(world, { x: 70 + i*100, y: 450, w: 100, h: 100 + elevations[i]*2, color: 'grey' }, {
-    //     grounds[i] = new PolygonFromPoints(world, { x: 60 + i*_x, y: 600+i*(-curveY), points: points, color: 'grey' }, {
-    //     isStatic: true, angle: PI * 0, label: 'ground' + i, restitution: 1.4
-    //   });
-    // } else {
-    //   grounds[i] = new PolygonFromPoints(world, { x: 60 + i*_x, y: 220+i*curveY, points: points2, color: 'grey' }, {
-    //     isStatic: true, angle: PI * 0, label: 'ground' + i, restitution: 1.0
-    //   });
-    //   compressor.process(soundArray[i], .0001);
-    // }
-
-//Attempt to fully redo block layout
-    
-      //grounds[i] = new Block(world, { x: 70 + i*100, y: 450, w: 100, h: 100 + elevations[i]*2, color: 'grey' }, {
         grounds[i] = new PolygonFromPoints(world, { x: 35*2 + i*_x, y: 410+i*(curveY), points: points2, color: 'grey' }, {
         isStatic: true, angle: PI * 0, label: 'ground' + i, restitution: 1.2
       });
      
-
-
     amplitude = new p5.Amplitude(0.5);
     amplitude.toggleNormalize(true);
 
@@ -201,8 +181,7 @@ let curveY = 35;
 
   // propeller
   propeller = new Block(world,
-    //{ x: 100, y: 250, w: 200, h: 30, color: 'white' },
-    { x: 500, y: 250, w: 150, h: 30, color: 'white' }, //Debug thing to disable the propeller during dev by setting w:0
+    { x: 500, y: 250, w: 150, h: 30, color: 'white' },
     { isStatic: true, angle: angle, label: 'propeller', restitution: 0.5 }
   );
 
@@ -215,25 +194,14 @@ let curveY = 35;
     let idNumber = bodyB.id % soundArray.length;
     //console.log(idNumber);
 
-    //Collision with ground
-    if (bodyA.label === "ground" || bodyB.label === "ground") {
-      //soundArray[idNumber].play();
-    }
-
     //New specific collision with each block
     for (let i = 0; i<grounds.length; i++) {
       if (bodyA.label == "ground"+i || bodyB.label == "ground"+i) {
-        //Only start playing if it is not currently playing...
-        //if (!soundArray[i].isPlaying()) soundArray[i].play();
-        //soundArray[i].play();
-        //console.log(amplitudes[i].getLevel());
-        //Perhaps we could check the volume of each sound instead?
+        //Perhaps we could check the volume of each sound and only play if not too high?
         if (amplitudes[i].getLevel() < 0.4) soundArray[i].play();
-
         //We could perhaps also check the overall levels of all that is playing combined, and not play anything if they are too high?
       }
     }
-
 
     //Special sound when colliding with propeller
     if (bodyA.label === "propeller" || bodyB.label === "propeller") {
@@ -245,9 +213,30 @@ let curveY = 35;
   // run the engine
   Matter.Runner.run(engine);
 
-
   //amplitude = new p5.Amplitude(0.5);
   //amplitude.toggleNormalize(true);
+
+  setInterval(changeScale, 2000);
+
+}
+
+function changeScale() {
+  console.log("change the musical scale");
+
+  if (soundArrayCounter%2 == 0) {
+    //soundArray = altSoundArray; 
+  } else {
+    //soundArray = originalSoundArray;
+  }
+
+
+  soundArray = shuffleArrays[soundArrayCounter%shuffleArrays.length];
+
+
+  for (let i = 0; i<nBlocksAndSounds; i++) {
+    amplitudes[i].setInput(soundArray[i]);
+  }
+  soundArrayCounter++;
 }
 
 function modelReady() {
@@ -264,18 +253,17 @@ function draw() {
   if (!debugMode) {
     image(video, 0, 0);
     yawnScore();
-    //if (isMouthOpen && frameCount % 25 == 0) {
-      if (isMouthOpen && openMouthCounter == 1) {  
-      //addBody(mouthKeypoints[0] + mouthKeypoints[2] / 2, mouthKeypoints[1] + mouthKeypoints[3] / 2, mouthKeypoints[2], mouthKeypoints[3]);
-    }
   } else {
+  }
+  pop();
+
+  if (debugMode) {
     fill(255);
     textAlign(CENTER, CENTER);
-    text('Click: New Body\nPress SPACE: Delete all', width / 2, 50);
+    text('DEBUG MODE\nClick mouse: New Body\nPress SPACE: Delete all\nPress f for full screen', width / 2, 50);
     textAlign(LEFT);
     text("frameRate: " + nf(frameRate(),0,2), 10, 10)
   }
-  pop();
 
   noStroke();
   fill(255);
@@ -299,15 +287,13 @@ function draw() {
   // animate angle property of propeller
   Matter.Body.setAngle(propeller.body, angle);
   Matter.Body.setAngularVelocity(propeller.body, 0.25);
-  angle -= 0.07;
+  angle -= 0.10;
 
   levelPropellerSound = amplitudePropellerSound.getLevel();
   propeller.attributes.color = color(7*255/(nBlocksAndSounds+1), levelPropellerSound*255*1.2 + 20, levelPropellerSound*255*0.8 + 40);
 
   propeller.draw();
   pop();
-
-  
 
   //console.log(mouths.length, world.bodies.length); //Keep track of the number of mouths and if they are deleted okay?
   ////Delete offscreen bodies adapted from https://github.com/CodingTrain/website-archive/tree/main/Courses/natureofcode/5.19_matter_delete_bodies
@@ -319,6 +305,14 @@ function draw() {
     }
   }
   //console.log(amplitude.getLevel());
+
+  if (!debugMode && !fullscreen()) {
+    push();
+    fill(0)
+    textSize(24);
+    text("Click mouse to enter full screen", 10 , 36)
+    pop();
+  }
 }
 
 function keyReleased() {
@@ -342,7 +336,6 @@ function addBody(_x, _y, _w, _h) {
     const newMouth = new Block(world, { x: mouseX/(1920/640), y: mouseY/(1080/480), w: 50, h: 50, color: 'white', label: 'ball', image: mouthImgClosed }, { density: 0.0001 });
     mouths.push(newMouth);
   } else {
-    
     //mouthPG = video.get(mouthKeypoints[0], mouthKeypoints[1], _w, _h);    
     mouthPG = get((640-_w-mouthKeypoints[0])/(640/1920), mouthKeypoints[1]/(480/1080), _w/(640/1920), _h/(480/1080));
     mouthPG.resize(_w, _h);
@@ -358,16 +351,19 @@ document.oncontextmenu = function () {
 }
 
 function mouseReleased(event) {
-  if (mouseButton === LEFT) {
+  if (mouseButton === LEFT && debugMode) {
     addBody(mouseX, mouseY, 50, 50);
   } else if (mouseButton === RIGHT) {
-    location.reload(true);
+    //location.reload(true);
+  } else if (mouseButton === LEFT && !debugMode) {//full screen
+    let fs = fullscreen();
+    fullscreen(!fs);
   }
 }
 
 
 function yawnScore() {
-  console.log(predictions.length);
+  //console.log(predictions.length);
   for (let i = 0; i < predictions.length; i += 1) {
     //const keypoints = predictions[i].scaledMesh;
     const keypoints = predictions[0].scaledMesh; //Perhaps we can avoid mistakes if we only use the first person?
