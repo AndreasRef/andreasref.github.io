@@ -17,6 +17,7 @@ let levels = [];
 
 let amplitudePropellerSound;
 let levelPropellerSound;
+let slapSound;
 
 let compressor;
 
@@ -38,6 +39,9 @@ let angle = 0;
 
 let mouthImg;
 let mouthImgClosed;
+
+let propellerSound;
+let propellerArray = [];
 
 let soundArray = [];
 let shuffleArrays = [];
@@ -74,7 +78,7 @@ let penaltyCounter = 0;
 let openMouthCounter = 0;
 
 let nBlocksAndSounds = 7;
-let propellerSound;
+
 
 function preload() {
   //New array with the sounds in scale
@@ -83,6 +87,10 @@ function preload() {
     for (let i = 0; i < nBlocksAndSounds; i++) {
       //soundArray.push(loadSound("scaleNumbered/" +i + '.mp3'));
       //soundArray.push(loadSound("OhEbMinor/" +i + '.mp3'));
+
+      propellerArray.push(loadSound("ows/nonPitched/"+i+".mp3"))
+      propellerArray[i].setVolume(0.6);
+
       
       soundArray.push(loadSound("shortSounds/" +i + '.mp3'));
       //soundArray.push(loadSound("shortScaleNumbered/" +i + '.mp3'));
@@ -95,6 +103,8 @@ function preload() {
       //shuffleArrays[j].push(loadSound("scaleNumbered/" +i + '.mp3'));
       if (j == 0) {
         shuffleArrays[j][i] = loadSound("scaleNumbered/" +i + '.mp3');
+        //shuffleArrays[j][i] = loadSound("ows/nonPitched/" +i + '.mp3');
+        //shuffleArrays[j][i] = loadSound("ows/GbLydianScale/" +i + '.mp3');
         shuffleArrays[j][i].setVolume(0.6)
       } else if (j == 1) {
         shuffleArrays[j][i] = loadSound("shortSounds/" +i + '.mp3');
@@ -108,8 +118,10 @@ function preload() {
   }
   
   originalSoundArray = soundArray;
-  propellerSound = loadSound("av_sound.mp3")
+  propellerSound = loadSound("ows/nonPitched/0.mp3")
   propellerSound.setVolume(0.6);
+  slapSound = loadSound("slap-soundmaster13-49669815.mp3")
+  slapSound.setVolume(0.04);
 
   mouthImg = loadImage('mouth100x100.png');
   mouthImgClosed = loadImage('closedMouth.jpg');
@@ -206,6 +218,8 @@ let curveY = 35;
     //Special sound when colliding with propeller
     if (bodyA.label === "propeller" || bodyB.label === "propeller") {
       //soundArray[0].play();
+      //slapSound.play();
+      propellerSound = propellerArray[floor(random(propellerArray.length))];
       propellerSound.play();
     }
   });
@@ -216,7 +230,7 @@ let curveY = 35;
   //amplitude = new p5.Amplitude(0.5);
   //amplitude.toggleNormalize(true);
 
-  setInterval(changeScale, 2000);
+  setInterval(changeScale, 20000);
 
 }
 
