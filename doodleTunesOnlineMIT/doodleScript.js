@@ -17,7 +17,7 @@ document.getElementById("addButton").disabled = true;
 
 var instrumentOnlyMode = true;
 
-var guessThreshold = 0.02;
+var guessThreshold = 0.01;
 
 //var instructionText = "Draw something! 🎹🥁🎸🎷🚲🪚🐶🐤";
 var instructionText = "<h3>Draw something! Tip: Try to imitate the drawings above.</h3>";
