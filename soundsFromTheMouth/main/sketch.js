@@ -4,6 +4,9 @@
 ***Freday 23. september***
 Fix logik med lyd-arrays
 Sæt en tidsramme for dem (linje 219)
+
+
+Replace sound playback with Howler: https://github.com/goldfire/howler.js
 */
 
 let debugMode = false;
@@ -80,6 +83,17 @@ let openMouthCounter = 0;
 let nBlocksAndSounds = 7;
 
 
+//Howler
+let howlerArray = [];
+let AMinorLong = [];
+let DMajorLong = [];
+
+let AbLydianShort = [];
+let CMajorShort = [];
+
+//New color logic for the Howler playback
+let colorIntensity = [0, 0, 0, 0, 0, 0, 0];
+
 function preload() {
   //New array with the sounds in scale
   for (let j = 0; j< 2; j++) {
@@ -88,26 +102,65 @@ function preload() {
       //soundArray.push(loadSound("scaleNumbered/" +i + '.mp3'));
       //soundArray.push(loadSound("OhEbMinor/" +i + '.mp3'));
 
-      propellerArray.push(loadSound("ows/nonPitched/"+i+".mp3"))
-      propellerArray[i].setVolume(0.6);
+      //propellerArray.push(loadSound("ows/nonPitched/"+i+".mp3"))
+      //propellerArray[i].setVolume(0.6);
 
+      //Howler lib for propellerArray
+      propellerArray.push(
+        new Howl({
+          //src: ['ows/nonPitched/'+i+'.mp3']
+          src: ['SlapOw/'+i+'.mp3']
+        })
+      )
       
-      soundArray.push(loadSound("shortSounds/" +i + '.mp3'));
+      //soundArray.push(loadSound("shortSounds/" +i + '.mp3'));
       //soundArray.push(loadSound("shortScaleNumbered/" +i + '.mp3'));
+      soundArray.push(loadSound("AMinor/" +i + '.mp3'));
       soundArray[i].setVolume(0.6)
   
       //Test with alternative soundArray (for shuffling between them)
       //altSoundArray.push(loadSound("scaleNumbered/" +i + '.mp3'));
       //altSoundArray[i].setVolume(0.6)
   
+      howlerArray.push(
+        new Howl({
+          src: ['AMinor/'+i+'.mp3']
+        })
+      )
+
+      AMinorLong.push(
+        new Howl({
+          src: ['AMinor/'+i+'.mp3']
+        })
+      )
+
+      DMajorLong.push(
+        new Howl({
+          src: ['DMajor/'+i+'.mp3']
+        })
+      )
+      
+      AbLydianShort.push(
+        new Howl({
+          src: ['finalShortScales/AbLydian/'+i+'.mp3']
+        })
+      )
+
+
+      CMajorShort.push(
+        new Howl({
+          src: ['finalShortScales/CMajor/'+i+'.mp3']
+        })
+      )
+
       //shuffleArrays[j].push(loadSound("scaleNumbered/" +i + '.mp3'));
       if (j == 0) {
-        shuffleArrays[j][i] = loadSound("scaleNumbered/" +i + '.mp3');
+        shuffleArrays[j][i] = loadSound("AMinor/" +i + '.mp3');
         //shuffleArrays[j][i] = loadSound("ows/nonPitched/" +i + '.mp3');
         //shuffleArrays[j][i] = loadSound("ows/GbLydianScale/" +i + '.mp3');
         shuffleArrays[j][i].setVolume(0.6)
       } else if (j == 1) {
-        shuffleArrays[j][i] = loadSound("shortSounds/" +i + '.mp3');
+        shuffleArrays[j][i] = loadSound("finalShortScales/CMajor/" +i + '.mp3');
         shuffleArrays[j][i].setVolume(0.6)
       }
       
@@ -118,9 +171,9 @@ function preload() {
   }
   
   originalSoundArray = soundArray;
-  propellerSound = loadSound("ows/nonPitched/0.mp3")
+  propellerSound = loadSound("SlapOw/0.mp3")
   propellerSound.setVolume(0.6);
-  slapSound = loadSound("slap-soundmaster13-49669815.mp3")
+  slapSound = loadSound("SlapOw/0.mp3")
   slapSound.setVolume(0.04);
 
   mouthImg = loadImage('mouth100x100.png');
@@ -180,9 +233,13 @@ let curveY = 35;
     amplitude.toggleNormalize(true);
 
     amplitudes[i] = new p5.Amplitude(0.5);
+
     amplitudes[i].setInput(soundArray[i]);
     //amplitude.smooth(1);
     amplitudes[i].toggleNormalize(true);
+
+
+    //test with setting amplitudes to howlerArray instead
 
     amplitudePropellerSound = new p5.Amplitude(0.5);
     amplitudePropellerSound.setInput(propellerSound);
@@ -210,7 +267,9 @@ let curveY = 35;
     for (let i = 0; i<grounds.length; i++) {
       if (bodyA.label == "ground"+i || bodyB.label == "ground"+i) {
         //Perhaps we could check the volume of each sound and only play if not too high?
-        if (amplitudes[i].getLevel() < 0.4) soundArray[i].play();
+        //if (amplitudes[i].getLevel() < 0.4) soundArray[i].play();
+        howlerArray[i].play();
+        colorIntensity[i] = 235;
         //We could perhaps also check the overall levels of all that is playing combined, and not play anything if they are too high?
       }
     }
@@ -219,8 +278,9 @@ let curveY = 35;
     if (bodyA.label === "propeller" || bodyB.label === "propeller") {
       //soundArray[0].play();
       //slapSound.play();
-      propellerSound = propellerArray[floor(random(propellerArray.length))];
-      propellerSound.play();
+      //propellerSound = propellerArray[floor(random(propellerArray.length))];
+      propellerArray[floor(random(propellerArray.length))].play();
+      //propellerSound.play();
     }
   });
 
@@ -230,19 +290,27 @@ let curveY = 35;
   //amplitude = new p5.Amplitude(0.5);
   //amplitude.toggleNormalize(true);
 
-  setInterval(changeScale, 20000);
+  setInterval(changeScale, 30000);
 
 }
 
 function changeScale() {
-  console.log("change the musical scale");
+  
 
-  if (soundArrayCounter%2 == 0) {
+  if (soundArrayCounter%4 == 0) {
+    howlerArray = AMinorLong;
     //soundArray = altSoundArray; 
-  } else {
+  } else if (soundArrayCounter%4 == 1) {
+    howlerArray = CMajorShort;
+    //soundArray = originalSoundArray;
+  }  else if (soundArrayCounter%4 == 2) {
+    howlerArray = DMajorLong;
+    //soundArray = originalSoundArray;
+  }  else if (soundArrayCounter%4 == 3) {
+    howlerArray = AbLydianShort;
     //soundArray = originalSoundArray;
   }
-
+  console.log("change the musical scale to " + soundArrayCounter%4);
 
   soundArray = shuffleArrays[soundArrayCounter%shuffleArrays.length];
 
@@ -293,8 +361,11 @@ function draw() {
   for (let i = 0; i<grounds.length; i++) {
     colorMode(HSB)
     levels[i] = amplitudes[i].getLevel();
-    grounds[i].attributes.color = color(i*(255/(nBlocksAndSounds+1)), levels[i]*255*1.2 + 20, levels[i]*255*0.8 + 40);
+    //grounds[i].attributes.color = color(i*(255/(nBlocksAndSounds+1)), levels[i]*255*1.2 + 20, levels[i]*255*0.8 + 40);
+    grounds[i].attributes.color = color(i*(255/(nBlocksAndSounds+1)), colorIntensity[i]+20, colorIntensity[i]+20);
     grounds[i].draw();
+    colorIntensity[i]-=5;
+    colorIntensity[i] = constrain(colorIntensity[i], 0, 255);
   }
 
 
@@ -369,6 +440,21 @@ function mouseReleased(event) {
     addBody(mouseX, mouseY, 50, 50);
   } else if (mouseButton === RIGHT) {
     //location.reload(true);
+    for (let i = 0; i<7; i++) {
+      //soundArray[i].play();
+    }
+
+    // sound0.play();
+    // sound1.play();
+    // sound2.play();
+    // sound3.play();
+    // sound4.play();
+    // sound5.play();
+    // sound6.play();
+
+    howlerArray[1].play();
+    
+    //sound.play();
   } else if (mouseButton === LEFT && !debugMode) {//full screen
     let fs = fullscreen();
     fullscreen(!fs);
