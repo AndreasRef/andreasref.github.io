@@ -1,0 +1,10 @@
+/* Preloading tip from https://perishablepress.com/a-way-to-preload-images-without-javascript-that-is-so-much-better/ */
+div#preload { display: none; }
+
+body{
+    margin:0;
+  }
+
+  * {
+    cursor: none;
+    }

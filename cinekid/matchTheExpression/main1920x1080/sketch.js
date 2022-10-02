@@ -1,118 +1,310 @@
+/*
+To fix
+- Go fullscreen
+- Do the mouth only for the scores
+- Smaller paintings
+- Clean DALLE markers
+
+
+Nice to have
+- Take a picture effect / perfect!
+- Different clap sounds
+
+*/
+
+
 const videoElement = document.getElementsByClassName('input_video')[0];
 const canvasElement = document.getElementsByClassName('output_canvas')[0];
 const canvasCtx = canvasElement.getContext('2d');
 
+const img = new Image();
+img.src = '0full.png'; // Set source path
 
-const img = new Image();  
-img.src = 'rightBottomImg.jpg'; // Set source path
-
-
-const img2 = new Image();  
-img2.src = 'paintingWithHoles.png'; // Set source path
-
+const img2 = new Image();
+img2.src = '0.png'; // Set source path
 
 let imgCounter = 0;
 
-
+let showDebugPoints = false;
 let mouseDown = false;
+
+let totalDist = 0;
+
+let expressionCounter = 0;
+
+//let snapShotImage;
+
+// Clamp number between two values with the following line:
+const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+
 document.body.onmousedown = () => {
   mouseDown = true;
+  openFullscreen();
 };
 document.body.onmouseup = () => {
-  mouseDown = false;
+
+   mouseDown = false;
+   expressionHold();
+  // imgCounter++;
+  // if (imgCounter > 6) {
+  //   imgCounter = 0;
+  // }
+  // img.src = imgCounter + '.jpg';
+  // img2.src = imgCounter + 'full.jpg';
+};
+
+
+let clap = new Audio('clapTrimmed.mp3');
+
+
+//full screen
+var elem = document.documentElement;
+
+//Confetti stuff
+var count = 600;
+var defaults = {
+  origin: { y: 0.6, x: 0.35 }
+};
+
+function fire(particleRatio, opts) {
+  confetti(Object.assign({}, defaults, opts, {
+    particleCount: Math.floor(count * particleRatio)
+  }));
+}
+
+function fireAllConfetti() {
+  fire(0.25, {
+    spread: 126,
+    startVelocity: 55,
+  });
+  fire(0.2, {
+    spread: 60,
+    scalar: 1.1
+  });
+  fire(0.35, {
+    spread: 100,
+    decay: 0.91,
+    scalar: 0.8
+  });
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 25,
+    decay: 0.92,
+    scalar: 1.2
+  });
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 45,
+    scalar: 1.5
+  });  
+}
+
+
+
+function nextImage() {
+
   imgCounter++;
   if (imgCounter > 6) {
     imgCounter = 0;
   }
-  img.src = imgCounter + 'full.png';
-  img2.src = imgCounter + '.png'; 
-};
+  img.src = imgCounter + '.jpg';
+  img2.src = imgCounter + 'full.jpg';
+  //clap.play();
+}
 
 function onResults(results) {
   canvasCtx.save();
   canvasCtx.translate(canvasElement.width, 0);
   canvasCtx.scale(-1, 1);
   canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-  
-  canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
-
-  //Draw a rectangle at the upper right corner of the canvas
-  canvasCtx.fillStyle = '#FFFFFF';
-  canvasCtx.fillRect(0, 0, 540, 540);
-
-  //Lets draw the current image as reference to the right
-  canvasCtx.drawImage(img, 0, 540, 540, 540);
 
   //Lets draw the current image with the mask to the left
   canvasCtx.drawImage(img2, 540, 0, 1380, 1080);
 
+  //Outline
+  canvasCtx.strokeStyle = "black"
+  canvasCtx.lineWidth = 5;
+  canvasCtx.strokeRect(540, 0, 1380, 1080);
+
+  let x = 700;
+  let y = 500;
+  let w = 300;
+  let h = 300;
+
+  let p = staticPaintings[imgCounter];
+  
+  canvasCtx.beginPath();
+  canvasCtx.moveTo(canvasElement.width - p.x, p.y);
+  canvasCtx.lineTo(canvasElement.width - (p.x+p.w), p.y);
+  canvasCtx.lineTo(canvasElement.width - (p.x+p.w), p.y+p.h);
+  canvasCtx.lineTo(canvasElement.width - p.x, p.y+p.h);
+  canvasCtx.closePath();
+  canvasCtx.clip();
+
+  //webcam feed
+  canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height); 
+
+  canvasCtx.restore();
+  canvasCtx.save();
+  canvasCtx.translate(canvasElement.width, 0);
+  canvasCtx.scale(-1, 1);
+
+  //Draw a white rectangle at the upper right corner of the canvas
+  canvasCtx.fillStyle = '#FFFFFF';
+  canvasCtx.fillRect(0, 0, 540, 540);
+
+  //Draw outlines
+  canvasCtx.strokeStyle = "black"
+  canvasCtx.lineWidth = 5;
+  canvasCtx.strokeRect(0, 0, 540, 540);
+
+  //Lets draw the current image as reference in the right bottom
+  canvasCtx.drawImage(img, 0, 540, 540, 540);
+  //Draw outline
+  canvasCtx.strokeRect(0, 540, 540, 540);
+  
+
+  //Draw a scaled version of the facetracker mesh in the upper right corner
   if (results.multiFaceLandmarks) {
-
     if (results.multiFaceLandmarks[0]) { //if we got a face (not very elegant)
-      let landmarks = results.multiFaceLandmarks[0][0]; 
-
-      console.log(landmarks.x*canvasElement.width);
-
-      //First we translate to the left of the screen based on the face's position so it is locked indepentendtly of where you are - this works!
+      let landmarks = results.multiFaceLandmarks[0][0];
 
       //Could we perhaps also scale this??
-      canvasCtx.scale(0.65, 0.65);
-      canvasCtx.translate(canvasElement.height/4 - landmarks.x*canvasElement.width + 100, canvasElement.height/4  - landmarks.y*canvasElement.height + 250);
-      //canvasCtx.translate(landmarks.x*100, landmarks.y*100);
+      canvasCtx.scale(0.6, 0.6);
+      canvasCtx.translate(canvasElement.height / 4 - landmarks.x * canvasElement.width + 100, canvasElement.height / 4 - landmarks.y * canvasElement.height + 250);
     }
-
-    
-    
 
     for (const landmarks of results.multiFaceLandmarks) {
-      //canvasCtx.translate(400, 100); //This works, but mirrored translation
-
-      //let landmarks = results.multiFaceLandmarks[0][0]; 
-      //translate the drawing to the upper left corner of the canvas based on the x and y values of the landmarks
-      //
-
-      drawConnectors(canvasCtx, landmarks, FACEMESH_TESSELATION,
-                     {color: '#C0C0C070', lineWidth: 1});
-      drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_EYE, {color: '#FF3030'});
-      drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_EYEBROW, {color: '#FF3030'});
-      drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_IRIS, {color: '#FF3030'});
-      drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_EYE, {color: '#30FF30'});
-      drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_EYEBROW, {color: '#30FF30'});
-      drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_IRIS, {color: '#30FF30'});
-      drawConnectors(canvasCtx, landmarks, FACEMESH_FACE_OVAL, {color: '#E0E0E0'});
-      drawConnectors(canvasCtx, landmarks, FACEMESH_LIPS, {color: '#E0E0E0'});
+      drawConnectors(canvasCtx, landmarks, FACEMESH_TESSELATION, { color: '#C0C0C070', lineWidth: 1 });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_EYE, { color: '#FF3030' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_EYEBROW, { color: '#FF3030' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_IRIS, { color: '#FF3030' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_EYE, { color: '#30FF30' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_EYEBROW, { color: '#30FF30' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_IRIS, { color: '#30FF30' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_FACE_OVAL, { color: '#E0E0E0' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_LIPS, { color: '#E0E0E0' });
     }
-
   }
   canvasCtx.restore();
 
-  //Draw a B to check stuff
-  canvasCtx.font = 'bold 100px Arial';
-  canvasCtx.fillStyle = '#FF0000';
-  //canvasCtx.fillText('B', 100, 100);
+  if (results.multiFaceLandmarks) {
 
+    //Reset totalDist
+    totalDist=0;
 
-  //Find a keypoint and draw it
-  if (results.multiFaceLandmarks) {      
-
-    //Find the first landmark and print out its coordinates
-    if (results.multiFaceLandmarks[0]) { //if we got a face (not very elegant)
-    let landmarks = results.multiFaceLandmarks[0][0]; 
-     
-    //console.log(landmarks);
-
-    //Make a green circle at the x and y position of the first landmark
-    canvasCtx.beginPath();
-    //canvasCtx.arc(canvasElement.width - landmarks.x*canvasElement.width, landmarks.y*canvasElement.height, 10, 0, 2 * Math.PI);
-    canvasCtx.fillStyle = '#00FF00';
-    canvasCtx.fill();
+    //if no face
+    if (!results.multiFaceLandmarks[0]) {
+      totalDist=200000;
     }
+
+
+    if (results.multiFaceLandmarks[0]) { //if we got a face (not very elegant)
+      //Make green circles that compare the landmarks to the current one from the face tracker
+      let allLandMarks = results.multiFaceLandmarks[0];
+      let p = staticPaintings[imgCounter];
+      for (let i = 0; i<allLandMarks.length-10; i++) { //-10 because we ignore the last 10
+        if (showDebugPoints) {
+          canvasCtx.beginPath();
+          canvasCtx.arc(canvasElement.width - allLandMarks[i].x*canvasElement.width, allLandMarks[i].y*canvasElement.height, 5, 0, 2 * Math.PI);
+          canvasCtx.fillStyle = '#00FF00';
+          canvasCtx.fill();
+
+          //Load existing keypoints from static images and display them 
+          //Make a red circle at the x and y position of each loaded landmark 
+          canvasCtx.beginPath();
+          canvasCtx.arc(1380 - p.coordinates[i][0], p.coordinates[i][1], 5, 0, 2 * Math.PI);
+          canvasCtx.fillStyle = '#FF0000';
+          canvasCtx.fill();
+        }
+        
+        //Very crude comparison of all points!
+        totalDist += dist(canvasElement.width - allLandMarks[i].x*canvasElement.width, allLandMarks[i].y*canvasElement.height, 1380 - p.coordinates[i][0], p.coordinates[i][1]);
+      }
+    }
+    console.log(totalDist);
+
+
+    //Gradient
+    // Create a linear gradient
+    // The start gradient point is at x=20, y=0
+    // The end gradient point is at x=220, y=0
+    const gradient = canvasCtx.createLinearGradient(20, 0, 1380-40, 0);
+
+    // Add three color stops
+    gradient.addColorStop(0, "red");
+    gradient.addColorStop(0.4, "orange");
+    gradient.addColorStop(0.8, "green");
+    gradient.addColorStop(1.0, "LawnGreen");
+
+    // Set the fill style and draw a rectangle
+    canvasCtx.fillStyle = gradient;
+    //canvasCtx.fillRect(20, 220, 200, 100);
+
+    //Translate test for moving bar down
+    canvasCtx.restore();
+    canvasCtx.save();
+    canvasCtx.translate(0,1080-150)
+    //Sloppy score bar
+    let score = map(totalDist, 200000,10000, 0, 1)
+    score = clamp(score, 0, 1);
+    //canvasCtx.fillStyle = lerpColor("#FF0000", "#00FF00", score);
+    canvasCtx.fillRect(20, 20, score*(1380-40), 100);
+    canvasCtx.strokeStyle = "white"
+    canvasCtx.lineWidth = 5;
+    canvasCtx.strokeRect(20, 20, 1380-40, 100);
+
+    //Ticks
+    canvasCtx.fillStyle = "white"
+    canvasCtx.textAlign = 'center';
+    canvasCtx.textBaseline = 'middle';
+    //Icons
+    canvasCtx.font = "35px serif";
+    let stars = "";
+    for (let i = 0; i<5; i++) {
+      stars+="⭐️"
+      if (i>0) canvasCtx.fillRect(20 + i* (1380-40) / 5, 100, 5, 20);
+      canvasCtx.fillText(stars, 20 + i* (1380-40) / 5 + ((1380-40) / 10), 70);
+    }
+    
+    
+    canvasCtx.restore();
+    //canvasCtx.fillText('⭐️', 80, 70);
+    //canvasCtx.fillText('⭐️⭐️⭐️⭐️⭐️', (1380-40)-80, 70);
+
+
+    if (score > 0.8) {
+      expressionCounter++;
+      //snapShotImage = videoElement.toDataURL('image/jpeg');
+      //canvasCtx.drawImage(snapShotImage, 0, 0)
+    } else {
+      expressionCounter = 0;
+    }
+
+    if (expressionCounter > 120) {
+      expressionHold();
+      //nextImage();
+      expressionCounter = 0;
+    }
+    //console.log(expressionCounter);
+
   }
 }
 
-const faceMesh = new FaceMesh({locateFile: (file) => {
-  return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
-}});
+function expressionHold() {
+  
+  fireAllConfetti();
+
+  clap.play();
+  setTimeout(nextImage, 2000)
+}
+
+
+const faceMesh = new FaceMesh({
+  locateFile: (file) => {
+    return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+  }
+});
 faceMesh.setOptions({
   maxNumFaces: 1,
   refineLandmarks: true,
@@ -123,10 +315,56 @@ faceMesh.onResults(onResults);
 
 const camera = new Camera(videoElement, {
   onFrame: async () => {
-    await faceMesh.send({image: videoElement});
+    await faceMesh.send({ image: videoElement });
   },
   width: 1280,
   height: 720,
-  
+
 });
 camera.start();
+
+
+function dist(x1, y1, x2, y2){
+  let y = x2 - x1;
+  let x = y2 - y1;
+  return Math.sqrt(x * x + y * y);
+}
+
+
+function map(value, in_min, in_max, out_min, out_max) {
+  return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+//Full screen
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+}
+
+// function lerpColor(a, b, amount) { 
+
+//   var ah = parseInt(a.replace(/#/g, ''), 16),
+//       ar = ah >> 16, ag = ah >> 8 & 0xff, ab = ah & 0xff,
+//       bh = parseInt(b.replace(/#/g, ''), 16),
+//       br = bh >> 16, bg = bh >> 8 & 0xff, bb = bh & 0xff,
+//       rr = ar + amount * (br - ar),
+//       rg = ag + amount * (bg - ag),
+//       rb = ab + amount * (bb - ab);
+
+//   return '#' + ((1 << 24) + (rr << 16) + (rg << 8) + rb | 0).toString(16).slice(1);
+// }
