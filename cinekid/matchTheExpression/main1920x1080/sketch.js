@@ -1,7 +1,5 @@
 /*
 To fix
-- Go fullscreen
-- Do the mouth only for the scores
 - Smaller paintings
 - Clean DALLE markers
 
@@ -9,7 +7,6 @@ To fix
 Nice to have
 - Take a picture effect / perfect!
 - Different clap sounds
-
 */
 
 
@@ -18,17 +15,19 @@ const canvasElement = document.getElementsByClassName('output_canvas')[0];
 const canvasCtx = canvasElement.getContext('2d');
 
 const img = new Image();
-img.src = '0full.png'; // Set source path
+img.src = '4.jpg'; // Set source path
 
 const img2 = new Image();
-img2.src = '0.png'; // Set source path
+img2.src = '4full.jpg'; // Set source path
 
-let imgCounter = 0;
+let imgCounter = 4;
 
 let showDebugPoints = false;
 let mouseDown = false;
 
 let totalDist = 0;
+
+let lerpedScore = 0;
 
 let expressionCounter = 0;
 
@@ -56,6 +55,13 @@ document.body.onmouseup = () => {
 
 let clap = new Audio('clapTrimmed.mp3');
 
+let lipsPoints = [
+  61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, //lipsUpperOuter
+  146, 91, 181, 84, 17, 314, 405, 321, 375, 291, //lipsLowerOuter
+  78, 191, 80, 81, 82, 13, 312, 311, 310, 415, 308, //lipsUpperInner
+  78, 95, 88, 178, 87, 14, 317, 402, 318, 324, 308, //lipsLowerInner
+  20, 238, 241, 125, 19, 354, 461, 458, 250, 462, 370, 94, 141, 242, 2, 1, 4, 5//nose quick points
+]
 
 //full screen
 var elem = document.documentElement;
@@ -104,7 +110,7 @@ function fireAllConfetti() {
 function nextImage() {
 
   imgCounter++;
-  if (imgCounter > 6) {
+  if (imgCounter > 7) {
     imgCounter = 0;
   }
   img.src = imgCounter + '.jpg';
@@ -172,16 +178,20 @@ function onResults(results) {
       //Could we perhaps also scale this??
       canvasCtx.scale(0.6, 0.6);
       canvasCtx.translate(canvasElement.height / 4 - landmarks.x * canvasElement.width + 100, canvasElement.height / 4 - landmarks.y * canvasElement.height + 250);
+      //only mouth
+      //canvasCtx.translate(canvasElement.height / 4 - landmarks.x * canvasElement.width + 100, canvasElement.height / 4 - landmarks.y * canvasElement.height);
     }
 
     for (const landmarks of results.multiFaceLandmarks) {
       drawConnectors(canvasCtx, landmarks, FACEMESH_TESSELATION, { color: '#C0C0C070', lineWidth: 1 });
-      drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_EYE, { color: '#FF3030' });
-      drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_EYEBROW, { color: '#FF3030' });
-      drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_IRIS, { color: '#FF3030' });
-      drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_EYE, { color: '#30FF30' });
-      drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_EYEBROW, { color: '#30FF30' });
-      drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_IRIS, { color: '#30FF30' });
+      //drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_EYE, { color: '#FF3030' });
+      //drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_EYEBROW, { color: '#FF3030' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_EYE, { color: '#E0E0E0' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_EYEBROW, { color: '#E0E0E0' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_RIGHT_IRIS, { color: '#E0E0E0' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_EYE, { color: '#E0E0E0' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_EYEBROW, { color: '#E0E0E0' });
+      drawConnectors(canvasCtx, landmarks, FACEMESH_LEFT_IRIS, { color: '#E0E0E0' });
       drawConnectors(canvasCtx, landmarks, FACEMESH_FACE_OVAL, { color: '#E0E0E0' });
       drawConnectors(canvasCtx, landmarks, FACEMESH_LIPS, { color: '#E0E0E0' });
     }
@@ -195,7 +205,7 @@ function onResults(results) {
 
     //if no face
     if (!results.multiFaceLandmarks[0]) {
-      totalDist=200000;
+      totalDist=10000;
     }
 
 
@@ -204,7 +214,7 @@ function onResults(results) {
       let allLandMarks = results.multiFaceLandmarks[0];
       let p = staticPaintings[imgCounter];
       for (let i = 0; i<allLandMarks.length-10; i++) { //-10 because we ignore the last 10
-        if (showDebugPoints) {
+        if (showDebugPoints && lipsPoints.includes(i)) {
           canvasCtx.beginPath();
           canvasCtx.arc(canvasElement.width - allLandMarks[i].x*canvasElement.width, allLandMarks[i].y*canvasElement.height, 5, 0, 2 * Math.PI);
           canvasCtx.fillStyle = '#00FF00';
@@ -219,7 +229,13 @@ function onResults(results) {
         }
         
         //Very crude comparison of all points!
-        totalDist += dist(canvasElement.width - allLandMarks[i].x*canvasElement.width, allLandMarks[i].y*canvasElement.height, 1380 - p.coordinates[i][0], p.coordinates[i][1]);
+        //totalDist += dist(canvasElement.width - allLandMarks[i].x*canvasElement.width, allLandMarks[i].y*canvasElement.height, 1380 - p.coordinates[i][0], p.coordinates[i][1]);
+        //only compare lip points
+
+        if(lipsPoints.includes(i)) {
+          totalDist += dist(canvasElement.width - allLandMarks[i].x*canvasElement.width, allLandMarks[i].y*canvasElement.height, 1380 - p.coordinates[i][0], p.coordinates[i][1]);
+        }
+
       }
     }
     console.log(totalDist);
@@ -246,10 +262,12 @@ function onResults(results) {
     canvasCtx.save();
     canvasCtx.translate(0,1080-150)
     //Sloppy score bar
-    let score = map(totalDist, 200000,10000, 0, 1)
+    let score = map(totalDist, 10000,1000, 0, 1)
     score = clamp(score, 0, 1);
+
+    lerpedScore = lerp(lerpedScore, score, 0.2);
     //canvasCtx.fillStyle = lerpColor("#FF0000", "#00FF00", score);
-    canvasCtx.fillRect(20, 20, score*(1380-40), 100);
+    canvasCtx.fillRect(20, 20, lerpedScore*(1380-40), 100);
     canvasCtx.strokeStyle = "white"
     canvasCtx.lineWidth = 5;
     canvasCtx.strokeRect(20, 20, 1380-40, 100);
@@ -267,16 +285,11 @@ function onResults(results) {
       canvasCtx.fillText(stars, 20 + i* (1380-40) / 5 + ((1380-40) / 10), 70);
     }
     
-    
     canvasCtx.restore();
-    //canvasCtx.fillText('⭐️', 80, 70);
-    //canvasCtx.fillText('⭐️⭐️⭐️⭐️⭐️', (1380-40)-80, 70);
 
 
-    if (score > 0.8) {
+    if (lerpedScore > 0.8) {
       expressionCounter++;
-      //snapShotImage = videoElement.toDataURL('image/jpeg');
-      //canvasCtx.drawImage(snapShotImage, 0, 0)
     } else {
       expressionCounter = 0;
     }
@@ -354,6 +367,10 @@ function closeFullscreen() {
   } else if (document.msExitFullscreen) { /* IE11 */
     document.msExitFullscreen();
   }
+}
+
+function lerp (start, end, amt){
+  return (1-amt)*start+amt*end
 }
 
 // function lerpColor(a, b, amount) { 

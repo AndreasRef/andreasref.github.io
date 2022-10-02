@@ -8,3 +8,6 @@ body{
   * {
     cursor: none;
     }
+  canvas{
+    cursor: none;
+  }
