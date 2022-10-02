@@ -20,7 +20,7 @@ var brushSizeMin = 1;
 var brushSizeMax = 100;
 var brushSizeStep = 1;
 
-var lerpStability = 0.5;
+var lerpStability = 0.9;
 var lerpStabilityMin = 0.0;
 var lerpStabilityMax = 1.0;
 var lerpStabilityStep = 0.01;
@@ -52,6 +52,7 @@ function setup() {
   });
 
   capture.hide();
+  noCursor();
 
   // Create the GUI
   //gui = createGui('p5.gui');
@@ -86,6 +87,14 @@ function draw() {
   loadPredictions(); // =>loads the predictions into the predictions array
 
   if (predictions != null && predictions.length > 0) {
+
+
+    if (predictions.length > 1) {
+      lerpStability = 0.9;
+    } else {
+      lerpStability = 0.6;
+    }
+
     //Grab the nose of the first (biggest) person and save in noseVector
     noseVector.set(
       width - predictions[0].landmarks[2][0] * (width / capture.width), //we have to reverse in order to flip
