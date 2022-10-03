@@ -294,7 +294,7 @@ function onResults(results) {
       expressionCounter = 0;
     }
 
-    if (expressionCounter > 120) {
+    if (expressionCounter > 90) {
       expressionHold();
       //nextImage();
       expressionCounter = 0;
