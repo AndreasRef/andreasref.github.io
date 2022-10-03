@@ -2,7 +2,7 @@
 To fix
 - Smaller paintings
 - Clean DALLE markers
-
+- Countdown timer needs to keep the confettiicon until the next picture
 
 Nice to have
 - Take a picture effect / perfect!
@@ -31,6 +31,8 @@ let lerpedScore = 0;
 
 let expressionCounter = 0;
 
+let keepLastEmoji = false;
+
 //let snapShotImage;
 
 // Clamp number between two values with the following line:
@@ -51,6 +53,14 @@ document.body.onmouseup = () => {
   // img.src = imgCounter + '.jpg';
   // img2.src = imgCounter + 'full.jpg';
 };
+
+
+//Countdown stuff
+let symbols = ["⭐️⭐️⭐️⭐️⭐️", "3️⃣", "2️⃣", "1️⃣", "🎉"]
+
+let emojiCounter = 0;
+
+let to1, to2, to3, to4;
 
 
 let clap = new Audio('clapTrimmed.mp3');
@@ -115,6 +125,7 @@ function nextImage() {
   }
   img.src = imgCounter + '.jpg';
   img2.src = imgCounter + 'full.jpg';
+  keepLastEmoji = false;
   //clap.play();
 }
 
@@ -238,7 +249,7 @@ function onResults(results) {
 
       }
     }
-    console.log(totalDist);
+    //console.log(totalDist);
 
 
     //Gradient
@@ -282,7 +293,8 @@ function onResults(results) {
     for (let i = 0; i<5; i++) {
       stars+="⭐️"
       if (i>0) canvasCtx.fillRect(20 + i* (1380-40) / 5, 100, 5, 20);
-      canvasCtx.fillText(stars, 20 + i* (1380-40) / 5 + ((1380-40) / 10), 70);
+      if (i<4) canvasCtx.fillText(stars, 20 + i* (1380-40) / 5 + ((1380-40) / 10), 70);
+      if (i==4) canvasCtx.fillText(symbols[emojiCounter], 20 + i* (1380-40) / 5 + ((1380-40) / 10), 70);
     }
     
     canvasCtx.restore();
@@ -290,11 +302,29 @@ function onResults(results) {
 
     if (lerpedScore > 0.8) {
       expressionCounter++;
+
+      if (expressionCounter == 10) {
+        emojiCounter = 1;
+      } else if (expressionCounter == 40) {
+        emojiCounter = 2;
+      } else if (expressionCounter == 80) {
+        emojiCounter = 3;
+      } else if (expressionCounter == 100) {
+        emojiCounter = 4;
+        keepLastEmoji = true;
+      } 
     } else {
       expressionCounter = 0;
+      emojiCounter = 0;
+      // clearTimeout(to1);
+      // clearTimeout(to2);
+      // clearTimeout(to3);
+      // clearTimeout(to4);
     }
 
-    if (expressionCounter > 90) {
+    if (keepLastEmoji) emojiCounter = 4;
+
+    if (expressionCounter > 100) {
       expressionHold();
       //nextImage();
       expressionCounter = 0;
@@ -306,6 +336,12 @@ function onResults(results) {
 
 function expressionHold() {
   
+
+//  to1 = setTimeout(updateEmoji, 100)
+//  to2 = setTimeout(updateEmoji, 200)
+//  to3 = setTimeout(updateEmoji, 300)
+//  to4 = setTimeout(updateEmoji, 400)
+
   fireAllConfetti();
 
   clap.play();
@@ -372,6 +408,11 @@ function closeFullscreen() {
 function lerp (start, end, amt){
   return (1-amt)*start+amt*end
 }
+
+//function updateEmoji() {
+  // emojiCounter++;
+  // if (emojiCounter == 4) emojiCounter = 0;
+//}
 
 // function lerpColor(a, b, amount) { 
 
