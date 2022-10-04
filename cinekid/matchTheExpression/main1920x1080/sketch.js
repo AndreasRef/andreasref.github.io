@@ -33,6 +33,8 @@ let expressionCounter = 0;
 
 let keepLastEmoji = false;
 
+let borderGreen = 255;
+
 //let snapShotImage;
 
 // Clamp number between two values with the following line:
@@ -279,8 +281,17 @@ function onResults(results) {
     lerpedScore = lerp(lerpedScore, score, 0.2);
     //canvasCtx.fillStyle = lerpColor("#FF0000", "#00FF00", score);
     canvasCtx.fillRect(20, 20, lerpedScore*(1380-40), 100);
-    canvasCtx.strokeStyle = "white"
-    canvasCtx.lineWidth = 5;
+    //canvasCtx.strokeStyle = "white"
+    if (expressionCounter == 0) {
+      canvasCtx.strokeStyle = "rgb(255,255,255)";
+      canvasCtx.lineWidth = 5;
+    } else {
+      let thergb = "rgb(" + 0 + "," + (expressionCounter%10)*25+ "," + 0 + ")"; 
+      //canvasCtx.strokeStyle = thergb;
+      canvasCtx.strokeStyle = lerpColor("#FFFFFF", "#00FF00",(Math.sin((expressionCounter%100)*0.4)*0.3+0.7));
+      canvasCtx.lineWidth = 10+ Math.sin((expressionCounter%100)*0.4)*1.5;
+    }
+    
     canvasCtx.strokeRect(20, 20, 1380-40, 100);
 
     //Ticks
@@ -288,13 +299,19 @@ function onResults(results) {
     canvasCtx.textAlign = 'center';
     canvasCtx.textBaseline = 'middle';
     //Icons
-    canvasCtx.font = "35px serif";
+    //canvasCtx.font = "35px serif";
+    let fontSize = 35;
     let stars = "";
     for (let i = 0; i<5; i++) {
+      fontSize +=2;
+      canvasCtx.font = fontSize+"px serif";
       stars+="⭐️"
       if (i>0) canvasCtx.fillRect(20 + i* (1380-40) / 5, 100, 5, 20);
       if (i<4) canvasCtx.fillText(stars, 20 + i* (1380-40) / 5 + ((1380-40) / 10), 70);
-      if (i==4) canvasCtx.fillText(symbols[emojiCounter], 20 + i* (1380-40) / 5 + ((1380-40) / 10), 70);
+      if (i==4) {
+        canvasCtx.font = "45px serif";
+        canvasCtx.fillText(symbols[emojiCounter], 20 + i* (1380-40) / 5 + ((1380-40) / 10), 70);
+      } 
     }
     
     canvasCtx.restore();
@@ -414,15 +431,15 @@ function lerp (start, end, amt){
   // if (emojiCounter == 4) emojiCounter = 0;
 //}
 
-// function lerpColor(a, b, amount) { 
+function lerpColor(a, b, amount) { 
 
-//   var ah = parseInt(a.replace(/#/g, ''), 16),
-//       ar = ah >> 16, ag = ah >> 8 & 0xff, ab = ah & 0xff,
-//       bh = parseInt(b.replace(/#/g, ''), 16),
-//       br = bh >> 16, bg = bh >> 8 & 0xff, bb = bh & 0xff,
-//       rr = ar + amount * (br - ar),
-//       rg = ag + amount * (bg - ag),
-//       rb = ab + amount * (bb - ab);
+  var ah = parseInt(a.replace(/#/g, ''), 16),
+      ar = ah >> 16, ag = ah >> 8 & 0xff, ab = ah & 0xff,
+      bh = parseInt(b.replace(/#/g, ''), 16),
+      br = bh >> 16, bg = bh >> 8 & 0xff, bb = bh & 0xff,
+      rr = ar + amount * (br - ar),
+      rg = ag + amount * (bg - ag),
+      rb = ab + amount * (bb - ab);
 
-//   return '#' + ((1 << 24) + (rr << 16) + (rg << 8) + rb | 0).toString(16).slice(1);
-// }
+  return '#' + ((1 << 24) + (rr << 16) + (rg << 8) + rb | 0).toString(16).slice(1);
+}
