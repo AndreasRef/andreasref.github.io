@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+
+<body>
+  <div class="container">
+    <video class="input_video" hidden="true"></video>
+    <canvas class="output_canvas" width="1920px" height="1080px"></canvas>
+  </div>
+  <script src="paintingCoordinates.js"></script>
+  <script src="sketch.js" type="module"></script>
+</body>
+
+<div id="preload">
+  <img src="0.jpg" width="1" height="1" alt="Image 0" />
+  <img src="1.jpg" width="1" height="1" alt="Image 01" />
+  <img src="2.jpg" width="1" height="1" alt="Image 02" />
+  <img src="3.jpg" width="1" height="1" alt="Image 03" />
+  <img src="4.jpg" width="1" height="1" alt="Image 03" />
+  <img src="5.jpg" width="1" height="1" alt="Image 03" />
+  <img src="6.jpg" width="1" height="1" alt="Image 03" />
+  <img src="7.jpg" width="1" height="1" alt="Image 03" />
+
+  <img src="0full.jpg" width="1" height="1" alt="Image full 0" />
+  <img src="1full.jpg" width="1" height="1" alt="Image full 01" />
+  <img src="2full.jpg" width="1" height="1" alt="Image full 02" />
+  <img src="3full.jpg" width="1" height="1" alt="Image full 03" />
+  <img src="4full.jpg" width="1" height="1" alt="Image full 03" />
+  <img src="5full.jpg" width="1" height="1" alt="Image full 03" />
+  <img src="6full.jpg" width="1" height="1" alt="Image full 03" />
+  <img src="7full.jpg" width="1" height="1" alt="Image full 03" />
+
+</div>
+
+</html>
