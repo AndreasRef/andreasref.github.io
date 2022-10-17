@@ -76,7 +76,11 @@ function drawKeypoints() {
 
           //cut from here
           pg.stroke(230, 80, 0);
-          pg.strokeWeight(15);
+          pg.strokeWeight(20);
+
+          //Attempt at HSB color
+          pg.colorMode(HSB, 1000);
+          pg.stroke(frameCount % 1000, 1000, 1000);
 
 
           if (pNoseX != 0 && pNoseY != 0) {
