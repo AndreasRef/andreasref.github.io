@@ -89,7 +89,7 @@ function drawKeypoints() {
             pg.line(width - noseX, noseY, width - pNoseX, pNoseY); //flipped
           }
 
-          if (dist(pNoseX, pNoseY, noseX, noseY) > 5) {
+          if (dist(pNoseX, pNoseY, noseX, noseY) > 2) {
             clearCounter = 0;
           }
           pNoseX = noseX;
@@ -104,7 +104,7 @@ function drawKeypoints() {
 
   //console.log("n poses: " + poses.length) 
   clearCounter++;
-  if (clearCounter > 500) {
+  if (clearCounter > 70) {
     pg.clear();
     clearCounter = 0;
   }
