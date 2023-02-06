@@ -1,0 +1,33 @@
+body {
+    background-color: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+}
+
+#poem {
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    width:60%;
+
+    font-family: 'helvetica neue', helvetica, arial, sans-serif;
+    font-size: 64px;
+
+    /* only wrap if the text is too long to fit on one line */
+    
+
+    
+
+
+    /* make the element's origin the center */
+    /* transform: translate(-50%, -50%); */
+
+    /* transform: translate(-50%, -50%); */
+}
