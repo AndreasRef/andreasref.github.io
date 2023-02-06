@@ -2,3 +2,10 @@ I dette foredrag vil Andreas Refsgaard vise hvordan han benytter programmering o
 
 (Alternativ)
 Med computeren som værktøj forsøger Andreas gennem sine værker at afmystificere computeralgoritmer og brugen af kunstig intelligens. Ved at lade folk spille musik kun med øjnene, lade algoritmer skrive videre på nyhedsartikler bag betalingsvægge og oprette en boghandel udelukkende med computergenerede science fiction romaner, viser Andreas teknologiens kreative potentiale på en legende og lettilgængelige facon. Samtidig dyrker værkerne også de fejl, computeralgoritmerne uundgåeligt laver, og peger dermed på større samfundsmæssige problemstillinger omkring bias, inklusion, overvågning, automatisering og koncentration af data hos tech-giganterne. 
+
+(Folkeskole)
+Andreas Refsgaard vil med udgangspunkt i sit kunstneriske virke vise eksempler på, hvordan nye digitale teknologier som DALL:E og ChatGPT påvirker skabelse af kreative tekster og billeder. Andreas vil også på en sjov, tilgængelig og inddragende facon, give et indblik i de maskinlæringsteknikker, der lægger bag. Andreas vil både komme ind på de kreative muligheder, som teknologierne åbner, men også belyse og lægge op til diskussion af de udfordringer, disse medfører. Foredraget vil give massere af materiale, eksempler og diskussionsemner, som kan benyttes i undervisningen efterfølgende. 
+
+
+(Folkeskole mindre specifikt)
+Andreas Refsgaard vil med udgangspunkt i sit kunstneriske virke vise eksempler på, hvordan kunstig intelligens kan benyttes kunstnerisk, kreativt og skabende. Andreas vil også på en sjov, tilgængelig og inddragende facon, give et indblik i de maskinlæringsteknikker, der lægger bag. Andreas vil både komme ind på de kreative muligheder, som teknologierne åbner, men også belyse og lægge op til diskussion af de udfordringer, disse medfører. Foredraget vil give massere af materiale, eksempler og diskussionsemner, som kan benyttes i undervisningen efterfølgende.
