@@ -1,3 +1,15 @@
+***NY***
+Kreativ AI
+Deltag i en inspirerende og interaktiv workshop, ledet af interaktionsdesigner, programmør og kunstner, Andreas Refsgaard. Andreas, en anerkendt kunstner og kreativ koder fra København, vil guide dig gennem processen, hvor du bliver introduceret til verdenen af algoritmer og kunstig intelligens på en engagerende og tankevækkende måde.
+
+I løbet af workshoppen får du mulighed for selv at udforske og afprøve forskellige AI-teknikker. Vi træner en algoritme til at genkende forskellige former for input, herunder billeder. Derudover vil vi også prøve kræfter med at generere både tekst og billeder ved hjælp af AI.
+
+Denne workshop er ikke blot en teknisk øvelse, men en kreativ og interaktiv oplevelse, der giver dig mulighed for at udforske og udfordre dine egne kreative evner inden for rammerne af kunstig intelligens. Ingen forudgående teknisk viden er nødvendig for at deltage.
+
+For at sikre den bedste oplevelse, anbefaler vi, at du medbringer en nyere bærbar computer med et fungerende webkamera og en opdateret Google Chrome internetbrowser.
+
+
+***GAMMEL***
 Machine Learning giver computere evnen til at lære uden at blive eksplicit programmeret. Denne hands on workshop går ud på at træne algoritmer til at genkende hunde, katte, ansigtsudtryk, kropspositioner, lyde og alt muligt andet. Vi skaber vores egne træningsdata på få minutter, og laver sjove, kunstneriske eller måske ligefrem nyttige interaktive programmer, der reagerer mere eller mindre intelligent på nye inputs.
 
 Fokus ligger på det kreative og det interaktive – ikke på at forstå algoritmerne bag machine learning til fulde eller skabe optimale træningssæt. Det er ikke en teoretisk eller akademisk workshop, men derimod et sjovt kortere undervisningsforløb, hvor vi går eksplorativt til værks og prøver at lave mindre interaktive eksperimenter med kunstig intelligens som drivkraft.
