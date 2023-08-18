@@ -1,0 +1,61 @@
+body{
+  background-color:white;
+  font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
+  margin: 0px;
+}
+
+a {
+  color: black;
+}
+a:hover{
+  font-weight: bold;
+}
+a:active{
+  color: black;
+}
+a:visited {
+  color: black;
+}
+
+#hint{
+  line-height: 130%;
+  margin-top: 20px;
+}
+
+.canvas-wrap{
+  padding: 0px;
+  margin-right: 0px;
+  margin-top:0px;
+  outline: 1px solid black;
+  display: none;
+}
+.canvas-title{
+  padding: px;
+  display: none;
+}
+#title{
+  font-size:36px;
+}
+#footer{
+  margin-top:50px;
+}
+
+/* 
+#canvas{
+  position:absolute;
+  top: 8px;
+  left: 700px;
+  z-index:1;
+  outline: 3px solid black; 
+}
+*/
+
+#master_canvas{
+  /* position:absolute; 
+  top:50 px; 
+  left:50 px; 
+  z-index:-1; */
+  /* border: 5px solid black;  */
+  z-index:-1;
+}
+
