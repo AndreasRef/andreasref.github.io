@@ -20,7 +20,7 @@ var skeletonization = {}
 skeletonization.setup = function(width,height){
   skeletonization.KERNEL_WIDTH = width;
   skeletonization.KERNEL_HEIGHT = height;
-  skeletonization.thinning_gpu = new GPU();
+  skeletonization.thinning_gpu = new GPUX();
   skeletonization.thinning_iterKernel0 = skeletonization.thinning_gpu.createKernel(function(a,WIDTH,HEIGHT,bbox) {
 
     if (this.thread.x < bbox[1]*WIDTH || this.thread.x > bbox[3] * WIDTH || this.thread.x % WIDTH < bbox[0] || this.thread.x % WIDTH > bbox[2]){
