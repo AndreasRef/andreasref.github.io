@@ -327,7 +327,7 @@ function onResults(results) {
         emojiCounter = 2;
       } else if (expressionCounter == 30) {
         emojiCounter = 3;
-      } else if (expressionCounter == 45) {
+      } else if (expressionCounter == 65) {
         emojiCounter = 4;
         keepLastEmoji = true;
       } 
@@ -342,7 +342,7 @@ function onResults(results) {
 
     if (keepLastEmoji) emojiCounter = 4;
 
-    if (expressionCounter > 45) {
+    if (expressionCounter > 65) {
       expressionHold();
       //nextImage();
       expressionCounter = 0;
