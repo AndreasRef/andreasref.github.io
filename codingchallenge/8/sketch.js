@@ -15,7 +15,7 @@ var nWords = 10;
 
 function setup() {
   createCanvas(windowWidth-20,windowHeight-75);
-  wordVectors = new ml5.Word2Vec('data/wordvecs10000.json');
+  wordVectors = new ml5.Word2Vec('data/wordvecs1000.json');
 
   frameRate(10);
 

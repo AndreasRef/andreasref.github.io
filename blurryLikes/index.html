@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Blurry Likes</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* 3x3 grid layout */
+            gap: 10px;
+            /* Adjust spacing between images as needed */
+        }
+
+        .overlay-content h2 {
+            margin-top: 45px;
+        }
+
+        .image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+
+        .image-container img.faded {
+            opacity: 0.9;
+
+        }
+
+        .like-indicator {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 40%;
+            /* Position halfway down the parent */
+            left: 0%;
+            /* Position halfway across the parent */
+            transform: translate(-0%, -0%);
+            /* Offset by half the indicator's width and height to center */
+            color: rgb(226, 226, 226);
+            text-align: center;
+            /* Center the text inside the indicator */
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            /* Prevents blocking click events */
+            font-size: 3rem;
+            font-family: 'Roboto', sans-serif;
+            width: 100%;
+            /* Ensure full width to center text correctly */
+            display: flex;
+            /* Use flexbox for centering */
+            justify-content: center;
+            /* Center horizontally in the flex container */
+            align-items: center;
+            /* Center vertically in the flex container */
+        }
+
+
+        .like-indicator.animate {
+            transform: scale(1.0);
+            opacity: 1;
+            /* transform: translateY(-10px); */
+        }
+
+        .safari-blur-fix {
+            -webkit-filter: blur(1px);
+            /* Adjust as necessary for Safari */
+            filter: blur(1px);
+            /* Standard filter for other browsers */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8em;
+            color: #666;
+            background-color: #f8f8f8;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        footer a {
+            color: #666;
+            /* text-decoration: none; */
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .overlay {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow-x: hidden;
+            transition: 1.0s;
+            padding-top: 10px;
+            font-size: 1.5em;
+        }
+
+        .overlay-content {
+            position: relative;
+            top: 5%;
+            width: 70%;
+            /* Adjust the width to your preference */
+            margin-left: 15%;
+            /* This will center the overlay content box */
+            text-align: left;
+            /* Align text to the left */
+            margin-top: 10px;
+            color: white;
+            margin-bottom: 50px;
+
+            a:visited {
+                color: #FFFFFF;
+            }
+        }
+
+        .closebtn {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            /* Adjust this based on new overlay content width */
+            font-size: 60px;
+            cursor: pointer;
+        }
+
+
+        @media screen and (max-height: 450px) {
+            .overlay {
+                padding-top: 15px
+            }
+
+            .closebtn {
+                /* position: fixed;  */
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                font-size: 40px;
+                /* Adjust size as needed */
+                cursor: pointer;
+                color: white;
+                /* Adjust color as needed */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="aboutOverlay" class="overlay">
+        <div class="overlay-content">
+            <span class="closebtn" onclick="closeOverlay()">&times;</span>
+            <h1>Blurry Likes</h1>
+            Blurry Likes is not about connecting people, sharing stunning images, or expressing your true self. Instead
+            it's about the
+            joy of slowly watching the most popular pictures on the platform turn into blurry blobs. A service that
+            dares to ask: "What if likes made things worse?"
+            <h2>Like → Blur</h2>
+            Likes gradually turn clear photos into indecipherable, pixelated mysteries. The higher the popularity, the
+            fuzzier the image.
+            <h2>Who needs context? </h2>
+            Not us! There's no text descriptions, no comments, no user profiles (yet!) - just good old-fashioned blur.
+
+            <h2>Anti-Social Metrics </h2>
+            Likes are all that matter - the more you get, the less you see. It's the ultimate anti-climax.
+
+            <h2>Alpha version</h2>
+            We're currently in the alpha stage, operating on an invite-only basis. Visitors have the privilege of liking
+            images, but uploading is not yet an option. Want your most popular images vanish into
+            the blurry abyss? Contact <a href="https://www.andreasrefsgaard.dk/">Andreas Refsgaard</a> for access.
+            <br><br>
+        </div>
+    </div>
+    <div class="grid-container" id="gridContainer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@latest/lib/p5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5.party@latest/dist/p5.party.js"></script>
+    <script src="script.js"></script>
+
+    <footer id="pageFooter">
+        <a href="javascript:void(0)" onclick="openOverlay()">What is Blurry Likes?</a> |
+        Made by <a href="https://www.andreasrefsgaard.dk/" target="_blank">Andreas Refsgaard</a> | 2024
+    </footer>
+</body>
+
+</html>
