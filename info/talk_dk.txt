@@ -13,10 +13,10 @@ Andreas Refsgaard vil med udgangspunkt i sit kunstneriske virke vise eksempler p
 
 
 (Ny version samlet)
-I dette foredrag vil Andreas Refsgaard introducere algoritmer og kunstig intelligens på en engagerende facon så alle kan være med, og senere vise sjove, provokerende og tankevækkende eksempler på hvordan disse teknikker giver mulighed helt nye kreative udfoldelser.
+I dette foredrag vil Andreas Refsgaard introducere algoritmer og kunstig intelligens på en engagerende måde så alle kan være med, og senere vise sjove, provokerende og tankevækkende eksempler på hvordan disse teknikker giver mulighed helt nye kreative udfoldelser.
 
 Med computeren som værktøj forsøger Andreas gennem sine værker at afmystificere computeralgoritmer og brugen af kunstig intelligens.
 
-Ved at lade folk spille musik kun med øjnene, lade algoritmer skrive videre på nyhedsartikler bag betalingsvægge og oprette en boghandel udelukkende med computergenerede science fiction romaner, viser Andreas teknologiens kreative potentiale på en legende og lettilgængelige facon.
+Ved at lade folk spille musik kun med øjnene, lade algoritmer skrive videre på nyhedsartikler bag betalingsvægge og oprette en boghandel udelukkende med computergenerede science fiction romaner, viser Andreas teknologiens kreative potentiale på en legende og lettilgængelig facon.
 
 Samtidig dyrker værkerne også de fejl, computeralgoritmerne uundgåeligt laver, og peger dermed på større samfundsmæssige problemstillinger omkring bias, overvågning og automatisering.
