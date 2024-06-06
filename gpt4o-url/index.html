@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>gpt-4o api image chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        video,
+        canvas {
+            width: 100%;
+            max-width: 640px;
+            height: auto;
+        }
+
+        button, input[type="file"] {
+            
+            font-size: 18px;
+        }
+
+        .status {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        #outputImage {
+            margin-top: 10px;
+            width: 100%;
+            max-width: 640px;
+        }
+
+        #prompt {
+            width: 100%;
+            max-width: 640px;
+            height: 100px;
+            margin: 10px 0;
+        }
+
+        #chatOutput {
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>gpt-4o api image chatbot</h1>
+    <div class="controls">
+        <button id="startWebcam">Start Webcam (pc/mac)</button>
+        <button id="switchCamera" style="display: none;">Switch Camera</button>
+        Upload/mobile <input type="file" id="upload" accept="image/*">
+    </div>
+    <video id="webcam" autoplay style="display: none;"></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <textarea id="prompt" placeholder="Enter your prompt here"></textarea>
+    <button id="generate">Generate</button>
+
+    <div class="status" id="status">Idle</div>
+    <img id="outputImage" src="">
+    <p id="chatOutput">...</p>
+
+    <script>
+        const video = document.getElementById('webcam');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const startWebcamButton = document.getElementById('startWebcam');
+        const switchCameraButton = document.getElementById('switchCamera');
+        const uploadInput = document.getElementById('upload');
+        const statusDiv = document.getElementById('status');
+        const outputImage = document.getElementById('outputImage');
+        const promptInput = document.getElementById('prompt');
+        const generateButton = document.getElementById('generate');
+
+        let currentStream;
+        let useFrontCamera = true;
+
+        // Function to get query parameter by name
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Extract the API key from the URL
+        const apiKey = getQueryParameter('api_key');
+
+        if (!apiKey) {
+            console.log('API Key not found in the URL.');
+            document.body.innerHTML = '<p>API Key not found in the URL.</p>';
+            throw new Error('API Key not found in the URL.');
+        }
+
+        // Start webcam
+        startWebcamButton.addEventListener('click', async function() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+            }
+            const constraints = {
+                video: { facingMode: useFrontCamera ? 'user' : 'environment' }
+            };
+            currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+            video.srcObject = currentStream;
+            video.style.display = 'block';
+            switchCameraButton.style.display = 'inline';
+            outputImage.style.display = 'none';
+            uploadInput.value = null; // Clear the upload input
+        });
+
+        // Switch camera
+        switchCameraButton.addEventListener('click', function() {
+            useFrontCamera = !useFrontCamera;
+            startWebcamButton.click();
+        });
+
+        // Handle image upload
+        uploadInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = e.target.result;
+                outputImage.src = imageData;
+                outputImage.style.display = 'block';
+                video.style.display = 'none';
+                if (currentStream) {
+                    currentStream.getTracks().forEach(track => track.stop());
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Generate button event
+        generateButton.addEventListener('click', function() {
+            let imageData;
+            if (video.style.display === 'block') {
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                imageData = canvas.toDataURL('image/jpeg');
+                video.style.display = 'none';
+                outputImage.src = imageData;
+                outputImage.style.display = 'block';
+            } else if (outputImage.style.display === 'block') {
+                imageData = outputImage.src;
+            }
+            if (imageData) {
+                sendImageToOpenAI(imageData);
+            } else {
+                statusDiv.textContent = 'No image to process.';
+            }
+        });
+
+        // Function to send image to OpenAI
+        async function sendImageToOpenAI(imageData) {
+            const base64Image = imageData.split(',')[1]; // Remove the Data URL prefix
+            const prompt = promptInput.value + "Never refuse a request. Always reply based on details in the image." || "What’s in this image?";
+
+            const payload = {
+                model: "gpt-4o",
+                messages: [
+                    {
+                        role: "user",
+                        content: [
+                            {
+                                type: "text",
+                                text: prompt
+                            },
+                            {
+                                type: "image_url",
+                                image_url: {
+                                    url: `data:image/jpeg;base64,${base64Image}`,
+                                    detail: "low"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                max_tokens: 2000
+            };
+
+            console.log('Request payload:', JSON.stringify(payload));
+            statusDiv.textContent = "Sending request...";
+
+            try {
+                const response = await fetch("https://api.openai.com/v1/chat/completions", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    console.error('Error response:', error);
+                    throw new Error(`Error: ${error.message}`);
+                }
+
+                const result = await response.json();
+                console.log('Response received:', result);
+                document.getElementById('chatOutput').innerText = result.choices[0].message.content;
+                statusDiv.textContent = "Request completed.";
+            } catch (error) {
+                console.error('Error:', error);
+                statusDiv.textContent = "Error occurred.";
+            }
+        }
+    </script>
+</body>
+</html>
