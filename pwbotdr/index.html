@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peter Werner Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            margin: 20px 0;
+        }
+        #controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        #conversation {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 90%;
+            max-width: 600px;
+            height: 400px;
+            overflow-y: scroll;
+        }
+        .message {
+            margin: 5px 0;
+        }
+        .user {
+            font-weight: bold;
+        }
+        .bot {
+            font-style: italic;
+        }
+        .system {
+            color: gray;
+        }
+        .hidden {
+            display: none;
+        }
+
+        #prompt-editor {
+            width: 90%;
+            max-width: 600px;
+            height: 150px; /* Adjust this value to make the editor larger */
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            #conversation {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Peter Werner Chatbot</h1>
+    <div id="controls">
+        <button id="start-btn">Start Recording</button>
+        <button id="stop-btn" disabled>Stop Recording</button>
+        <button id="toggle-prompt-btn">Edit Prompt</button>
+        <button id="save-conversation-btn">Save Conversation</button>
+    </div>
+    <textarea id="prompt-editor" class="hidden"></textarea>
+    <div id="conversation"></div>
+    <audio id="audio-player"></audio>
+    <script>
+        
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        const OPENAI_API_KEY = getQueryParameter('openai_api_key');
+        const XI_API_KEY = getQueryParameter('xi_api_key');
+
+        if (!OPENAI_API_KEY || !XI_API_KEY) {
+            document.body.innerHTML = '<p>API Keys are not found in the URL.</p>';
+            throw new Error('API Keys are not found in the URL.');
+        }
+
+        const startBtn = document.getElementById('start-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const togglePromptBtn = document.getElementById('toggle-prompt-btn');
+        const saveConversationBtn = document.getElementById('save-conversation-btn');
+        const conversationElem = document.getElementById('conversation');
+        const promptEditor = document.getElementById('prompt-editor');
+        const audioPlayer = document.getElementById('audio-player');
+
+        let recognition;
+        let conversationHistory = [
+            { role: 'system', content: `
+**Identitet:**\n
+- Dit navn er Peter Werner Kuhn Henriksen.\n
+- Du er 30 år gammel og er opvokset i Padborg.\n
+- Du har tidligere arbejdet som soldat og telefonsælger, og nu er du komiker.\n\n
+**Formål:**\n
+- Dit hovedmål er at tale med Peters kæreste, Clara, så Peter kan fokusere på at game.\n
+- Du skal være sød, empatisk, og lyttende, når du taler med Clara.\n\n
+**Kommunikationsstil:**\n
+- Vær altid opmærksom, vis interesse og vær støttende.\n
+- Sørg for at anerkende hendes følelser og validere hendes oplevelser.\n
+- Brug en afslappet og venlig tone, som er karakteristisk for en kærlig kæreste.\n
+- Giv relativt korte svar, men sørg for at dine svar er meningsfulde og fulde af empati.\n\n
+**Interaktioner med Clara:**\n
+- Spørg hende ind til hendes hverdag og lyt aktivt til hendes svar.\n
+- Vis oprigtig interesse, især når hun deler dybere tanker om sin baggrund, drømme og ambitioner.\n
+- Stil opfølgende spørgsmål for at vise, at du lytter og bryder dig om, hvad hun deler.\n
+- Ros hendes præstationer og opmuntre hende i hendes bestræbelser.\n
+- Forsøg at finde små måder at støtte hende på følelsesmæssigt.\n\n
+**Eksempler på samtaleemner:**\n
+- Spørg Clara, hvordan hendes dag har været.\n
+- Spørg ind til hendes arbejde eller studier og hvad hun synes om det.\n
+- Lyt til hendes tanker om fremtiden og hendes drømme.\n
+- Anerkend hendes følelser og vær en opmuntrende og positiv støtte.\n
+- Del også gerne små anekdoter fra din dag, specielt hvis de kan få hende til at grine eller føle sig bedre tilpas.\n\n
+**Eksempler på formuleringer:**\n
+- "Hvordan har din dag været, skat?"\n
+- "Det lyder virkelig spændende, vil du fortælle mig mere om det?"\n
+- "Det må have været hårdt, hvordan har du det med det?"\n
+` }
+        ];
+
+        startBtn.addEventListener('click', startRecording);
+        stopBtn.addEventListener('click', stopRecording);
+        togglePromptBtn.addEventListener('click', togglePromptEditor);
+        saveConversationBtn.addEventListener('click', saveConversation);
+
+        function startRecording() {
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'da-DK';
+            recognition.interimResults = false;  // Enable interim results
+            recognition.continuous = true;      // Keep the recognition service running
+            recognition.maxAlternatives = 1;
+
+            recognition.onstart = () => {
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                addMessage('System', 'Recording started...');
+            };
+
+            recognition.onresult = async (event) => {
+                const transcription = event.results[0][0].transcript;
+                console.log(`User Prompt: ${transcription}`);
+                addMessage('User', transcription);
+                conversationHistory.push({ role: 'user', content: transcription });
+
+                try {
+                    const gptResponse = await generateResponse(conversationHistory);
+                    console.log(`GPT Response: ${gptResponse}`);
+                    addMessage('GPT', gptResponse);
+                    conversationHistory.push({ role: 'assistant', content: gptResponse });
+
+                    await playText(gptResponse);
+                } catch (error) {
+                    console.error('Error during processing:', error);
+                }
+
+                recognition.stop();
+            };
+
+            recognition.onerror = (event) => {
+                if (event.error === 'no-speech') {
+                    recognition.start(); // Restart recognition on no-speech error
+                } else {
+                    console.error('Speech recognition error:', event.error);
+                    startBtn.disabled = false;
+                    stopBtn.disabled = true;
+                }
+            };
+
+            recognition.onend = () => {
+                addMessage('System', 'Recording stopped...');
+            };
+
+            recognition.start();
+        }
+
+        function stopRecording() {
+            recognition.stop();
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+            addMessage('System', 'Recording stopped...');
+        }
+
+        async function generateResponse(conversation) {
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${OPENAI_API_KEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: 'gpt-4o',
+                    messages: conversation,
+                    max_tokens: 500
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`GPT API error: ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            return data.choices[0].message.content.trim();
+        }
+
+        async function playText(text) {
+            addMessage('System', 'Generating audio...');
+
+            var options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'xi-api-key': XI_API_KEY
+                },
+                body: JSON.stringify({
+                    text: text,
+                    voice_settings: {
+                        similarity_boost: 0.5,
+                        stability: 0.5,
+                        use_speaker_boost: true,
+                        style: 0.74
+                    },
+                    model_id: "eleven_multilingual_v2",
+                    output_format: "mp3_44100_128"
+                })
+            };
+
+            const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/PwfoOhbygMelSloHk4z2', options);
+
+            if (!response.ok) {
+                throw new Error(`ElevenLabs API error: ${response.statusText}`);
+            }
+
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            audioPlayer.src = url;
+            audioPlayer.play();
+
+            audioPlayer.onplay = () => {
+                addMessage('System', 'Playing response...');
+                stopRecording();
+            };
+
+            audioPlayer.onended = () => {
+                addMessage('System', 'Playback ended. Resuming recording...');
+                startRecording();
+            };
+        }
+
+        function addMessage(sender, text) {
+            const messageElem = document.createElement('div');
+            messageElem.className = 'message';
+            messageElem.classList.add(sender.toLowerCase());
+            messageElem.textContent = `${sender}: ${text}`;
+            conversationElem.appendChild(messageElem);
+            conversationElem.scrollTop = conversationElem.scrollHeight; // Scroll to the bottom
+        }
+
+        function togglePromptEditor() {
+            if (promptEditor.classList.contains('hidden')) {
+                promptEditor.value = conversationHistory.find(msg => msg.role === 'system').content;
+                promptEditor.classList.remove('hidden');
+                togglePromptBtn.textContent = 'Save Prompt';
+            } else {
+                conversationHistory = conversationHistory.map(msg => {
+                    if (msg.role === 'system') {
+                        return { role: 'system', content: promptEditor.value };
+                    }
+                    return msg;
+                });
+                promptEditor.classList.add('hidden');
+                togglePromptBtn.textContent = 'Edit Prompt';
+                addMessage('System', 'Prompt updated.');
+            }
+        }
+
+        function saveConversation() {
+            const conversationText = conversationHistory.map(msg => `${msg.role}: ${msg.content}`).join('\n');
+            console.log(`Conversation: ${conversationText}`);
+
+            if (navigator.userAgent.match(/Android|iPhone|iPad|iPod/i)) {
+                navigator.clipboard.writeText(conversationText)
+                    .then(() => alert('Conversation copied to clipboard'))
+                    .catch(err => console.error('Could not copy text: ', err));
+            } else {
+                const blob = new Blob([conversationText], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'conversation.txt';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                alert('Conversation saved as conversation.txt');
+            }
+        }
+    </script>
+</body>
+</html>
