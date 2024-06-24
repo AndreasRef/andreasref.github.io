@@ -17,6 +17,7 @@
         }
         h1 {
             margin: 20px 0;
+            font-size: 56px;
         }
         #controls {
             display: flex;
@@ -51,7 +52,7 @@
             width: 90%;
             max-width: 600px;
             height: 150px; /* Adjust this value to make the editor larger */
-            margin-top: 10px;
+            margin: 10px;
         }
 
         @media (max-width: 600px) {
@@ -63,14 +64,15 @@
 </head>
 <body>
     <h1>Superpeter</h1>
+    
+    <img src="Peter-Werner-03-COVER-scaled.jpg" alt="Peter Werner Cover Image" style="max-width: 90%; height: auto; margin-bottom: 20px;">
     <div id="controls">
-        <button id="start-btn">Start Recording</button>
-        <button id="stop-btn" disabled>Stop Recording</button>
-        <button id="toggle-prompt-btn">Edit Prompt</button>
-        <button id="save-conversation-btn">Save Conversation</button>
+        <button id="start-btn">Start</button>
+        <button id="stop-btn" disabled>Stop</button>
+        <button id="toggle-prompt-btn">Sæt instruktioner</button>
+        <button id="save-conversation-btn">Gem samtale</button>
     </div>
     <textarea id="prompt-editor" class="hidden"></textarea>
-    <img src="Peter-Werner-03-COVER-scaled.jpg" alt="Peter Werner Cover Image" style="max-width: 90%; height: auto; margin-bottom: 20px;">
     <div id="conversation"></div>
     <audio id="audio-player"></audio>
     <script>
