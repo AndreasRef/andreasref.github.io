@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peter Werner Chatbot</title>
+    <title>Superpeter</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -60,7 +60,7 @@
     </style>
 </head>
 <body>
-    <h1>Peter Werner Chatbot</h1>
+    <h1>Superpeter</h1>
     <div id="controls">
         <button id="start-btn">Start Recording</button>
         <button id="stop-btn" disabled>Stop Recording</button>
@@ -68,6 +68,7 @@
         <button id="save-conversation-btn">Save Conversation</button>
     </div>
     <textarea id="prompt-editor" class="hidden"></textarea>
+    <img src="Peter-Werner-03-COVER-scaled.jpg" alt="Peter Werner Cover Image" style="max-width: 90%; height: auto; margin-bottom: 20px;">
     <div id="conversation"></div>
     <audio id="audio-player"></audio>
     <script>
@@ -142,19 +143,19 @@
             recognition.onstart = () => {
                 startBtn.disabled = true;
                 stopBtn.disabled = false;
-                addMessage('System', 'Recording started...');
+                addMessage('System', 'Lytter...');
             };
 
             recognition.onresult = async (event) => {
                 const transcription = event.results[0][0].transcript;
                 console.log(`User Prompt: ${transcription}`);
-                addMessage('User', transcription);
+                addMessage('Clara', transcription);
                 conversationHistory.push({ role: 'user', content: transcription });
 
                 try {
                     const gptResponse = await generateResponse(conversationHistory);
                     console.log(`GPT Response: ${gptResponse}`);
-                    addMessage('GPT', gptResponse);
+                    addMessage('Superpeter', gptResponse);
                     conversationHistory.push({ role: 'assistant', content: gptResponse });
 
                     await playText(gptResponse);
@@ -176,7 +177,8 @@
             };
 
             recognition.onend = () => {
-                addMessage('System', 'Recording stopped...');
+                //addMessage('System', 'Recording stopped...');
+                console.log("Recording stopped")
             };
 
             recognition.start();
@@ -186,7 +188,8 @@
             recognition.stop();
             startBtn.disabled = false;
             stopBtn.disabled = true;
-            addMessage('System', 'Recording stopped...');
+            //addMessage('System', 'Recording stopped...');
+            console.log("Recording stopped")
         }
 
         async function generateResponse(conversation) {
@@ -212,7 +215,8 @@
         }
 
         async function playText(text) {
-            addMessage('System', 'Generating audio...');
+            //addMessage('System', 'Generating audio...');
+            console.log("Generating audio...")
 
             var options = {
                 method: 'POST',
@@ -245,12 +249,14 @@
             audioPlayer.play();
 
             audioPlayer.onplay = () => {
-                addMessage('System', 'Playing response...');
+                //addMessage('System', 'Playing response...');
+                console.log("Playing response...")
                 stopRecording();
             };
 
             audioPlayer.onended = () => {
-                addMessage('System', 'Playback ended. Resuming recording...');
+                //addMessage('System', 'Playback ended. Resuming recording...');
+                console.log("Playback ended. Resuming recording...")
                 startRecording();
             };
         }
