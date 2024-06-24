@@ -140,7 +140,7 @@
             webcamCanvas.width = webcamFeed.videoWidth;
             webcamCanvas.height = webcamFeed.videoHeight;
             webcamContext.drawImage(webcamFeed, 0, 0, webcamCanvas.width, webcamCanvas.height);
-            webcamCanvas.style.display = 'block';
+            webcamCanvas.style.display = 'hide';
             requestAnimationFrame(drawWebcamToCanvas);
         }
     }
@@ -239,9 +239,12 @@
             };
 
             async function captureWebcamImage() {
+                let imageData;
+                imageData = webcamCanvas.toDataURL('image/jpeg');
                 // Placeholder for actual implementation to capture an image from the webcam
                 console.log('Capturing image from webcam...');
-                return 'image-data-placeholder';
+                console.log(imageData);
+                return imageData;
             }
 
             recognition.onerror = (event) => {
@@ -292,10 +295,68 @@
             return data.choices[0].message.content.trim();
         }
 
-        async function generateVisionResponse(conversation, image) {
+        async function generateVisionResponse(conversation, imageData) {
+            let returnText = "Intet svar fra API'en"
+            const base64Image = imageData.split(',')[1]; // Remove the Data URL prefix
             console.log('Generating vision response...');
             // Placeholder for actual implementation
-            return 'This is a placeholder response based on vision and speech input.';
+
+            const prompt = "Hvad er der på billedet? Svar kort med en enkelt sætning.";
+
+            const payload = {
+                model: "gpt-4o",
+                messages: [
+                    {
+                        role: "user",
+                        content: [
+                            {
+                                type: "text",
+                                text: prompt
+                            },
+                            {
+                                type: "image_url",
+                                image_url: {
+                                    url: `data:image/jpeg;base64,${base64Image}`,
+                                    detail: "low"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                max_tokens: 300
+            };
+
+            console.log('Request payload:', JSON.stringify(payload));
+            //statusDiv.textContent = "Sending request...";
+
+            try {
+                const response = await fetch("https://api.openai.com/v1/chat/completions", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${OPENAI_API_KEY}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    console.error('Error response:', error);
+                    throw new Error(`Error: ${error.message}`);
+                }
+
+                const result = await response.json();
+                console.log('Response received:', result);
+                console.log('Content', result.choices[0].message.content);
+                returnText = result.choices[0].message.content;
+                //document.getElementById('chatOutput').innerText = result.choices[0].message.content;
+                //statusDiv.textContent = "Request completed.";
+            } catch (error) {
+                console.error('Error:', error);
+                returnText = "Hov, der skete en fejl med billedet."
+                //statusDiv.textContent = "Error occurred.";
+            }
+            return returnText; 
         }
 
 
