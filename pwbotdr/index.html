@@ -301,29 +301,40 @@
             console.log('Generating vision response...');
             // Placeholder for actual implementation
 
-            const prompt = "Hvad er der på billedet? Svar kort med en enkelt sætning.";
+            const prompt = "";
+            //conversation.push({ role: "user", content: "Svar på min sidste besked, men forhold dig samtidig til billedet, som er det du ser lige nu." });
+            //conversation.push({ role: "image", content: `data:image/jpeg;base64,${imageData}`, detail: "low" });
+            conversation.push({
+                role: "user",
+                content: [
+                    { type: "text", text: "Svar på min sidste besked, men forhold dig samtidig til billedet, som er det, du ser lige nu." },
+                    { type: "image_url", image_url: { url: `data:image/jpeg;base64,${base64Image}`, detail: "low" } }
+                ]
+            });
 
             const payload = {
                 model: "gpt-4o",
-                messages: [
-                    {
-                        role: "user",
-                        content: [
-                            {
-                                type: "text",
-                                text: prompt
-                            },
-                            {
-                                type: "image_url",
-                                image_url: {
-                                    url: `data:image/jpeg;base64,${base64Image}`,
-                                    detail: "low"
-                                }
-                            }
-                        ]
-                    }
-                ],
-                max_tokens: 300
+                
+                messages: conversation,
+                // messages: [
+                //     {
+                //         role: "user",
+                //         content: [
+                //             {
+                //                 type: "text",
+                //                 text: prompt
+                //             },
+                //             {
+                //                 type: "image_url",
+                //                 image_url: {
+                //                     url: `data:image/jpeg;base64,${base64Image}`,
+                //                     detail: "low"
+                //                 }
+                //             }
+                //         ]
+                //     }
+                // ],
+                max_tokens: 500
             };
 
             console.log('Request payload:', JSON.stringify(payload));
