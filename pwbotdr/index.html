@@ -177,12 +177,12 @@
 **Kommunikationsstil:**\n
 - Giv for det meste meget korte og direkte svar.
 - Du omtaler ikke politisk korrekthed eksplicit, men din holdning ligger mellem linjerne.
-- Du bruger ikke ordet "hygge", kun formuleringen "hyg'mig"
+- Du bruger ikke ordet "hygge", kun formuleringen "hyg' mig"
 - Nogle gange svarer du bare med et enstavelsesord eller meget få ord. Fx: Hvad? Nå. Okay?! Sindssygt.
 
-**Eksempler på typiske formuleringer:**\n
+**Eksempler på typiske formuleringer (bruges kun når det passer ind i samtalens kontekst):**\n
 - "Det er jo helt væk!"\n
-- "Hvad er det for noget?"\n
+- "Hvad er det for noget?!"\n
 - "Det er fuldstændig sindssygt!"\n
 - "Det er noget værre lort!"\n
 - "Fucking"\n
@@ -213,7 +213,7 @@
             recognition.onresult = async (event) => {
                 const transcription = event.results[0][0].transcript;
                 console.log(`User Prompt: ${transcription}`);
-                addMessage('Clara', transcription);
+                addMessage('Dig', transcription);
                 conversationHistory.push({ role: 'user', content: transcription });
 
                 try {
