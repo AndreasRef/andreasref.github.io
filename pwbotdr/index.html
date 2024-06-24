@@ -60,18 +60,29 @@
                 height: 300px;
             }
         }
+
+        #webcam-feed {
+            margin: 20px;
+            width: 90%;
+            max-width: 600px;
+            height: auto;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <h1>Superpeter</h1>
     
     <img src="Peter-Werner-03-COVER-scaled.jpg" alt="Peter Werner Cover Image" style="max-width: 90%; height: auto; margin-bottom: 20px;">
+    
     <div id="controls">
         <button id="start-btn">Start</button>
         <button id="stop-btn" disabled>Stop</button>
         <button id="toggle-prompt-btn">Sæt instruktioner</button>
         <button id="save-conversation-btn">Gem samtale</button>
+        <button id="toggle-video-btn">Tænd video</button>
     </div>
+    <video id="webcam-feed" autoplay></video>
     <textarea id="prompt-editor" class="hidden"></textarea>
     <div id="conversation"></div>
     <audio id="audio-player"></audio>
@@ -89,6 +100,35 @@
             document.body.innerHTML = '<p>API Keys are not found in the URL.</p>';
             throw new Error('API Keys are not found in the URL.');
         }
+
+        const toggleVideoBtn = document.getElementById('toggle-video-btn');
+        const webcamFeed = document.getElementById('webcam-feed');
+        let webcamStream = null;
+
+        toggleVideoBtn.addEventListener('click', async () => {
+            if (webcamFeed.style.display === 'none') {
+                try {
+                    webcamStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    webcamFeed.srcObject = webcamStream;
+                    webcamFeed.style.display = 'block';
+                    toggleVideoBtn.textContent = 'Sluk video';
+                } catch (error) {
+                    console.error('Error accessing webcam:', error);
+                }
+            } else {
+                if (webcamStream) {
+                    webcamStream.getTracks().forEach(track => track.stop());
+                }
+                webcamFeed.srcObject = null;
+                webcamFeed.style.display = 'none';
+                toggleVideoBtn.textContent = 'Tænd video';
+            }
+        });
+
+        // Set initial state
+        webcamFeed.style.display = 'none';
+        toggleVideoBtn.textContent = 'Tænd video';
+
 
         const startBtn = document.getElementById('start-btn');
         const stopBtn = document.getElementById('stop-btn');
