@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.sound.min.js"></script>
+
+    <script src='Node.js'></script><script src='Spring.js'></script><!-- sketch additions -->
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #inputField {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+        }
+
+        /* Change the input focus border color */
+    #inputField:focus {
+        outline: none;
+        border: 2px solid rgb(0, 130, 164); /* Updated focus color */
+    }
+
+    /* Prevent autocomplete */
+    #inputField {
+        autocomplete: off;
+    }
+
+        #replayButton {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 20;
+        }
+  </style>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <input type="text" id="inputField" placeholder="" autofocus autocomplete="off">
+
+
+    <!-- main -->
+    <script src="sketch.js"></script>
+    <button id="replayButton" style="position: absolute; top: 10px; right: 10px; display: none;" onclick="resetSketch()">⟳</button>
+  </body>
+</html>
