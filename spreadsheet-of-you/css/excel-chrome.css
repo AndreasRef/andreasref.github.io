@@ -246,12 +246,6 @@ html, body {
   margin-right: 2px;
 }
 
-/* ---- Fullscreen mode: hide menu + toolbar for more grid space ---- */
-#excel-window.fullscreen #menu-bar,
-#excel-window.fullscreen #toolbar {
-  display: none;
-}
-
 #excel-window.fullscreen {
   border: none;
 }
