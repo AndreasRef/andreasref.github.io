@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>spreadsheet-of-you - Microsoft Excel</title>
+  <link rel="stylesheet" href="css/excel-chrome.css">
+  <link rel="stylesheet" href="css/grid.css">
+  <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "@mediapipe/tasks-vision": "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.18/vision_bundle.mjs"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="excel-window" style="display:none;">
+
+    <!-- Title Bar -->
+    <div id="title-bar">
+      <div style="display:flex;align-items:center;overflow:hidden;flex:1;">
+        <div id="title-icon">X</div>
+        <span id="title-text">spreadsheet-of-you - Microsoft Excel</span>
+      </div>
+      <div id="window-controls">
+        <button class="win-btn minimize">_</button>
+        <button class="win-btn maximize">&square;</button>
+        <button class="win-btn close">&times;</button>
+      </div>
+    </div>
+
+    <!-- Menu Bar -->
+    <div id="menu-bar">
+      <span class="menu-item"><u>F</u>ile</span>
+      <span class="menu-item"><u>E</u>dit</span>
+      <span class="menu-item"><u>V</u>iew</span>
+      <span class="menu-item"><u>I</u>nsert</span>
+      <span class="menu-item">F<u>o</u>rmat</span>
+      <span class="menu-item"><u>T</u>ools</span>
+      <span class="menu-item"><u>D</u>ata</span>
+      <span class="menu-item"><u>W</u>indow</span>
+      <span class="menu-item"><u>H</u>elp</span>
+    </div>
+
+    <!-- Toolbar -->
+    <div id="toolbar">
+      <div class="toolbar-group">
+        <button class="tool-btn icon-btn" title="New"><span class="tb-icon new-icon"></span></button>
+        <button class="tool-btn icon-btn" title="Open"><span class="tb-icon open-icon"></span></button>
+        <button class="tool-btn icon-btn" title="Save"><span class="tb-icon save-icon"></span></button>
+      </div>
+      <div class="toolbar-separator"></div>
+      <div class="toolbar-group">
+        <button class="tool-btn icon-btn" title="Print"><span class="tb-icon print-icon"></span></button>
+      </div>
+      <div class="toolbar-separator"></div>
+      <div class="toolbar-group">
+        <button class="tool-btn" title="Cut" style="font-size:13px;">&#9986;</button>
+        <button class="tool-btn icon-btn" title="Copy"><span class="tb-icon copy-icon"></span></button>
+        <button class="tool-btn icon-btn" title="Paste"><span class="tb-icon paste-icon"></span></button>
+      </div>
+      <div class="toolbar-separator"></div>
+      <div class="toolbar-group">
+        <button class="tool-btn" title="Undo">&#8630;</button>
+        <button class="tool-btn" title="Redo">&#8631;</button>
+      </div>
+      <div class="toolbar-separator"></div>
+      <div class="toolbar-group">
+        <button class="tool-btn" title="AutoSum">&Sigma;</button>
+        <button class="tool-btn" title="Sort Ascending" style="font-size:9px;">A&#8595;Z</button>
+        <button class="tool-btn" title="Sort Descending" style="font-size:9px;">Z&#8595;A</button>
+      </div>
+      <div class="toolbar-separator"></div>
+      <div class="toolbar-group">
+        <select class="font-select"><option>Arial</option></select>
+        <select class="size-select"><option>10</option></select>
+      </div>
+      <div class="toolbar-separator"></div>
+      <div class="toolbar-group">
+        <button class="tool-btn" title="Bold"><b>B</b></button>
+        <button class="tool-btn" title="Italic"><i>I</i></button>
+        <button class="tool-btn" title="Underline"><u>U</u></button>
+      </div>
+      <div class="toolbar-separator"></div>
+      <div class="toolbar-group">
+        <button class="tool-btn align-btn" title="Align Left"><span class="align-lines left"></span></button>
+        <button class="tool-btn align-btn" title="Center"><span class="align-lines center"></span></button>
+        <button class="tool-btn align-btn" title="Align Right"><span class="align-lines right"></span></button>
+      </div>
+      <div class="toolbar-separator"></div>
+      <div class="toolbar-group">
+        <button class="tool-btn" title="Currency">$</button>
+        <button class="tool-btn" title="Percent">%</button>
+        <button class="tool-btn" title="Comma">,</button>
+      </div>
+      <div class="toolbar-separator"></div>
+      <div class="toolbar-group">
+        <button class="tool-btn" title="Borders" style="font-size:13px;">&#9638;</button>
+        <button class="tool-btn" title="Fill Color" style="border-bottom:3px solid #FFFF00;padding-bottom:0;">&#9649;</button>
+        <button class="tool-btn" title="Font Color" style="border-bottom:3px solid #FF0000;padding-bottom:0;font-weight:bold;">A</button>
+      </div>
+      <div class="toolbar-separator"></div>
+      <div class="toolbar-group" style="display:none;">
+        <button class="tool-btn toggle-btn active" id="btn-camera" title="Toggle Camera">CAM</button>
+        <button class="tool-btn toggle-btn active" id="btn-segmentation" title="Toggle Segmentation">SEG</button>
+      </div>
+    </div>
+
+    <!-- Formula Bar -->
+    <div id="formula-bar">
+      <div id="cell-name">F23</div>
+      <div id="formula-separator"></div>
+      <div id="formula-input">=VLOOKUP(soul, data_brokers, price, FALSE)</div>
+    </div>
+
+    <!-- Main Workspace -->
+    <div id="workspace">
+      <div id="grid-wrapper">
+        <div id="corner-cell"></div>
+        <div id="col-headers"></div>
+        <div id="row-headers"></div>
+        <div id="viewport">
+          <canvas id="portrait"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

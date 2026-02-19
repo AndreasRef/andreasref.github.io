@@ -1,0 +1,95 @@
+/* ============================================================
+   Sidebar — L-shaped data panel (right + bottom)
+   ============================================================ */
+
+/* --- Right sidebar --- */
+#sidebar-right {
+  width: 200px;
+  background: #FFF;
+  border-left: 1px solid #C0C0C0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex-shrink: 0;
+}
+
+/* --- Bottom sidebar --- */
+#sidebar-bottom {
+  height: 60px;
+  background: #FFF;
+  border-top: 1px solid #C0C0C0;
+  overflow-y: hidden;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+#sidebar-bottom .sidebar-table {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 100%;
+  align-content: flex-start;
+}
+
+#sidebar-bottom .sidebar-row {
+  width: auto;
+  white-space: nowrap;
+  padding: 1px 6px;
+}
+
+/* --- Shared row/table styles --- */
+.sidebar-table {
+  width: 100%;
+}
+
+.sidebar-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 1px 4px;
+  border-bottom: 1px solid #F0F0F0;
+  font-size: 9px;
+  font-family: 'Verdana', sans-serif;
+  line-height: 15px;
+  color: #333;
+}
+
+.sidebar-attr {
+  color: #555;
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+
+.sidebar-val {
+  font-family: 'Courier New', monospace;
+  color: #000;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* --- Subtle category tinting --- */
+.cat-phys {
+  background: #EDF2FA;   /* faint blue */
+}
+
+.cat-behav {
+  background: #FAF8ED;   /* faint yellow */
+}
+
+.cat-judge {
+  background: #FAF0F0;   /* faint red */
+}
+
+/* Scrollbar styling (thin, matches Excel grey) */
+#sidebar-right::-webkit-scrollbar,
+#sidebar-bottom::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+#sidebar-right::-webkit-scrollbar-track,
+#sidebar-bottom::-webkit-scrollbar-track {
+  background: #F0F0F0;
+}
+#sidebar-right::-webkit-scrollbar-thumb,
+#sidebar-bottom::-webkit-scrollbar-thumb {
+  background: #C0C0C0;
+  border: 1px solid #A0A0A0;
+}
