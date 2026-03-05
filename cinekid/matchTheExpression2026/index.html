@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match The Expression</title>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <video class="input_video" hidden></video>
+    <canvas class="output_canvas" width="1920" height="1080"></canvas>
+  </div>
+
+  <!-- Settings Panel -->
+  <div id="settings-panel" class="settings-panel hidden">
+    <h3>Settings</h3>
+    <label for="difficulty-slider">Difficulty</label>
+    <div class="slider-container">
+      <input type="range" id="difficulty-slider" min="0" max="100" step="1" value="65">
+      <div class="slider-labels">
+        <span>Easy</span>
+        <span>Hard</span>
+      </div>
+    </div>
+    <label class="checkbox-label">
+      <input type="checkbox" id="debug-toggle"> Show Debug Points
+    </label>
+  </div>
+  <button id="settings-toggle" class="settings-toggle" title="Settings (S)">&#9881;</button>
+
+  <!-- Preload images -->
+  <div id="preload">
+    <img src="0.jpg" width="1" height="1" alt="Image 0">
+    <img src="1.jpg" width="1" height="1" alt="Image 1">
+    <img src="2.jpg" width="1" height="1" alt="Image 2">
+    <img src="3.jpg" width="1" height="1" alt="Image 3">
+    <img src="4.jpg" width="1" height="1" alt="Image 4">
+    <img src="5.jpg" width="1" height="1" alt="Image 5">
+    <img src="6.jpg" width="1" height="1" alt="Image 6">
+    <img src="7.jpg" width="1" height="1" alt="Image 7">
+    <img src="0full.jpg" width="1" height="1" alt="Full 0">
+    <img src="1full.jpg" width="1" height="1" alt="Full 1">
+    <img src="2full.jpg" width="1" height="1" alt="Full 2">
+    <img src="3full.jpg" width="1" height="1" alt="Full 3">
+    <img src="4full.jpg" width="1" height="1" alt="Full 4">
+    <img src="5full.jpg" width="1" height="1" alt="Full 5">
+    <img src="6full.jpg" width="1" height="1" alt="Full 6">
+    <img src="7full.jpg" width="1" height="1" alt="Full 7">
+  </div>
+
+  <script src="paintingCoordinates.js"></script>
+  <script src="sketch.js" type="module"></script>
+</body>
+</html>
