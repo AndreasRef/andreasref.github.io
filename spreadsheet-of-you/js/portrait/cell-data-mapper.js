@@ -1,35 +1,100 @@
-import { GRID_COLS, GRID_ROWS } from '../utils/constants.js';
+import { GRID_COLS, GRID_ROWS } from "../utils/constants.js";
+
+// --- i18n dictionary. Default language is English; Danish toggled from loading overlay. ---
+const I18N = {
+  en: {
+    gender: "gender",
+    yearsLeft: "years left",
+    income: "monthly income",
+    mouthOpen: "yawn",
+    blinkCount: "blinks",
+    name: "likely name",
+    age: "age",
+    expression: "expression",
+    symmetry: "symmetry",
+    smileCount: "smiles",
+    male: "male",
+    female: "female",
+    exprNeutral: "neutral",
+    exprHappy: "happy",
+    exprSad: "sad",
+    exprAngry: "angry",
+    exprSurprised: "surprised",
+    exprFearful: "fearful",
+    exprDisgusted: "disgusted",
+  },
+  da: {
+    gender: "køn",
+    yearsLeft: "år tilbage",
+    income: "månedsløn",
+    mouthOpen: "gab",
+    blinkCount: "blink",
+    name: "sandsynligt navn",
+    age: "alder",
+    expression: "udtryk",
+    symmetry: "symmetri",
+    smileCount: "smil",
+    male: "mand",
+    female: "kvinde",
+    exprNeutral: "neutral",
+    exprHappy: "glad",
+    exprSad: "trist",
+    exprAngry: "vred",
+    exprSurprised: "overrasket",
+    exprFearful: "bange",
+    exprDisgusted: "væmmet",
+  },
+};
+
+function t(key) {
+  const lang =
+    typeof window !== "undefined" && window.__LANG === "da" ? "da" : "en";
+  return (I18N[lang] && I18N[lang][key]) != null
+    ? I18N[lang][key]
+    : I18N.en[key];
+}
 
 // --- 5 right-side metrics (always visible) ---
 const METRIC_DEFS = [
-  { key: 'gender',     label: 'gender',     fmt: v => String(v) },
-  { key: 'yearsLeft',  label: 'years left', fmt: v => String(v) },
-  { key: 'income',     label: 'monthly income', fmt: v => String(v) },
-  { key: 'mouthOpen',  label: 'yawn',       fmt: v => v.toFixed(2) },
-  { key: 'blinkCount', label: 'blinks',     fmt: v => Math.floor(v).toString() },
+  { key: "gender", labelKey: "gender", fmt: (v) => String(v) },
+  { key: "yearsLeft", labelKey: "yearsLeft", fmt: (v) => String(v) },
+  { key: "income", labelKey: "income", fmt: (v) => String(v) },
+  { key: "mouthOpen", labelKey: "mouthOpen", fmt: (v) => v.toFixed(2) },
+  {
+    key: "blinkCount",
+    labelKey: "blinkCount",
+    fmt: (v) => Math.floor(v).toString(),
+  },
 ];
 
 // --- 5 left-side demographic cells ---
 const DEMO_DEFS = [
-  { key: 'name',       label: 'likely name',     fmt: v => String(v) },
-  { key: 'age',        label: 'age',             fmt: v => v.toFixed(1) },
-  { key: 'expression', label: 'expression',      fmt: v => String(v) },
-  { key: 'symmetry',   label: 'symmetry',        fmt: v => v.toFixed(2) },
-  { key: 'smileCount', label: 'smiles',           fmt: v => Math.floor(v).toString() },
+  { key: "name", labelKey: "name", fmt: (v) => String(v) },
+  { key: "age", labelKey: "age", fmt: (v) => v.toFixed(1) },
+  { key: "expression", labelKey: "expression", fmt: (v) => String(v) },
+  { key: "symmetry", labelKey: "symmetry", fmt: (v) => v.toFixed(2) },
+  {
+    key: "smileCount",
+    labelKey: "smileCount",
+    fmt: (v) => Math.floor(v).toString(),
+  },
 ];
 
-// Expression key → display label mapping
-const EXPR_MAP = {
-  exprNeutral: 'neutral', exprHappy: 'happy', exprSad: 'sad',
-  exprAngry: 'angry', exprSurprised: 'surprised',
-  exprFearful: 'fearful', exprDisgusted: 'disgusted',
-};
+const EXPR_KEYS = [
+  "exprNeutral",
+  "exprHappy",
+  "exprSad",
+  "exprAngry",
+  "exprSurprised",
+  "exprFearful",
+  "exprDisgusted",
+];
 
 // --- Layout constants ---
-const NUM_ENTRIES   = 5;
-const ROW_PADDING   = 1;   // top/bottom padding rows per entry
-const MIN_BLOCK_COLS = 8;  // minimum block width
-const PERSON_GAP    = 2;   // columns gap between person edge and block
+const NUM_ENTRIES = 5;
+const ROW_PADDING = 1; // top/bottom padding rows per entry
+const MIN_BLOCK_COLS = 8; // minimum block width
+const PERSON_GAP = 2; // columns gap between person edge and block
 
 // --- EMA smoothing for person edges ---
 const EMA_ALPHA = 0.12;
@@ -55,7 +120,18 @@ export class CellDataMapper {
   /**
    * Recomputes merged cell data every frame.
    */
-  update(metrics, _lm, _crop, segMask, _frame, _imageData, timestamp, _fakeVals, _mockVals, demographics) {
+  update(
+    metrics,
+    _lm,
+    _crop,
+    segMask,
+    _frame,
+    _imageData,
+    timestamp,
+    _fakeVals,
+    _mockVals,
+    demographics,
+  ) {
     this.mergedCells = [];
 
     const m = metrics || {};
@@ -82,8 +158,8 @@ export class CellDataMapper {
           row,
           spanCols: pos.rightCols,
           spanRows,
-          label: def.label,
-          value: v != null ? def.fmt(v) : '\u2014',
+          label: t(def.labelKey),
+          value: v != null ? def.fmt(v) : "\u2014",
         });
       });
     }
@@ -101,8 +177,8 @@ export class CellDataMapper {
           row,
           spanCols: pos.leftCols,
           spanRows,
-          label: def.label,
-          value: v != null ? def.fmt(v) : '\u2014',
+          label: t(def.labelKey),
+          value: v != null ? def.fmt(v) : "\u2014",
         });
       });
     }
@@ -144,14 +220,30 @@ export class CellDataMapper {
         this.smoothPersonLeft = person.personLeft;
         this._personEverDetected = true;
       } else {
-        this.smoothPersonRight = ema(this.smoothPersonRight, person.personRight, EMA_ALPHA);
-        this.smoothPersonLeft = ema(this.smoothPersonLeft, person.personLeft, EMA_ALPHA);
+        this.smoothPersonRight = ema(
+          this.smoothPersonRight,
+          person.personRight,
+          EMA_ALPHA,
+        );
+        this.smoothPersonLeft = ema(
+          this.smoothPersonLeft,
+          person.personLeft,
+          EMA_ALPHA,
+        );
       }
     } else {
       const defaultRight = DEFAULT_RIGHT_START - PERSON_GAP;
       const defaultLeft = DEFAULT_LEFT_END + PERSON_GAP;
-      this.smoothPersonRight = ema(this.smoothPersonRight, defaultRight, EMA_DRIFT_ALPHA);
-      this.smoothPersonLeft = ema(this.smoothPersonLeft, defaultLeft, EMA_DRIFT_ALPHA);
+      this.smoothPersonRight = ema(
+        this.smoothPersonRight,
+        defaultRight,
+        EMA_DRIFT_ALPHA,
+      );
+      this.smoothPersonLeft = ema(
+        this.smoothPersonLeft,
+        defaultLeft,
+        EMA_DRIFT_ALPHA,
+      );
     }
 
     // Right block
@@ -177,13 +269,13 @@ export class CellDataMapper {
 
     // Gender
     if (m.genderMale != null) {
-      vals.gender = m.genderMale > 0.5 ? 'male' : 'female';
+      vals.gender = m.genderMale > 0.5 ? t("male") : t("female");
     } else {
       vals.gender = null;
     }
 
-    vals.yearsLeft = d.yearsLeft || '\u2014';
-    vals.income = d.income || '\u2014';
+    vals.yearsLeft = d.yearsLeft || "\u2014";
+    vals.income = d.income || "\u2014";
     vals.mouthOpen = m.mouthOpen;
     vals.blinkCount = m.blinkCount;
 
@@ -198,26 +290,26 @@ export class CellDataMapper {
 
     // Dominant expression
     let bestScore = -1;
-    let bestLabel = null;
-    for (const [key, label] of Object.entries(EXPR_MAP)) {
+    let bestKey = null;
+    for (const key of EXPR_KEYS) {
       const val = m[key];
       if (val != null && val > bestScore) {
         bestScore = val;
-        bestLabel = label;
+        bestKey = key;
       }
     }
 
     return {
-      name: d.name || '\u2014',
+      name: d.name || "\u2014",
       age: m.age != null ? m.age : null,
-      expression: bestLabel,
+      expression: bestKey ? t(bestKey) : null,
       symmetry: m.symmetry != null ? m.symmetry : null,
       smileCount: m.smileCount != null ? m.smileCount : null,
     };
   }
 
   getFormulaEntries() {
-    return this.mergedCells.map(mc => ({
+    return this.mergedCells.map((mc) => ({
       label: mc.label,
       value: mc.value,
       cellRef: colToLetter(mc.col) + (mc.row + 1),
@@ -230,8 +322,12 @@ function ema(prev, curr, alpha) {
 }
 
 function colToLetter(n) {
-  let s = '';
+  let s = "";
   n++;
-  while (n > 0) { n--; s = String.fromCharCode(65 + (n % 26)) + s; n = Math.floor(n / 26); }
+  while (n > 0) {
+    n--;
+    s = String.fromCharCode(65 + (n % 26)) + s;
+    n = Math.floor(n / 26);
+  }
   return s;
 }
