@@ -1,4 +1,4 @@
-// p5 matter based on examples from Bene: https://b-g.github.io/p5-matter-examples/docs/ 
+// p5 matter based on examples from Bene: https://b-g.github.io/p5-matter-examples/docs/
 /* To do:
 
 ***Freday 23. september***
@@ -70,7 +70,7 @@ var mouthUpperInnerLipY = 0;
 var mouthLowerInnerLipX = 0;
 var mouthLowerInnerLipY = 0;
 
-//For face graphics 
+//For face graphics
 let mouthKeypoints = [];
 
 let modelLoaded = false;
@@ -81,7 +81,6 @@ let penaltyCounter = 0;
 let openMouthCounter = 0;
 
 let nBlocksAndSounds = 7;
-
 
 //Howler
 let howlerArray = [];
@@ -96,8 +95,8 @@ let colorIntensity = [0, 0, 0, 0, 0, 0, 0];
 
 function preload() {
   //New array with the sounds in scale
-  for (let j = 0; j< 2; j++) {
-    shuffleArrays[j] = []; 
+  for (let j = 0; j < 2; j++) {
+    shuffleArrays[j] = [];
     for (let i = 0; i < nBlocksAndSounds; i++) {
       //soundArray.push(loadSound("scaleNumbered/" +i + '.mp3'));
       //soundArray.push(loadSound("OhEbMinor/" +i + '.mp3'));
@@ -109,87 +108,110 @@ function preload() {
       propellerArray.push(
         new Howl({
           //src: ['ows/nonPitched/'+i+'.mp3']
-          src: ['SlapOw/'+i+'.mp3']
-        })
-      )
-      
+          src: ["SlapOw/" + i + ".mp3"],
+        }),
+      );
+
       //soundArray.push(loadSound("shortSounds/" +i + '.mp3'));
       //soundArray.push(loadSound("shortScaleNumbered/" +i + '.mp3'));
-      soundArray.push(loadSound("AMinor/" +i + '.mp3'));
-      soundArray[i].setVolume(0.6)
-  
+      soundArray.push(loadSound("AMinor/" + i + ".mp3"));
+      soundArray[i].setVolume(0.6);
+
       //Test with alternative soundArray (for shuffling between them)
       //altSoundArray.push(loadSound("scaleNumbered/" +i + '.mp3'));
       //altSoundArray[i].setVolume(0.6)
-  
+
       howlerArray.push(
         new Howl({
-          src: ['AMinor/'+i+'.mp3']
-        })
-      )
+          src: ["AMinor/" + i + ".mp3"],
+        }),
+      );
 
       AMinorLong.push(
         new Howl({
-          src: ['AMinor/'+i+'.mp3']
-        })
-      )
+          src: ["AMinor/" + i + ".mp3"],
+        }),
+      );
 
       DMajorLong.push(
         new Howl({
-          src: ['DMajor/'+i+'.mp3']
-        })
-      )
-      
+          src: ["DMajor/" + i + ".mp3"],
+        }),
+      );
+
       AbLydianShort.push(
         new Howl({
-          src: ['finalShortScales/AbLydian/'+i+'.mp3']
-        })
-      )
-
+          src: ["finalShortScales/AbLydian/" + i + ".mp3"],
+        }),
+      );
 
       CMajorShort.push(
         new Howl({
-          src: ['finalShortScales/CMajor/'+i+'.mp3']
-        })
-      )
+          src: ["finalShortScales/CMajor/" + i + ".mp3"],
+        }),
+      );
 
       //shuffleArrays[j].push(loadSound("scaleNumbered/" +i + '.mp3'));
       if (j == 0) {
-        shuffleArrays[j][i] = loadSound("AMinor/" +i + '.mp3');
+        shuffleArrays[j][i] = loadSound("AMinor/" + i + ".mp3");
         //shuffleArrays[j][i] = loadSound("ows/nonPitched/" +i + '.mp3');
         //shuffleArrays[j][i] = loadSound("ows/GbLydianScale/" +i + '.mp3');
-        shuffleArrays[j][i].setVolume(0.6)
+        shuffleArrays[j][i].setVolume(0.6);
       } else if (j == 1) {
-        shuffleArrays[j][i] = loadSound("finalShortScales/CMajor/" +i + '.mp3');
-        shuffleArrays[j][i].setVolume(0.6)
+        shuffleArrays[j][i] = loadSound(
+          "finalShortScales/CMajor/" + i + ".mp3",
+        );
+        shuffleArrays[j][i].setVolume(0.6);
       }
-      
-  
+
       //shuffleArrays[1].push(loadSound("scaleNumbered/" +i + '.mp3'));
       //shuffleArrays[1][i].setVolume(0.6)
     }
   }
-  
+
   originalSoundArray = soundArray;
-  propellerSound = loadSound("SlapOw/0.mp3")
+  propellerSound = loadSound("SlapOw/0.mp3");
   propellerSound.setVolume(0.6);
-  slapSound = loadSound("SlapOw/0.mp3")
+  slapSound = loadSound("SlapOw/0.mp3");
   slapSound.setVolume(0.04);
 
-  mouthImg = loadImage('mouth100x100.png');
-  mouthImgClosed = loadImage('closedMouth.jpg');
+  mouthImg = loadImage("mouth100x100.png");
+  mouthImgClosed = loadImage("closedMouth.jpg");
 }
 
+// Logical/world coordinate space. Everything (grounds, propeller, bodies, keypoints)
+// lives in this 640x480 space and is scaled to fill the actual canvas at draw time.
+const LOGICAL_W = 640;
+const LOGICAL_H = 480;
+const FIXED_DT = 1000 / 60; // physics step in ms — keeps speed identical on 60 / 120 / 144 Hz displays
+
 function setup() {
-  const canvas = createCanvas(1920, 1080);
+  const canvas = createCanvas(windowWidth, windowHeight);
+  frameRate(60); // cap so per-frame counters (propeller spin, color fade) don't run 2x on 120Hz displays
   if (!debugMode) {
-    video = createCapture(VIDEO);
-    video.size(640, 480);
-    video.hide();  
-    facemesh = ml5.facemesh(video, modelReady);
-    facemesh.on("predict", (results) => {
-      predictions = results;
+    // Match the reference code: request a 16:9 stream explicitly. The default
+    // constraints sometimes give a 4:3 stream where the native and CSS
+    // dimensions disagree, which throws MediaPipe's landmark normalization off.
+    video = createCapture({
+      video: {
+        width: { ideal: 1280 },
+        height: { ideal: 720 },
+      },
+      audio: false,
     });
+    video.elt.addEventListener("loadedmetadata", () => {
+      console.log(
+        "video native:",
+        video.elt.videoWidth,
+        "x",
+        video.elt.videoHeight,
+      );
+      // Sync p5's tracked dimensions with the actual stream so image() draws
+      // at the real aspect ratio.
+      video.size(video.elt.videoWidth, video.elt.videoHeight);
+    });
+    video.hide();
+    initMediaPipeFaceMesh();
   }
 
   mouthPG = createGraphics(50, 50);
@@ -197,38 +219,49 @@ function setup() {
 
   mouthImgClosed.resize(50, 50);
   mouthImg.resize(50, 50);
-  
+
   engine = Matter.Engine.create();
   world = engine.world;
 
-
-//Pyramid ground setup
-let _x = (640-200)/nBlocksAndSounds;
-let extraY = 300;
-let curveY = 35;
+  //Pyramid ground setup
+  let _x = (640 - 200) / nBlocksAndSounds;
+  let extraY = 300;
+  let curveY = 35;
 
   const points = [
     { x: 0, y: 0 },
-    { x: _x, y: -curveY},
+    { x: _x, y: -curveY },
     { x: _x, y: 0 },
     { x: _x, y: extraY },
     { x: 0, y: extraY },
   ];
-  
+
   const points2 = [
     { x: 0, y: 0 },
-    { x: -_x, y: -curveY},
+    { x: -_x, y: -curveY },
     { x: -_x, y: 0 },
     { x: -_x, y: extraY },
     { x: 0, y: extraY },
   ];
 
   //Redo ground with multiple blocks instead of one
-  for (let i = 0; i<nBlocksAndSounds; i++) {
-        grounds[i] = new PolygonFromPoints(world, { x: 35*2 + i*_x, y: 410+i*(curveY), points: points2, color: 'grey' }, {
-        isStatic: true, angle: PI * 0, label: 'ground' + i, restitution: 1.2
-      });
-     
+  for (let i = 0; i < nBlocksAndSounds; i++) {
+    grounds[i] = new PolygonFromPoints(
+      world,
+      {
+        x: 35 * 2 + i * _x,
+        y: 410 + i * curveY,
+        points: points2,
+        color: "grey",
+      },
+      {
+        isStatic: true,
+        angle: PI * 0,
+        label: "ground" + i,
+        restitution: 1.2,
+      },
+    );
+
     amplitude = new p5.Amplitude(0.5);
     amplitude.toggleNormalize(true);
 
@@ -237,7 +270,6 @@ let curveY = 35;
     amplitudes[i].setInput(soundArray[i]);
     //amplitude.smooth(1);
     amplitudes[i].toggleNormalize(true);
-
 
     //test with setting amplitudes to howlerArray instead
 
@@ -249,13 +281,14 @@ let curveY = 35;
   }
 
   // propeller
-  propeller = new Block(world,
-    { x: 500, y: 250, w: 150, h: 30, color: 'white' },
-    { isStatic: true, angle: angle, label: 'propeller', restitution: 0.5 }
+  propeller = new Block(
+    world,
+    { x: 500, y: 250, w: 150, h: 30, color: "white" },
+    { isStatic: true, angle: angle, label: "propeller", restitution: 0.5 },
   );
 
   // setup hit sound
-  Matter.Events.on(engine, 'collisionStart', function (event) {
+  Matter.Events.on(engine, "collisionStart", function (event) {
     const pairs = event.pairs[0];
     const bodyA = pairs.bodyA;
     const bodyB = pairs.bodyB;
@@ -264,8 +297,8 @@ let curveY = 35;
     //console.log(idNumber);
 
     //New specific collision with each block
-    for (let i = 0; i<grounds.length; i++) {
-      if (bodyA.label == "ground"+i || bodyB.label == "ground"+i) {
+    for (let i = 0; i < grounds.length; i++) {
+      if (bodyA.label == "ground" + i || bodyB.label == "ground" + i) {
         //Perhaps we could check the volume of each sound and only play if not too high?
         //if (amplitudes[i].getLevel() < 0.4) soundArray[i].play();
         howlerArray[i].play();
@@ -284,56 +317,106 @@ let curveY = 35;
     }
   });
 
-  // run the engine
-  Matter.Runner.run(engine);
+  // Drive the engine ourselves on a fixed timestep in draw() instead of Matter.Runner —
+  // the built-in runner uses requestAnimationFrame and ran ~2x as fast on high-refresh-rate monitors.
+  // Matter.Runner.run(engine);
 
   //amplitude = new p5.Amplitude(0.5);
   //amplitude.toggleNormalize(true);
 
   setInterval(changeScale, 30000);
+}
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function changeScale() {
-  
-
-  if (soundArrayCounter%4 == 0) {
+  if (soundArrayCounter % 4 == 0) {
     howlerArray = AMinorLong;
-    //soundArray = altSoundArray; 
-  } else if (soundArrayCounter%4 == 1) {
+    //soundArray = altSoundArray;
+  } else if (soundArrayCounter % 4 == 1) {
     howlerArray = CMajorShort;
     //soundArray = originalSoundArray;
-  }  else if (soundArrayCounter%4 == 2) {
+  } else if (soundArrayCounter % 4 == 2) {
     howlerArray = DMajorLong;
     //soundArray = originalSoundArray;
-  }  else if (soundArrayCounter%4 == 3) {
+  } else if (soundArrayCounter % 4 == 3) {
     howlerArray = AbLydianShort;
     //soundArray = originalSoundArray;
   }
-  console.log("change the musical scale to " + soundArrayCounter%4);
+  console.log("change the musical scale to " + (soundArrayCounter % 4));
 
-  soundArray = shuffleArrays[soundArrayCounter%shuffleArrays.length];
+  soundArray = shuffleArrays[soundArrayCounter % shuffleArrays.length];
 
-
-  for (let i = 0; i<nBlocksAndSounds; i++) {
+  for (let i = 0; i < nBlocksAndSounds; i++) {
     amplitudes[i].setInput(soundArray[i]);
   }
   soundArrayCounter++;
 }
 
-function modelReady() {
-  console.log("Model ready!");
-  modelLoaded = true;
+// MediaPipe FaceMesh — replaces ml5.facemesh. Returns normalized [0..1] landmark coords;
+// we convert them to the same pixel-space "scaledMesh" shape the rest of the sketch reads,
+// so all downstream logic (yawnScore, mouthKeypoints, addBody) keeps working unchanged.
+function initMediaPipeFaceMesh() {
+  facemesh = new FaceMesh({
+    locateFile: (file) =>
+      `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh@0.4.1633559619/${file}`,
+  });
+  facemesh.setOptions({
+    maxNumFaces: 1,
+    refineLandmarks: true,
+    minDetectionConfidence: 0.5,
+    minTrackingConfidence: 0.5,
+  });
+  facemesh.onResults((results) => {
+    if (!modelLoaded) {
+      console.log("MediaPipe FaceMesh ready");
+      modelLoaded = true;
+    }
+    if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
+      // MediaPipe returns landmarks normalized [0..1] to the input image.
+      // Just scale into our logical 640x480 space (same as the reference).
+      predictions = [
+        {
+          scaledMesh: results.multiFaceLandmarks[0].map((lm) => [
+            lm.x * LOGICAL_W,
+            lm.y * LOGICAL_H,
+            (lm.z || 0) * LOGICAL_W,
+          ]),
+        },
+      ];
+    } else {
+      predictions = [];
+    }
+  });
+  pumpFaceMesh();
+}
+
+async function pumpFaceMesh() {
+  if (video && video.elt && video.elt.readyState >= 2) {
+    try {
+      await facemesh.send({ image: video.elt });
+    } catch (e) {
+      // ignore intermittent errors while the WASM model is warming up
+    }
+  }
+  requestAnimationFrame(pumpFaceMesh);
 }
 
 function draw() {
-  background('black');
+  // Step physics on a fixed timestep so simulation speed is identical regardless of monitor refresh.
+  Matter.Engine.update(engine, FIXED_DT);
+
+  background("black");
   push();
-  translate(width,0)
-  scale(-1920/640, 1080/480)
-  
+  translate(width, 0);
+  scale(-width / LOGICAL_W, height / LOGICAL_H);
+
   if (!debugMode) {
-    image(video, 0, 0);
+    // Explicit destination size — guarantees the full native frame is drawn
+    // into our LOGICAL 640x480 space regardless of what video.size ended up as.
+    image(video, 0, 0, LOGICAL_W, LOGICAL_H);
     yawnScore();
   } else {
   }
@@ -342,48 +425,60 @@ function draw() {
   if (debugMode) {
     fill(255);
     textAlign(CENTER, CENTER);
-    text('DEBUG MODE\nClick mouse: New Body\nPress SPACE: Delete all\nPress f for full screen', width / 2, 50);
+    text(
+      "DEBUG MODE\nClick mouse: New Body\nPress SPACE: Delete all\nPress f for full screen",
+      width / 2,
+      50,
+    );
     textAlign(LEFT);
-    text("frameRate: " + nf(frameRate(),0,2), 10, 10)
+    text("frameRate: " + nf(frameRate(), 0, 2), 10, 10);
   }
 
   noStroke();
   fill(255);
   push();
-  scale(1920/640, 1080/480)
+  scale(width / LOGICAL_W, height / LOGICAL_H);
   for (const mouth of mouths) {
     mouth.draw();
   }
   pop();
-  
+
   push();
-  scale(1920/640, 1080/480)
-  for (let i = 0; i<grounds.length; i++) {
-    colorMode(HSB)
+  scale(width / LOGICAL_W, height / LOGICAL_H);
+  for (let i = 0; i < grounds.length; i++) {
+    colorMode(HSB);
     levels[i] = amplitudes[i].getLevel();
     //grounds[i].attributes.color = color(i*(255/(nBlocksAndSounds+1)), levels[i]*255*1.2 + 20, levels[i]*255*0.8 + 40);
-    grounds[i].attributes.color = color(i*(255/(nBlocksAndSounds+1)), colorIntensity[i]+20, colorIntensity[i]+20);
+    grounds[i].attributes.color = color(
+      i * (255 / (nBlocksAndSounds + 1)),
+      colorIntensity[i] + 20,
+      colorIntensity[i] + 20,
+    );
     grounds[i].draw();
-    colorIntensity[i]-=5;
+    colorIntensity[i] -= 5;
     colorIntensity[i] = constrain(colorIntensity[i], 0, 255);
   }
-
 
   // animate angle property of propeller
   Matter.Body.setAngle(propeller.body, angle);
   Matter.Body.setAngularVelocity(propeller.body, 0.25);
-  angle -= 0.10;
+  angle -= 0.1;
 
   levelPropellerSound = amplitudePropellerSound.getLevel();
-  propeller.attributes.color = color(7*255/(nBlocksAndSounds+1), levelPropellerSound*255*1.2 + 20, levelPropellerSound*255*0.8 + 40);
+  propeller.attributes.color = color(
+    (7 * 255) / (nBlocksAndSounds + 1),
+    levelPropellerSound * 255 * 1.2 + 20,
+    levelPropellerSound * 255 * 0.8 + 40,
+  );
 
   propeller.draw();
   pop();
 
   //console.log(mouths.length, world.bodies.length); //Keep track of the number of mouths and if they are deleted okay?
   ////Delete offscreen bodies adapted from https://github.com/CodingTrain/website-archive/tree/main/Courses/natureofcode/5.19_matter_delete_bodies
+  // Bodies live in LOGICAL_H (480) world space, not canvas pixel height.
   for (var i = 0; i < mouths.length; i++) {
-    if (mouths[i].body.position.y > height + 100) {
+    if (mouths[i].body.position.y > LOGICAL_H + 100) {
       Matter.World.remove(world, mouths[i].body);
       mouths.splice(i, 1);
       i--;
@@ -393,39 +488,63 @@ function draw() {
 
   if (!debugMode && !fullscreen()) {
     push();
-    fill(0)
+    fill(0);
     textSize(24);
-    text("Click mouse to enter full screen", 10 , 36)
+    text("Click mouse to enter full screen", 10, 36);
     pop();
   }
 }
 
 function keyReleased() {
-  if (key == ' ') {
+  if (key == " ") {
     //Delete all bodies
     console.log("Delete all mouths");
     const bodies = Matter.Composite.allBodies(engine.world);
     Matter.World.clear(engine.world, bodies);
 
     //Delete all mouths
-    mouths = []; 
-  } else if (key == 'f') {
+    mouths = [];
+  } else if (key == "f") {
     let fs = fullscreen();
     fullscreen(!fs);
   }
 }
 
 function addBody(_x, _y, _w, _h) {
-  //Scale stuff
   if (debugMode) {
-    const newMouth = new Block(world, { x: mouseX/(1920/640), y: mouseY/(1080/480), w: 50, h: 50, color: 'white', label: 'ball', image: mouthImgClosed }, { density: 0.0001 });
+    const newMouth = new Block(
+      world,
+      {
+        x: (mouseX * LOGICAL_W) / width,
+        y: (mouseY * LOGICAL_H) / height,
+        w: 50,
+        h: 50,
+        color: "white",
+        label: "ball",
+        image: mouthImgClosed,
+      },
+      { density: 0.0001 },
+    );
     mouths.push(newMouth);
   } else {
-    //mouthPG = video.get(mouthKeypoints[0], mouthKeypoints[1], _w, _h);    
-    mouthPG = get((640-_w-mouthKeypoints[0])/(640/1920), mouthKeypoints[1]/(480/1080), _w/(640/1920), _h/(480/1080));
+    // Convert from logical 640x480 coords (mouth keypoints already scaled there)
+    // to actual canvas pixel coords for grabbing pixels via get().
+    const sx = width / LOGICAL_W;
+    const sy = height / LOGICAL_H;
+    mouthPG = get(
+      (LOGICAL_W - _w - mouthKeypoints[0]) * sx,
+      mouthKeypoints[1] * sy,
+      _w * sx,
+      _h * sy,
+    );
     mouthPG.resize(_w, _h);
-    //const newMouth = new Block(world, { x: _x, y: _y, w: _w, h: _h, image: mouthPG });
-    const newMouth = new Block(world, { x: 640- _x, y: _y, w: _w, h: _h, image: mouthPG });
+    const newMouth = new Block(world, {
+      x: LOGICAL_W - _x,
+      y: _y,
+      w: _w,
+      h: _h,
+      image: mouthPG,
+    });
     mouths.push(newMouth);
   }
 }
@@ -433,14 +552,14 @@ function addBody(_x, _y, _w, _h) {
 // disable right click context menu
 document.oncontextmenu = function () {
   return false;
-}
+};
 
 function mouseReleased(event) {
   if (mouseButton === LEFT && debugMode) {
     addBody(mouseX, mouseY, 50, 50);
   } else if (mouseButton === RIGHT) {
     //location.reload(true);
-    for (let i = 0; i<7; i++) {
+    for (let i = 0; i < 7; i++) {
       //soundArray[i].play();
     }
 
@@ -453,23 +572,21 @@ function mouseReleased(event) {
     // sound6.play();
 
     howlerArray[1].play();
-    
+
     //sound.play();
-  } else if (mouseButton === LEFT && !debugMode) {//full screen
+  } else if (mouseButton === LEFT && !debugMode) {
+    //full screen
     let fs = fullscreen();
     fullscreen(!fs);
   }
 }
 
-
 function yawnScore() {
   //console.log(predictions.length);
   for (let i = 0; i < predictions.length; i += 1) {
     //const keypoints = predictions[i].scaledMesh;
-    const keypoints = predictions[0].scaledMesh; //Perhaps we can avoid mistakes if we only use the first person?
-
-    //save the mouth keypoints (164, 57, 18 & 287) in an array (x, y, w, h)
-    mouthKeypoints = [keypoints[57][0], keypoints[164][1], keypoints[287][0] - keypoints[57][0], keypoints[18][1] - keypoints[164][1]];
+    // Keypoints are already in logical 640x480 space (see onResults).
+    const keypoints = predictions[0].scaledMesh;
 
     for (let j = 0; j < keypoints.length; j += 1) {
       const [x, y] = keypoints[j];
@@ -483,21 +600,62 @@ function yawnScore() {
         rightEyeInnerX = x;
         rightEyeInnerY = y;
       } else if (j == 13) {
-        //mouth upper inner lip 
+        //mouth upper inner lip
         mouthUpperInnerLipX = x;
         mouthUpperInnerLipY = y;
       } else if (j == 14) {
-        //mouth lower inner lip 
+        //mouth lower inner lip
         mouthLowerInnerLipX = x;
         mouthLowerInnerLipY = y;
       }
     }
 
+    // Build a tight bbox around the entire outer-lip contour. Using the min/max
+    // over all outer-lip landmarks (not just 4 specific indices) makes this
+    // robust to any one landmark being off, and it naturally encloses the
+    // inner lips too, so "full mouth, both lips" is exactly what gets cropped.
+    // Outer lip indices come from MediaPipe FaceMesh's lipsUpperOuter +
+    // lipsLowerOuter (same as tfjs-models facemesh annotations).
+    const OUTER_LIP_IDX = [
+      61,
+      185,
+      40,
+      39,
+      37,
+      0,
+      267,
+      269,
+      270,
+      409,
+      291, // upper outer
+      146,
+      91,
+      181,
+      84,
+      17,
+      314,
+      405,
+      321,
+      375, // lower outer
+    ];
+    let minX = Infinity,
+      maxX = -Infinity,
+      minY = Infinity,
+      maxY = -Infinity;
+    for (const idx of OUTER_LIP_IDX) {
+      const p = keypoints[idx];
+      if (p[0] < minX) minX = p[0];
+      if (p[0] > maxX) maxX = p[0];
+      if (p[1] < minY) minY = p[1];
+      if (p[1] > maxY) maxY = p[1];
+    }
+    mouthKeypoints = [minX, minY, maxX - minX, maxY - minY];
+
     var eyeDist = dist(
       leftEyeInnerX,
       leftEyeInnerY,
       rightEyeInnerX,
-      rightEyeInnerY
+      rightEyeInnerY,
     );
 
     var mouthOpen = max(mouthLowerInnerLipY - mouthUpperInnerLipY, 0);
@@ -507,21 +665,29 @@ function yawnScore() {
 
     if (yawnFactor > 0.5) {
       isMouthOpen = true;
-      openMouthCounter ++;
+      openMouthCounter++;
       if (openMouthCounter > 25) openMouthCounter = 0;
     } else {
       isMouthOpen = false;
       openMouthCounter = 0;
-    } 
-    if (wasMouthOpen != isMouthOpen && isMouthOpen && penaltyCounter == 0) {
+    }
+    // Fire a few frames AFTER the mouth crosses the threshold (not on the rising edge).
+    // This lets the mouth actually reach its open position before we capture the bbox —
+    // otherwise the snapshot is taken while the mouth is still cracking open, producing
+    // a too-small crop that lands awkwardly relative to the fully-open mouth a moment later.
+    if (isMouthOpen && openMouthCounter === 4 && penaltyCounter == 0) {
       console.log("TRIGG");
       penaltyCounter = 30;
-      addBody(mouthKeypoints[0] + mouthKeypoints[2] / 2, mouthKeypoints[1] + mouthKeypoints[3] / 2, mouthKeypoints[2], mouthKeypoints[3]);
-    } 
-    
+      addBody(
+        mouthKeypoints[0] + mouthKeypoints[2] / 2,
+        mouthKeypoints[1] + mouthKeypoints[3] / 2,
+        mouthKeypoints[2],
+        mouthKeypoints[3],
+      );
+    }
   }
   penaltyCounter--;
-  penaltyCounter = constrain(penaltyCounter,0,30);
+  penaltyCounter = constrain(penaltyCounter, 0, 30);
   wasMouthOpen = isMouthOpen;
   //console.log(openMouthCounter);
 }
