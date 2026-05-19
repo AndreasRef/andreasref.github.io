@@ -29,7 +29,7 @@ const I18N = {
     income: "månedsløn",
     mouthOpen: "gab",
     blinkCount: "blink",
-    name: "sandsynligt navn",
+    name: "navn",
     age: "alder",
     expression: "udtryk",
     symmetry: "symmetri",
