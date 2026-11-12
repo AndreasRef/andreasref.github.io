@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Face Detection</title>
+  <link rel="icon" href="data:,">
   <script defer src="face-api.min.js"></script>
   <script defer src="script.js"></script>
   <style>
@@ -24,6 +25,7 @@
   </style>
 </head>
 <body>
-  <video id="video" width="720" height="560" autoplay muted></video>
+  <video id="video" width="720" height="560" autoplay muted playsinline></video>
+  <p id="status" role="status" style="position: absolute; bottom: 16px; margin: 0 16px; font-family: sans-serif; text-align: center;">Loading models…</p>
 </body>
 </html>
