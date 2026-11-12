@@ -1,53 +1,65 @@
-var loaded = false;
+const video = document.getElementById('video');
+const status = document.getElementById('status');
+const modelUrl = new URL('./models/', document.baseURI).href;
 
-const video = document.getElementById('video')
+async function start() {
+  try {
+    await Promise.all([
+      faceapi.nets.tinyFaceDetector.loadFromUri(modelUrl),
+      faceapi.nets.faceLandmark68Net.loadFromUri(modelUrl),
+      faceapi.nets.faceExpressionNet.loadFromUri(modelUrl),
+      faceapi.nets.ageGenderNet.loadFromUri(modelUrl)
+    ]);
+    status.textContent = 'Allow camera access to start.';
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      throw new Error('Camera access requires HTTPS or localhost and a supported browser.');
+    }
+    video.srcObject = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+    await video.play();
+    status.textContent = '';
 
-Promise.all([
-  faceapi.nets.tinyFaceDetector.loadFromUri('https://rawgit.com/justadudewhohacks/face-api.js/master/weights'),
-  faceapi.nets.faceLandmark68Net.loadFromUri('https://rawgit.com/justadudewhohacks/face-api.js/master/weights'),
-  //faceapi.nets.faceRecognitionNet.loadFromUri('https://rawgit.com/justadudewhohacks/face-api.js/master/weights'),
-  faceapi.nets.faceExpressionNet.loadFromUri('https://rawgit.com/justadudewhohacks/face-api.js/master/weights'),
-  faceapi.nets.ageGenderNet.loadFromUri('https://rawgit.com/justadudewhohacks/face-api.js/master/weights')
-]).then(startVideo)
+    const canvas = faceapi.createCanvasFromMedia(video);
+    document.body.append(canvas);
+    const displaySize = { width: video.width, height: video.height };
+    faceapi.matchDimensions(canvas, displaySize);
 
-function startVideo() {
-  console.log("loading")
-  navigator.getUserMedia(
-    { video: {} },
-    stream => video.srcObject = stream,
-    err => console.error(err)
-  )
+    async function detect() {
+      try {
+        if (video.paused || video.ended) {
+          setTimeout(detect, 200);
+          return;
+        }
+        const detections = await faceapi
+          .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+          .withFaceLandmarks()
+          .withFaceExpressions()
+          .withAgeAndGender();
+        const resizedDetections = faceapi.resizeResults(detections, displaySize);
+        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        faceapi.draw.drawDetections(canvas, resizedDetections);
+        faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+        faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
+        for (const detection of resizedDetections) {
+          new faceapi.draw.DrawTextField(
+            [`${detection.gender} ${Math.floor(detection.age)} years old`],
+            detection.detection.box.bottomLeft
+          ).draw(canvas);
+        }
+        // Wait for inference to finish before scheduling another frame.
+        setTimeout(detect, 200);
+      } catch (error) {
+        showError('Face detection failed', error);
+      }
+    }
+    await detect();
+  } catch (error) {
+    showError('Unable to start', error);
+  }
 }
 
-video.addEventListener('play', () => {
-  const canvas = faceapi.createCanvasFromMedia(video)
-  document.body.append(canvas)
-  const displaySize = { width: video.width, height: video.height }
-  faceapi.matchDimensions(canvas, displaySize)
-  setInterval(async () => {
-    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions().withAgeAndGender()
-    //console.log("finished loading")
-    if (detections.length > 0) {
-        //console.log("age " + detections[0].age)
-        //console.log("gender " + detections[0].gender)
-    }
-        
-    //faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
-    const resizedDetections = faceapi.resizeResults(detections, displaySize)
-    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
-    
-    const box = { x: 20, y: 50, width: 0, height: 0 } //Try to make the ugly box invisible
-        // see DrawBoxOptions below
-        const drawOptions = {
-          label: detections[0].gender + " " + Math.floor(detections[0].age) + " years old",
-          lineWidth: 1
-        }
-        const drawBox = new faceapi.draw.DrawBox(box, drawOptions)
-        drawBox.draw(canvas)
-      
-    faceapi.draw.drawDetections(canvas, resizedDetections)
-    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
-    faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
-    //faceapi.draw.drawAgeAndGender(canvas, resizedDetections)
-  }, 200)
-})
+function showError(message, error) {
+  console.error(message, error);
+  status.textContent = `${message}: ${error.message || error}`;
+}
+
+start();
