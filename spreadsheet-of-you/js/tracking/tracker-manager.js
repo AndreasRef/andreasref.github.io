@@ -7,11 +7,9 @@ import { FaceApiTracker } from './faceapi-tracker.js';
  * Coordinates all trackers:
  *   - MediaPipe FaceLandmarker (primary, every frame)
  *   - MediaPipe ImageSegmenter (every frame)
- *   - face-api.js (secondary, every 5th frame, pauses at close range)
+ *   - face-api.js (secondary, using the same cropped image)
  *
- * Close-range handoff: when IPD exceeds CLOSE_RANGE_IPD, face-api.js pauses
- * because TinyFaceDetector is unreliable with very large faces. Its smoothed
- * values will drift toward neutral via the EMA drift mode.
+ * Face size is diagnostic only: digital zoom must never disable classification.
  */
 export class TrackerManager {
   constructor() {
@@ -44,7 +42,7 @@ export class TrackerManager {
 
   /**
    * Run all trackers for the current frame.
-   * @param {HTMLVideoElement} video
+   * @param {HTMLVideoElement|HTMLCanvasElement} video — confirmed camera crop
    * @param {number} timestamp — rAF timestamp (strictly increasing)
    * @param {boolean} segmentationEnabled — whether to run segmentation
    * @returns {{ face, segMask, faceApiResult }}
@@ -64,8 +62,8 @@ export class TrackerManager {
       if (mask) segMask = mask;
     }
 
-    // --- Close-range handoff for face-api.js ---
-    // Use the smoothed IPD from metrics (passed in next frame), or raw from landmarks
+    // Measure apparent face size without automatically pausing classification.
+    this.currentIpd = 0;
     if (face && face.faceLandmarks?.[0]?.length > 473) {
       const lm = face.faceLandmarks[0];
       const lIris = lm[468];
@@ -73,19 +71,7 @@ export class TrackerManager {
       this.currentIpd = Math.hypot(rIris.x - lIris.x, rIris.y - lIris.y);
     }
 
-    if (this.currentIpd > CLOSE_RANGE_IPD) {
-      if (!this.closeRange) {
-        this.closeRange = true;
-        this.faceApi.pause();
-        console.log('[TrackerManager] Close range detected (IPD %.3f) — face-api paused', this.currentIpd);
-      }
-    } else {
-      if (this.closeRange) {
-        this.closeRange = false;
-        this.faceApi.resume();
-        console.log('[TrackerManager] Normal range (IPD %.3f) — face-api resumed', this.currentIpd);
-      }
-    }
+    this.closeRange = this.currentIpd > CLOSE_RANGE_IPD;
 
     // --- face-api.js (fire-and-forget, reads last result) ---
     this.faceApi.detect(video);

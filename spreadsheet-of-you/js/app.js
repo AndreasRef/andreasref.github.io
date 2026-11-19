@@ -14,6 +14,7 @@ import { ComputedMetrics } from "./data/computed-metrics.js";
 import { FakeStreams } from "./data/fake-streams.js";
 import { DemographicLookup } from "./data/demographic-lookup.js";
 import { Archive } from "./ui/archive.js";
+import { CameraSetup } from "./ui/camera-setup.js";
 
 // ── Loading overlay i18n ────────────────────────────────────────────────
 const LOADING_I18N = {
@@ -171,6 +172,8 @@ class App {
     `;
     document.body.appendChild(el);
     this._loadingOverlay = el;
+    this.cameraSetup = new CameraSetup(this.camera, () => this._updateStartButton());
+    document.getElementById("loading-dialog").appendChild(this.cameraSetup.element);
 
     el.querySelectorAll("#loading-lang button").forEach((b) => {
       b.addEventListener("click", () => this._setLanguage(b.dataset.lang));
@@ -194,6 +197,7 @@ class App {
 
   _updateLangToggleStyles() {
     const lang = window.__LANG === "da" ? "da" : "en";
+    this.cameraSetup?.setLanguage(lang);
     const labelEl = document.getElementById("lang-label");
     if (labelEl) labelEl.textContent = LOADING_I18N[lang].languageLabel;
     document.querySelectorAll("#loading-lang button").forEach((b) => {
@@ -267,6 +271,7 @@ class App {
           </div>
         </div>
       </div>
+      <div id="camera-setup-slot"></div>
       <div style="text-align:right;">
         <button id="btn-enable-macros" style="
           min-width:110px;height:24px;
@@ -284,6 +289,7 @@ class App {
         " disabled>${txt.cancel}</button>
       </div>
     `;
+    document.getElementById("camera-setup-slot").appendChild(this.cameraSetup.element);
     const btn = document.getElementById("btn-enable-macros");
     btn.addEventListener("mousedown", () => {
       btn.style.borderColor = "#808080 #FFF #FFF #808080";
@@ -292,9 +298,16 @@ class App {
       btn.style.borderColor = "#FFF #808080 #808080 #FFF";
     });
     btn.addEventListener("click", () => this._beginExperience());
+    this._updateStartButton();
+  }
+
+  _updateStartButton() {
+    const btn = document.getElementById("btn-enable-macros");
+    if (btn) btn.disabled = !this.cameraSetup.confirmed;
   }
 
   _beginExperience() {
+    if (!this.cameraSetup.confirmed) return;
     // Reveal the Excel window
     document.getElementById("excel-window").style.display = "";
 
@@ -376,17 +389,26 @@ class App {
   loop(timestamp) {
     if (!this.running) return;
 
+    if (!this._loadingDismissed) {
+      this.cameraSetup.renderPreview();
+      requestAnimationFrame((t) => this.loop(t));
+      return;
+    }
+
     if (timestamp <= this.lastTimestamp) timestamp = this.lastTimestamp + 1;
     this.lastTimestamp = timestamp;
 
-    const video = this.camera.video;
+    const inputFrame = this.camera.getFrame();
+    if (!inputFrame) {
+      requestAnimationFrame((t) => this.loop(t));
+      return;
+    }
 
     // --- Run all trackers ---
     const { face, segMask, faceApiResult } = this.trackers.update(
-      video,
+      inputFrame,
       timestamp,
       this.segmentationEnabled,
-      null,
     );
 
     // --- Update MediaPipe metrics ---
@@ -460,7 +482,7 @@ class App {
         : null;
 
     // --- Render grid ---
-    const imageData = this.camera.sampleFrame();
+    const imageData = this.camera.sampleFrame(inputFrame);
     if (imageData) {
       this.cellMapper.update(
         smoothed,

@@ -28,7 +28,7 @@ export const CONFIDENCE_THRESHOLD = 0.3;
 // face-api.js
 export const FACEAPI_INTERVAL = 1;       // Run face-api every frame
 export const FACEAPI_MODEL_URL = 'https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/weights';
-export const CLOSE_RANGE_IPD = 0.11;     // IPD above this → face-api pauses (face too close)
+export const CLOSE_RANGE_IPD = 0.11;     // Diagnostic only; never pauses face-api
 
 // Sidebar & Formula bar
 export const FORMULA_CYCLE_SPEED = 2000;   // ms per cell in formula bar

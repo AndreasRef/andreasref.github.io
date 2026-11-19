@@ -7,6 +7,11 @@ export class Camera {
     this.video.setAttribute('autoplay', '');
     this.video.muted = true;
 
+    // One unmirrored crop shared by every tracker and the portrait.
+    this.inputCanvas = document.createElement('canvas');
+    this.inputCtx = this.inputCanvas.getContext('2d');
+    this.zoom = 1;
+
     // Small offscreen canvas for downsampled + mirrored frame
     this.sampleCanvas = document.createElement('canvas');
     this.sampleCanvas.width = GRID_COLS;
@@ -32,12 +37,46 @@ export class Camera {
   }
 
   /**
+   * Draw a centered digital crop. Preview and confirmed input use the same crop.
+   */
+  drawCrop(ctx, zoom = this.zoom) {
+    if (!this.ready || this.video.readyState < 2) return false;
+    const { video } = this;
+    const width = video.videoWidth / zoom;
+    const height = video.videoHeight / zoom;
+    ctx.drawImage(
+      video,
+      (video.videoWidth - width) / 2, (video.videoHeight - height) / 2,
+      width, height,
+      0, 0, ctx.canvas.width, ctx.canvas.height
+    );
+    return true;
+  }
+
+  setZoom(zoom) {
+    if (Number.isFinite(zoom)) this.zoom = Math.max(1, Math.min(3, zoom));
+  }
+
+  getFrame() {
+    if (!this.ready || this.video.readyState < 2) return null;
+    // Keep the original input at 1×; crop at camera resolution when zoomed.
+    if (this.zoom === 1) return this.video;
+    if (this.inputCanvas.width !== this.video.videoWidth ||
+        this.inputCanvas.height !== this.video.videoHeight) {
+      this.inputCanvas.width = this.video.videoWidth;
+      this.inputCanvas.height = this.video.videoHeight;
+    }
+    this.drawCrop(this.inputCtx);
+    return this.inputCanvas;
+  }
+
+  /**
    * Capture a mirror-flipped, downsampled frame as ImageData.
    */
-  sampleFrame() {
-    if (!this.ready) return null;
+  sampleFrame(frame = this.getFrame()) {
+    if (!frame) return null;
 
-    const { sampleCtx, sampleCanvas, video } = this;
+    const { sampleCtx, sampleCanvas } = this;
     const w = sampleCanvas.width;
     const h = sampleCanvas.height;
 
@@ -45,7 +84,7 @@ export class Camera {
     // Mirror flip: translate to right edge, scale -1 horizontally
     sampleCtx.translate(w, 0);
     sampleCtx.scale(-1, 1);
-    sampleCtx.drawImage(video, 0, 0, w, h);
+    sampleCtx.drawImage(frame, 0, 0, w, h);
     sampleCtx.restore();
     return sampleCtx.getImageData(0, 0, w, h);
   }

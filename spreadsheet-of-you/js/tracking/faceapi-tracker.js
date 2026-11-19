@@ -3,7 +3,7 @@ import { FACEAPI_INTERVAL, FACEAPI_MODEL_URL } from '../utils/constants.js';
 /**
  * Secondary tracker using face-api.js for age, gender, and 7 expression scores.
  * Runs every FACEAPI_INTERVAL frames (fire-and-forget async pattern).
- * Can be paused for close-range handoff when the face is too large for TinyFaceDetector.
+ * Classifies a stable snapshot of the same camera crop used by the spreadsheet.
  */
 export class FaceApiTracker {
   constructor() {
@@ -12,6 +12,8 @@ export class FaceApiTracker {
     this.lastResult = null;
     this.detecting = false;
     this.paused = false;
+    this.frameCanvas = null;
+    this.lastError = null;
   }
 
   async init() {
@@ -38,7 +40,7 @@ export class FaceApiTracker {
    * but only actually starts a detection every FACEAPI_INTERVAL frames.
    * Results are stored asynchronously and read via getResult().
    */
-  detect(video) {
+  async detect(video) {
     if (!this.ready || this.paused || this.detecting) return;
     if (video.readyState < 2) return;
 
@@ -46,33 +48,46 @@ export class FaceApiTracker {
     if (this.frameCount % FACEAPI_INTERVAL !== 0) return;
 
     this.detecting = true;
-    const faceapi = window.faceapi;
-    const options = new faceapi.TinyFaceDetectorOptions({
-      inputSize: 160,
-      scoreThreshold: 0.3
-    });
+    try {
+      // The shared crop is redrawn every animation frame. Freeze it so every
+      // asynchronous classification step reads the exact same image.
+      if (!this.frameCanvas) this.frameCanvas = document.createElement('canvas');
+      const width = video.videoWidth || video.width;
+      const height = video.videoHeight || video.height;
+      if (this.frameCanvas.width !== width || this.frameCanvas.height !== height) {
+        this.frameCanvas.width = width;
+        this.frameCanvas.height = height;
+      }
+      this.frameCanvas.getContext('2d').drawImage(video, 0, 0, width, height);
 
-    faceapi
-      .detectSingleFace(video, options)
-      .withFaceLandmarks()
-      .withFaceExpressions()
-      .withAgeAndGender()
-      .then(detection => {
-        this.detecting = false;
-        if (detection) {
-          this.lastResult = {
-            age: detection.age,
-            gender: detection.gender,
-            genderProbability: detection.genderProbability,
-            expressions: detection.expressions,
-            score: detection.detection.score,
-            timestamp: performance.now()
-          };
-        }
-      })
-      .catch(() => {
-        this.detecting = false;
+      const faceapi = window.faceapi;
+      const options = new faceapi.TinyFaceDetectorOptions({
+        inputSize: 320,
+        scoreThreshold: 0.3
       });
+      const detection = await faceapi
+        .detectSingleFace(this.frameCanvas, options)
+        .withFaceLandmarks()
+        .withFaceExpressions()
+        .withAgeAndGender();
+      this.lastError = null;
+      if (detection) {
+        this.lastResult = {
+          age: detection.age,
+          gender: detection.gender,
+          genderProbability: detection.genderProbability,
+          expressions: detection.expressions,
+          score: detection.detection.score,
+          timestamp: performance.now()
+        };
+      }
+    } catch (error) {
+      // Surface inference failures instead of silently leaving empty fields.
+      if (!this.lastError) console.warn('[FaceApi] Classification failed:', error);
+      this.lastError = error;
+    } finally {
+      this.detecting = false;
+    }
   }
 
   getResult() {
